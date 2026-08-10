@@ -5,10 +5,11 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc --noEmit && vite build",
+    "build": "tsc --noEmit && vite build && node scripts/prerender.mjs",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit",
-    "gen:splash": "node scripts/gen-ios-splash.mjs"
+    "gen:splash": "node scripts/gen-ios-splash.mjs",
+    "gen:og": "node scripts/gen-og-image.mjs"
   },
   "dependencies": {
     "@kt/data": "workspace:*",

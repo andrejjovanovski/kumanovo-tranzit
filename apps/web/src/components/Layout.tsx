@@ -3,6 +3,7 @@ import { AppHeader } from "@/components/navigation/AppHeader";
 import { BottomNav } from "@/components/navigation/BottomNav";
 import { TermsGate } from "@/components/TermsGate";
 import { PwaUpdatePrompt } from "@/components/PwaUpdatePrompt";
+import { RouteSeo } from "@/seo/RouteSeo";
 import { useBreakpoint } from "@/hooks/useBreakpoint";
 
 /** App chrome: sticky header, responsive main column, mobile bottom nav,
@@ -15,6 +16,7 @@ export function Layout({ children }: { children: ReactNode }) {
 
   return (
     <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column", background: "var(--color-bg)", color: "var(--color-text)" }}>
+      <RouteSeo />
       <AppHeader />
       <main style={{ flex: 1, width: "100%", maxWidth: 1320, margin: "0 auto", padding, paddingBottom, boxSizing: "border-box" }}>
         {children}

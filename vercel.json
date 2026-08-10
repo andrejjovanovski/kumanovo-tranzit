@@ -4,6 +4,8 @@
   "outputDirectory": "apps/web/dist",
   "installCommand": "pnpm install",
   "framework": "vite",
+  "cleanUrls": true,
+  "trailingSlash": false,
   "rewrites": [{ "source": "/((?!assets/).*)", "destination": "/" }],
   "headers": [
     {
