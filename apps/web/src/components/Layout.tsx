@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import { AppHeader } from "@/components/navigation/AppHeader";
 import { BottomNav } from "@/components/navigation/BottomNav";
 import { TermsGate } from "@/components/TermsGate";
+import { PwaUpdatePrompt } from "@/components/PwaUpdatePrompt";
 import { useBreakpoint } from "@/hooks/useBreakpoint";
 
 /** App chrome: sticky header, responsive main column, mobile bottom nav,
@@ -20,6 +21,7 @@ export function Layout({ children }: { children: ReactNode }) {
       </main>
       {isMobile && <BottomNav />}
       <TermsGate />
+      <PwaUpdatePrompt />
     </div>
   );
 }

@@ -11,7 +11,11 @@ export default defineConfig({
   plugins: [
     react(),
     VitePWA({
-      registerType: "autoUpdate",
+      // "prompt": a new deploy waits for the user to tap "Refresh" (see
+      // <PwaUpdatePrompt/>) instead of reloading silently.
+      registerType: "prompt",
+      // We register the service worker from React (CSP-safe: no inline script).
+      injectRegister: null,
       includeAssets: ["favicon.svg"],
       manifest: {
         name: "Куманово Транзит",

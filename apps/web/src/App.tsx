@@ -1,5 +1,6 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import { Layout } from "@/components/Layout";
+import { SplashGate } from "@/components/SplashGate";
 import { HomePage } from "@/features/home/HomePage";
 import { LinesPage } from "@/features/lines/LinesPage";
 import { LineDetailPage } from "@/features/lines/LineDetailPage";
@@ -14,6 +15,7 @@ import { InstallPage } from "@/features/install/InstallPage";
 export function App() {
   return (
     <Layout>
+      <SplashGate />
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/lines" element={<LinesPage />} />

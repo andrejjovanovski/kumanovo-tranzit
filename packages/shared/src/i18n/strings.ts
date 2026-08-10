@@ -78,6 +78,9 @@ export interface Strings {
   acceptTermsBtn: string;
   readFullTerms: string;
   neighborhood: string;
+  updateAvailable: string;
+  refresh: string;
+  dismiss: string;
   termsSections: TermsSection[];
 }
 
@@ -103,6 +106,9 @@ export const STR: Record<Lang, Strings> = {
     installAndroidTitle: "Android", installIosTitle: "iPhone (iOS)",
     termsGateBody: "За да ги користите возните редови и информациите во апликацијата, ве молиме да ги прифатите условите и политиката на употреба.", acceptTermsBtn: "Прифатам", readFullTerms: "Ги читам условите",
     neighborhood: "Населба",
+    updateAvailable: "Достапна е нова верзија",
+    refresh: "Освежи",
+    dismiss: "Затвори",
     termsSections: [
       { title: "Користење на апликацијата", body: "Куманово Транзит ви дава информации за линии, постојки и поаѓања на јавниот превоз во Куманово. Апликацијата е наменета за лична, некомерцијална употреба." },
       { title: "Точност на информациите", body: "Возните редови, цените и мапите на рутите се објавени од превозниците и може да се менуваат без најава. Се трудиме информациите да бидат ажурни, но не можеме да гарантираме точност." },
@@ -132,6 +138,9 @@ export const STR: Record<Lang, Strings> = {
     installAndroidTitle: "Android", installIosTitle: "iPhone (iOS)",
     termsGateBody: "To use the live schedules and information in this app, please accept our terms and usage policy.", acceptTermsBtn: "Accept", readFullTerms: "Read the full terms",
     neighborhood: "Neighborhood",
+    updateAvailable: "A new version is available",
+    refresh: "Refresh",
+    dismiss: "Dismiss",
     termsSections: [
       { title: "Use of the App", body: "Kumanovo Transit gives you route, stop and departure information for public bus lines in Kumanovo. It is provided for personal, non-commercial use." },
       { title: "Accuracy of Information", body: "Schedules, prices and route maps are published by transport operators and may change without notice. We do our best to keep them current but cannot guarantee accuracy." },
@@ -161,6 +170,9 @@ export const STR: Record<Lang, Strings> = {
     installAndroidTitle: "Android", installIosTitle: "iPhone (iOS)",
     termsGateBody: "Për të përdorur oraret dhe informacionet live në këtë aplikacion, ju lutemi pranoni kushtet dhe politikën e përdorimit.", acceptTermsBtn: "Prano", readFullTerms: "Lexoni kushtet e plota",
     neighborhood: "Lagje",
+    updateAvailable: "Është në dispozicion një version i ri",
+    refresh: "Rifresko",
+    dismiss: "Mbyll",
     termsSections: [
       { title: "Përdorimi i aplikacionit", body: "Kumanovo Transit ju jep informacione për linjat, stacionet dhe nisjet e transportit publik në Kumanovë. Aplikacioni është për përdorim personal, jo-komercial." },
       { title: "Saktësia e informacionit", body: "Oraret, çmimet dhe hartat e itinerareve publikohen nga operatorët e transportit dhe mund të ndryshojnë pa njoftim. Bëjmë çmos t'i mbajmë të përditësuara, por nuk mund të garantojmë saktësinë." },
