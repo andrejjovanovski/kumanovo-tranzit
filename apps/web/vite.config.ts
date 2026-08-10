@@ -17,6 +17,13 @@ export default defineConfig({
       // We register the service worker from React (CSP-safe: no inline script).
       injectRegister: null,
       includeAssets: ["favicon.svg"],
+      workbox: {
+        // Without this, the SPA navigation fallback serves index.html for every
+        // navigation — including typing /sitemap.xml or /robots.txt in the URL
+        // bar, which then boots the app and redirects to "/". Exclude any path
+        // with a file extension so those hit the network and get the real file.
+        navigateFallbackDenylist: [/\.[^/]+$/],
+      },
       manifest: {
         name: "Куманово Транзит",
         short_name: "КТ Транзит",
