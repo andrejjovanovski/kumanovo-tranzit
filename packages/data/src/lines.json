@@ -37,5 +37,57 @@
     "tripInfo": {
       "05:25": { "skipIds": ["koracin"] }, "06:25": { "skipIds": ["koracin", "fzc"] }, "08:25": { "skipIds": ["koracin", "fzc"] }, "09:25": { "skipIds": ["koracin", "fzc"] }, "11:25": { "skipIds": ["koracin", "fzc"] }, "12:25": { "skipIds": ["koracin", "fzc"] }, "14:25": { "skipIds": ["koracin", "fzc"] }, "15:25": { "skipIds": ["koracin", "fzc"] }, "16:25": { "skipIds": ["koracin", "fzc"] }, "17:25": { "skipIds": ["koracin", "fzc"] }, "18:25": { "skipIds": ["koracin", "fzc"] }, "19:25": { "skipIds": ["koracin", "fzc"] }, "21:25": { "skipIds": ["koracin", "fzc"] }
     }
+  },
+  {
+    "id": "8",
+    "num": "8",
+    "from": "с.Тромегја", "to": "Бединје",
+    "fromEn": "s. Tromegja", "toEn": "Bedinje",
+    "fromSq": "s. Tromegja", "toSq": "Bedinje",
+    "first": "05:10", "last": "22:30", "freq": 30,
+    "company": "Даро Компани ДООЕЛ Куманово", "companyEn": "Daro Kompani DOOEL Kumanovo",
+    "price": 30,
+    "disrupted": false,
+    "badge": { "bg": "transparent", "color": "var(--color-text)", "border": "2px solid var(--color-text)" },
+    "stopIds": ["novastanica", "stromegja", "stromegjaskola", "stromegjakrst", "trafostanica", "karadaci", "pukovsko", "rosipetrol", "belaograda", "zlatnazica", "bara", "postavm", "gladnopole1", "gladnopole2", "serviscoche", "staklopan", "tabakana", "ured", "serava", "zikdirekcija", "arm", "iskra", "jugturist", "sileks", "agrokumanovo", "fzc1", "kozhara", "fzc2"],
+    "times": ["05:10", "06:15", "06:16", "07:30", "08:00", "08:30", "09:00", "09:30", "10:00", "11:00", "11:25", "12:00", "12:25", "13:00", "13:30", "14:30", "15:00", "15:30", "16:00", "16:30", "17:30", "18:30", "20:30", "21:30"],
+    "timesRev": ["05:45", "06:55", "08:00", "08:30", "09:00", "09:30", "10:00", "10:30", "11:30", "12:00", "12:30", "13:00", "14:00", "14:30", "15:00", "15:01", "15:30", "16:00", "16:30", "17:00", "18:00", "19:00", "21:00", "21:55"],
+    "tripInfo": {
+      "06:16": { "skipIds": ["novastanica", "stromegja", "stromegjaskola", "stromegjakrst", "trafostanica", "karadaci", "pukovsko", "rosipetrol", "belaograda"] },
+      "08:00": { "skipIds": ["novastanica"] },
+      "08:30": { "skipIds": ["novastanica"] },
+      "09:00": { "skipIds": ["novastanica"] },
+      "09:30": { "skipIds": ["novastanica"] },
+      "10:00": { "skipIds": ["novastanica"] },
+      "11:00": { "skipIds": ["novastanica"] },
+      "12:00": { "skipIds": ["novastanica"] },
+      "13:00": { "skipIds": ["novastanica"] },
+      "15:00": { "skipIds": ["novastanica"] },
+      "16:00": { "skipIds": ["novastanica"] },
+      "20:30": { "skipIds": ["novastanica"] }
+    },
+    "tripInfoRev": {
+      "08:00": { "skipIds": ["novastanica", "iskra", "jugturist", "sileks", "agrokumanovo", "fzc1", "kozhara", "fzc2"] },
+      "08:30": { "skipIds": ["novastanica", "iskra", "jugturist", "sileks", "agrokumanovo", "fzc1", "kozhara", "fzc2"] },
+      "09:00": { "skipIds": ["novastanica", "iskra", "jugturist", "sileks", "agrokumanovo", "fzc1", "kozhara", "fzc2"] },
+      "09:30": { "skipIds": ["novastanica", "iskra", "jugturist", "sileks", "agrokumanovo", "fzc1", "kozhara", "fzc2"] },
+      "10:00": { "skipIds": ["iskra", "jugturist", "sileks", "agrokumanovo", "fzc1", "kozhara", "fzc2"] },
+      "10:30": { "skipIds": ["novastanica", "iskra", "jugturist", "sileks", "agrokumanovo", "fzc1", "kozhara", "fzc2"] },
+      "11:30": { "skipIds": ["novastanica", "iskra", "jugturist", "sileks", "agrokumanovo", "fzc1", "kozhara", "fzc2"] },
+      "12:00": { "skipIds": ["iskra", "jugturist", "sileks", "agrokumanovo", "fzc1", "kozhara", "fzc2"] },
+      "12:30": { "skipIds": ["novastanica", "iskra", "jugturist", "sileks", "agrokumanovo", "fzc1", "kozhara", "fzc2"] },
+      "13:00": { "skipIds": ["iskra", "jugturist", "sileks", "agrokumanovo", "fzc1", "kozhara", "fzc2"] },
+      "14:00": { "skipIds": ["iskra", "jugturist", "sileks", "agrokumanovo", "fzc1", "kozhara", "fzc2"] },
+      "14:30": { "skipIds": ["novastanica", "iskra", "jugturist", "sileks", "agrokumanovo", "fzc1", "kozhara", "fzc2"] },
+      "15:00": { "skipIds": ["iskra", "jugturist", "sileks", "agrokumanovo", "fzc1", "kozhara", "fzc2"] },
+      "15:01": { "skipIds": ["novastanica"] },
+      "15:30": { "skipIds": ["novastanica", "iskra", "jugturist", "sileks", "agrokumanovo", "fzc1", "kozhara", "fzc2"] },
+      "16:00": { "skipIds": ["iskra", "jugturist", "sileks", "agrokumanovo", "fzc1", "kozhara", "fzc2"] },
+      "16:30": { "skipIds": ["novastanica", "iskra", "jugturist", "sileks", "agrokumanovo", "fzc1", "kozhara", "fzc2"] },
+      "17:00": { "skipIds": ["iskra", "jugturist", "sileks", "agrokumanovo", "fzc1", "kozhara", "fzc2"] },
+      "18:00": { "skipIds": ["iskra", "jugturist", "sileks", "agrokumanovo", "fzc1", "kozhara", "fzc2"] },
+      "19:00": { "skipIds": ["iskra", "jugturist", "sileks", "agrokumanovo", "fzc1", "kozhara", "fzc2"] },
+      "21:00": { "skipIds": ["iskra", "jugturist", "sileks", "agrokumanovo", "fzc1", "kozhara", "fzc2"] }
+    }
   }
 ]
