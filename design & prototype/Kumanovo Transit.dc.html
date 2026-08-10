@@ -1,0 +1,1304 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+
+<helmet>
+  <link rel="stylesheet" href="_ds/modernist-103182da-9152-42d3-b836-0e1d1e7d7d3a/styles.css">
+  <script src="_ds/modernist-103182da-9152-42d3-b836-0e1d1e7d7d3a/_ds_bundle.js"></script>
+  <script src="./image-slot.js"></script>
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; }
+    html, body { margin: 0; }
+    :root { --font-heading: 'Montserrat', sans-serif; --font-body: 'Montserrat', sans-serif; }
+    a { color: var(--color-accent-700); text-decoration: none; }
+    a:hover { color: var(--color-accent-600); text-decoration: underline; }
+    @keyframes kt-shimmer { 0% { opacity: .45; } 50% { opacity: 1; } 100% { opacity: .45; } }
+    input[type=radio] { accent-color: var(--color-accent); }
+    input[type=time], select.input { font-family: var(--font-body); }
+    ::-webkit-scrollbar { width: 0; height: 0; }
+  </style>
+</helmet>
+
+<div id="ktRoot" style="min-height:100vh;max-width:{{ rootMaxWidth }};margin:{{ rootMargin }};display:flex;flex-direction:column;background:var(--color-bg);color:var(--color-text);font-family:var(--font-body);--radius-sm:12px;--radius-md:20px;--radius-lg:28px;--shadow-sm:0 2px 8px rgba(45,43,43,0.08);--shadow-md:0 10px 28px rgba(45,43,43,0.10);--shadow-lg:0 22px 50px rgba(45,43,43,0.16)">
+
+  <!-- HEADER -->
+  <div style="position:sticky;top:0;z-index:30;background:var(--color-bg);border-bottom:2px solid var(--color-divider)">
+    <div style="max-width:1320px;margin:0 auto;display:flex;align-items:center;gap:var(--space-4);padding:var(--space-3) var(--space-4)">
+      <div style="display:flex;align-items:center;gap:10px;cursor:pointer" onClick="{{ goHome }}">
+        <div style="width:38px;height:38px;flex:none;background:var(--color-accent-500);border-radius:10px;display:flex;align-items:center;justify-content:center">
+          <i data-lucide="route" style="width:20px;height:20px;color:#fff;stroke-width:2.5"></i>
+        </div>
+        <div style="font-family:var(--font-heading);font-weight:800;font-size:16px;letter-spacing:-0.01em;line-height:1.05">КУМАНОВО<br /><span style="color:var(--color-accent-600)">ТРАНЗИТ</span></div>
+      </div>
+      <sc-if value="{{ showTopNav }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;align-items:stretch;gap:var(--space-4);margin-left:var(--space-2);align-self:stretch">
+          <sc-for list="{{ navItems }}" as="item" hint-placeholder-count="5">
+            <a href="#" onClick="{{ item.onClick }}" aria-current="{{ item.current }}" style="font-family:var(--font-heading);font-weight:800;font-size:13px;letter-spacing:0.03em;color:{{ item.linkColor }};text-decoration:none;display:flex;align-items:center;gap:7px;border-bottom:{{ item.underline }};padding-bottom:4px">
+              <i data-lucide="{{ item.icon }}" style="width:16px;height:16px"></i>{{ item.label }}
+            </a>
+          </sc-for>
+        </div>
+      </sc-if>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:var(--space-3);position:relative">
+        <button class="btn btn-icon btn-ghost" onClick="{{ toggleMenu }}" aria-label="Menu">
+          <i data-lucide="{{ menuIcon }}" style="width:20px;height:20px"></i>
+        </button>
+        <sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
+          <div style="position:fixed;inset:0;z-index:50;background:var(--color-bg);display:flex;flex-direction:column">
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:var(--space-3) var(--space-4);border-bottom:2px solid var(--color-divider)">
+              <div style="display:flex;align-items:center;gap:10px">
+                <div style="width:38px;height:38px;flex:none;background:var(--color-accent-500);border-radius:10px;display:flex;align-items:center;justify-content:center">
+                  <i data-lucide="route" style="width:20px;height:20px;color:#fff;stroke-width:2.5"></i>
+                </div>
+                <div style="font-family:var(--font-heading);font-weight:800;font-size:16px;letter-spacing:-0.01em;line-height:1.05">КУМАНОВО<br /><span style="color:var(--color-accent-600)">ТРАНЗИТ</span></div>
+              </div>
+              <button class="btn btn-icon btn-ghost" onClick="{{ toggleMenu }}" aria-label="Close"><i data-lucide="x" style="width:22px;height:22px"></i></button>
+            </div>
+            <div style="flex:1;display:flex;flex-direction:column;padding:var(--space-4);max-width:480px;margin:0 auto;width:100%;box-sizing:border-box">
+              <button class="btn btn-secondary btn-block" style="display:flex;align-items:center;gap:10px;justify-content:flex-start" onClick="{{ goInstall }}">
+                <i data-lucide="download" style="width:18px;height:18px"></i>{{ T.installMenu }}
+              </button>
+              <div style="height:var(--space-2)"></div>
+              <button class="btn btn-secondary btn-block" style="display:flex;align-items:center;gap:10px;justify-content:flex-start" onClick="{{ goTerms }}">
+                <i data-lucide="file-text" style="width:18px;height:18px"></i>{{ T.termsMenu }}
+              </button>
+              <div style="height:var(--space-2)"></div>
+              <div style="position:relative">
+                <button class="btn btn-secondary btn-block" style="display:flex;align-items:center;gap:10px;justify-content:flex-start" onClick="{{ toggleLangMenu }}">
+                  <span style="font-size:16px;line-height:1">{{ currentLangFlag }}</span>{{ currentLangLabel }}
+                  <i data-lucide="{{ langChevronIcon }}" style="width:18px;height:18px;margin-left:auto"></i>
+                </button>
+                <sc-if value="{{ langMenuOpen }}" hint-placeholder-val="{{ false }}">
+                  <div class="card elev-md" style="position:absolute;top:calc(100% + 6px);left:0;right:0;z-index:5;padding:6px;display:flex;flex-direction:column;gap:2px">
+                    <sc-for list="{{ langOptions }}" as="opt" hint-placeholder-count="3">
+                      <button class="btn btn-ghost" style="{{ opt.style }}display:flex;align-items:center;gap:10px;justify-content:flex-start;width:100%" onClick="{{ opt.onClick }}">
+                        <span style="font-size:16px;line-height:1">{{ opt.flag }}</span>
+                        <span style="font-size:13px;font-weight:700">{{ opt.label }}</span>
+                      </button>
+                    </sc-for>
+                  </div>
+                </sc-if>
+              </div>
+            </div>
+          </div>
+        </sc-if>
+      </div>
+    </div>
+  </div>
+
+  <!-- TERMS GATE -->
+  <sc-if value="{{ showTermsGate }}" hint-placeholder-val="{{ false }}">
+    <div class="dialog-backdrop" style="z-index:100">
+      <div class="dialog" style="max-height:80vh;display:flex;flex-direction:column">
+        <div class="dialog-title">{{ T.termsTitle }}</div>
+        <div class="dialog-body" style="display:flex;flex-direction:column;gap:14px;overflow-y:auto;flex:1;min-height:0">
+          <p style="margin:0">{{ T.termsGateBody }}</p>
+          <sc-for list="{{ termsSections }}" as="sec" hint-placeholder-count="5">
+            <div style="display:flex;flex-direction:column;gap:4px">
+              <h4 style="margin:0;font-size:14px">{{ sec.title }}</h4>
+              <p style="margin:0;font-size:13px;line-height:1.6;opacity:0.8">{{ sec.body }}</p>
+            </div>
+          </sc-for>
+        </div>
+        <div class="dialog-actions">
+          <button class="btn btn-primary" onClick="{{ acceptTerms }}">{{ T.acceptTermsBtn }}</button>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+  <!-- MAIN -->
+  <div style="flex:1;width:100%;max-width:1320px;margin:0 auto;padding:{{ mainPadding }};padding-bottom:{{ mainPaddingBottom }};box-sizing:border-box;width:100%">
+
+    <!-- HOME -->
+    <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
+      <div style="display:flex;flex-direction:column;gap:var(--space-6)">
+        <div style="display:flex;flex-direction:column;gap:var(--space-3)">
+          <div style="display:flex;align-items:center;gap:var(--space-4);flex-wrap:wrap">
+            <div style="width:64px;height:64px;flex:none;border:2px solid var(--color-divider);border-radius:18px;display:flex;flex-direction:column;align-items:center;justify-content:center">
+              <span style="font-family:var(--font-heading);font-weight:800;font-size:24px;line-height:1">{{ dateDay }}</span>
+              <span style="font-size:9px;text-transform:uppercase;letter-spacing:0.06em;opacity:0.6">{{ dateMonth }}</span>
+            </div>
+            <div style="flex:1;min-width:200px">
+              <div style="font-family:var(--font-heading);font-weight:800;font-size:26px">{{ greeting }}</div>
+              <div style="font-size:12px;opacity:0.6">{{ nowLabel }}</div>
+            </div>
+          </div>
+          <div style="display:grid;grid-template-columns:{{ dashCols }};gap:var(--space-3)">
+            <div class="card elev-md" style="flex-direction:row;align-items:center;justify-content:space-between">
+              <div><div class="card-kicker">{{ T.navLines }}</div><div style="font-family:var(--font-heading);font-weight:800;font-size:22px">{{ activeLinesCount }}/{{ totalLinesCount }}</div></div>
+              <i data-lucide="route" style="width:20px;height:20px;opacity:0.35"></i>
+            </div>
+            <sc-if value="{{ hasDisrupted }}" hint-placeholder-val="{{ false }}">
+              <div class="card elev-md" style="flex-direction:row;align-items:center;justify-content:space-between;background:var(--color-accent-100)">
+                <div><div class="card-kicker">{{ T.disruptions }}</div><div style="font-family:var(--font-heading);font-weight:800;font-size:22px;color:var(--color-accent-800)">{{ disruptedCount }}</div></div>
+                <i data-lucide="alert-triangle" style="width:20px;height:20px;color:var(--color-accent-700)"></i>
+              </div>
+            </sc-if>
+            <sc-if value="{{ hasHeroNext }}" hint-placeholder-val="{{ false }}">
+              <div class="card elev-md" style="background:var(--color-neutral-900);color:#fff">
+                <div class="card-kicker" style="color:var(--color-accent-300)">{{ heroNext.stopName }}</div>
+                <div style="display:flex;align-items:baseline;gap:8px">
+                  <span style="font-family:var(--font-heading);font-weight:800;font-size:26px">{{ heroNext.time }}</span>
+                  <span style="font-size:11px;opacity:0.7">{{ T.line }} {{ heroNext.lineNum }}</span>
+                </div>
+              </div>
+            </sc-if>
+          </div>
+        </div>
+        <div style="display:flex;gap:var(--space-3);flex-wrap:wrap;align-items:flex-start">
+        <div style="position:relative;flex:1;min-width:260px">
+          <div class="field" style="position:relative;margin:0">
+            <input class="input" style="height:52px;font-size:16px;padding-left:44px;border:2px solid var(--color-divider)" placeholder="{{ T.searchPlaceholder }}" value="{{ homeSearch }}" onChange="{{ onHomeSearch }}" />
+            <i data-lucide="search" style="width:19px;height:19px;position:absolute;left:14px;top:16px;opacity:0.6"></i>
+          </div>
+          <sc-if value="{{ hasSearchQuery }}" hint-placeholder-val="{{ false }}">
+            <div class="card elev-md" style="position:absolute;left:0;right:0;top:56px;z-index:10;padding:var(--space-2);gap:4px">
+              <sc-if value="{{ hasSearchResults }}" hint-placeholder-val="{{ true }}">
+                <sc-for list="{{ searchResults }}" as="r" hint-placeholder-count="3">
+                  <div onClick="{{ r.onClick }}" style="display:flex;align-items:center;gap:10px;padding:8px 10px;cursor:pointer;border-radius:2px" onMouseOver="{{ noop }}">
+                    <i data-lucide="{{ r.icon }}" style="width:16px;height:16px;color:var(--color-accent-600);flex:none"></i>
+                    <div style="flex:1">
+                      <div style="font-size:14px;font-weight:600">{{ r.title }}</div>
+                      <div style="font-size:11px;opacity:0.65">{{ r.subtitle }}</div>
+                    </div>
+                  </div>
+                </sc-for>
+              </sc-if>
+              <sc-if value="{{ hasNoSearchResults }}" hint-placeholder-val="{{ false }}">
+                <div style="padding:14px;font-size:13px;opacity:0.7;text-align:center">{{ T.noResults }}</div>
+              </sc-if>
+            </div>
+          </sc-if>
+        </div>
+        <button class="btn btn-secondary" style="height:52px;flex:none" onClick="{{ goPlanner }}"><i data-lucide="navigation" style="width:15px;height:15px"></i>{{ T.findRoute }}</button>
+        </div>
+        <div style="display:grid;grid-template-columns:{{ homeGridCols }};gap:var(--space-6)">
+          <div style="display:flex;flex-direction:column;gap:var(--space-3)">
+            <div style="display:flex;align-items:center;justify-content:space-between">
+              <h3 style="margin:0">{{ T.nearbyStops }}</h3>
+              <sc-if value="{{ locationDenied }}" hint-placeholder-val="{{ true }}">
+                <button class="btn btn-ghost" style="font-size:12px" onClick="{{ enableLocation }}">
+                  <i data-lucide="locate-fixed" style="width:14px;height:14px"></i>{{ T.enableLocation }}
+                </button>
+              </sc-if>
+            </div>
+            <sc-if value="{{ locationDenied }}" hint-placeholder-val="{{ true }}">
+              <div class="card" style="background:var(--color-neutral-100);flex-direction:row;align-items:center;gap:10px">
+                <i data-lucide="map-pin-off" style="width:18px;height:18px;color:var(--color-accent-700);flex:none"></i>
+                <div style="font-size:12px;opacity:0.8">{{ T.locationDenied }}</div>
+              </div>
+            </sc-if>
+            <sc-if value="{{ loadingHome }}" hint-placeholder-val="{{ false }}">
+              <sc-for list="{{ skeletons }}" as="s" hint-placeholder-count="3">
+                <div class="card elev-md" style="height:96px;animation:kt-shimmer 1.4s ease-in-out infinite"></div>
+              </sc-for>
+            </sc-if>
+            <sc-if value="{{ homeNotLoading }}" hint-placeholder-val="{{ false }}">
+              <sc-for list="{{ nearbyStops }}" as="stop" hint-placeholder-count="3">
+                <div class="card elev-md" style="cursor:pointer" onClick="{{ stop.onClick }}">
+                  <div class="card-title">{{ stop.name }}</div>
+                  <div class="card-meta"><i data-lucide="footprints" style="width:12px;height:12px"></i>{{ stop.distance }} &middot; {{ stop.walk }}</div>
+                  <div style="display:flex;gap:6px;flex-wrap:wrap">
+                    <sc-for list="{{ stop.badges }}" as="b" hint-placeholder-count="2">
+                      <span style="display:inline-flex;align-items:center;justify-content:center;min-width:22px;height:22px;padding:0 6px;font-family:var(--font-heading);font-weight:800;font-size:12px;background:{{ b.bg }};color:{{ b.color }};border:{{ b.border }};border-radius:50%">{{ b.num }}</span>
+                    </sc-for>
+                  </div>
+                  <sc-if value="{{ stop.hasDepartures }}" hint-placeholder-val="{{ true }}">
+                    <div style="display:flex;flex-direction:column;gap:4px;margin-top:2px">
+                      <sc-for list="{{ stop.departures }}" as="d" hint-placeholder-count="2">
+                        <div style="display:flex;align-items:center;justify-content:space-between;font-size:13px">
+                          <span>{{ T.line }} {{ d.lineNum }}</span>
+                          <span style="display:flex;align-items:center;gap:6px;font-family:var(--font-heading);font-weight:800">{{ d.time }}<sc-if value="{{ d.hasWarning }}" hint-placeholder-val="{{ false }}"><span style="display:inline-flex;align-items:center;padding:3px;background:{{ d.statusBg }};color:{{ d.statusColor }}"><i data-lucide="alert-triangle" style="width:12px;height:12px"></i></span></sc-if>
+                          <sc-if value="{{ d.hasNoWarning }}" hint-placeholder-val="{{ true }}"><span style="font-size:10px;font-weight:600;padding:2px 6px;background:{{ d.statusBg }};color:{{ d.statusColor }}">{{ d.statusLabel }}</span></sc-if></span>
+                        </div>
+                      </sc-for>
+                    </div>
+                  </sc-if>
+                  <sc-if value="{{ stop.noDepartures }}" hint-placeholder-val="{{ false }}">
+                    <div style="font-size:12px;opacity:0.65">{{ T.lastBusToday }}</div>
+                  </sc-if>
+                </div>
+              </sc-for>
+              <a href="#" onClick="{{ goStops }}" style="font-size:13px;font-weight:600">{{ T.viewAll }} &rarr;</a>
+            </sc-if>
+          </div>
+
+          <div style="display:flex;flex-direction:column;gap:var(--space-3);border-left:{{ homeColDivider }};padding-left:{{ homeColPad }}">
+            <h3 style="margin:0">{{ T.popularLines }}</h3>
+            <div style="display:grid;grid-template-columns:{{ lineCardCols }};gap:var(--space-3)">
+              <sc-for list="{{ popularLines }}" as="ln" hint-placeholder-count="5">
+                <div class="card elev-md" style="cursor:pointer;flex-direction:row;align-items:center;gap:12px" onClick="{{ ln.onClick }}">
+                  <span style="display:flex;align-items:center;justify-content:center;width:44px;height:44px;flex:none;font-family:var(--font-heading);font-weight:800;font-size:20px;background:{{ ln.bg }};color:{{ ln.color }};border:{{ ln.border }};border-radius:50%">{{ ln.num }}</span>
+                  <div>
+                    <div style="font-weight:800;font-family:var(--font-heading);font-size:14px">{{ ln.from }} &rarr; {{ ln.to }}</div>
+                    <div style="font-size:10px;opacity:0.55">{{ ln.company }}</div>
+                    <div style="font-size:11px;opacity:0.65">{{ ln.freqLabel }}</div>
+                  </div>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+      </div>
+    </sc-if>
+
+    <!-- LINES LIST -->
+    <sc-if value="{{ isLines }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex;flex-direction:column;gap:var(--space-4)">
+        <h2 style="margin:0">{{ T.navLines }}</h2>
+        <div class="hr" style="margin:0"></div>
+        <div class="seg">
+          <sc-for list="{{ lineFilters }}" as="f" hint-placeholder-count="4">
+            <label class="seg-opt"><input type="radio" name="lfilter" checked="{{ f.checked }}" onChange="{{ f.onChange }}" />{{ f.label }}</label>
+          </sc-for>
+        </div>
+        <sc-if value="{{ hasFilteredLines }}" hint-placeholder-val="{{ true }}">
+          <div style="display:grid;grid-template-columns:{{ lineCardCols }};gap:var(--space-3)">
+            <sc-for list="{{ filteredLines }}" as="ln" hint-placeholder-count="5">
+              <div class="card elev-md" style="cursor:pointer" onClick="{{ ln.onClick }}">
+                <div style="display:flex;justify-content:space-between;align-items:flex-start">
+                  <span style="display:flex;align-items:center;justify-content:center;width:48px;height:48px;font-family:var(--font-heading);font-weight:800;font-size:22px;background:{{ ln.bg }};color:{{ ln.color }};border:{{ ln.border }};border-radius:50%">{{ ln.num }}</span>
+                  <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px">
+                    <span class="tag {{ ln.statusTagClass }}">{{ ln.statusLabel }}</span>
+                    <span style="display:flex;align-items:center;gap:4px;font-family:var(--font-heading);font-weight:800;font-size:15px;color:var(--color-accent-700);background:var(--color-accent-100);padding:3px 10px;border-radius:999px"><i data-lucide="ticket" style="width:13px;height:13px"></i>{{ ln.priceLabel }}</span>
+                  </div>
+                </div>
+                <div class="card-title">{{ ln.from }} &rarr; {{ ln.to }}</div>
+                <div style="font-size:10px;opacity:0.55;margin-top:-4px">{{ ln.company }}</div>
+                <div style="display:flex;gap:var(--space-4);font-size:12px;opacity:0.75">
+                  <span>{{ T.firstBus }}: {{ ln.first }}</span>
+                  <span>{{ T.lastBus }}: {{ ln.last }}</span>
+                </div>
+                <div class="card-meta"><i data-lucide="repeat" style="width:12px;height:12px"></i>{{ ln.freqLabel }}</div>
+              </div>
+            </sc-for>
+          </div>
+        </sc-if>
+        <sc-if value="{{ hasNoFilteredLines }}" hint-placeholder-val="{{ false }}">
+          <div class="card" style="align-items:center;text-align:center;padding:var(--space-8)">
+            <i data-lucide="bus-front" style="width:28px;height:28px;opacity:0.5"></i>
+            <div style="font-size:13px;opacity:0.7">{{ T.noResults }}</div>
+          </div>
+        </sc-if>
+      </div>
+    </sc-if>
+
+    <!-- LINE DETAIL -->
+    <sc-if value="{{ isLineDetail }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex;flex-direction:column;gap:var(--space-4);max-width:760px">
+        <a href="#" onClick="{{ goLines }}" style="display:flex;align-items:center;gap:4px;font-size:13px;font-weight:600"><i data-lucide="chevron-left" style="width:15px;height:15px"></i>{{ T.back }}</a>
+        <div style="display:flex;align-items:center;gap:var(--space-4)">
+          <span style="display:flex;align-items:center;justify-content:center;width:72px;height:72px;flex:none;font-family:var(--font-heading);font-weight:800;font-size:34px;background:{{ curLine.bg }};color:{{ curLine.color }};border:{{ curLine.border }};border-radius:50%">{{ curLine.num }}</span>
+          <div>
+            <h2 style="margin:0 0 4px">{{ curLine.from }} &rarr; {{ curLine.to }}</h2>
+            <div style="font-size:11px;opacity:0.55;margin-bottom:6px">{{ curLine.company }}</div>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+              <span class="tag {{ curLine.statusTagClass }}">{{ curLine.statusLabel }}</span>
+              <span style="display:flex;align-items:center;gap:5px;font-family:var(--font-heading);font-weight:800;font-size:16px;color:#fff;background:var(--color-accent-600);padding:5px 14px;border-radius:999px"><i data-lucide="ticket" style="width:14px;height:14px"></i>{{ curLine.priceLabel }}</span>
+            </div>
+          </div>
+        </div>
+        <div class="hr" style="margin:0"></div>
+        <div class="seg" style="align-self:flex-start">
+          <label class="seg-opt"><input type="radio" name="dir" checked="{{ dirFwdChecked }}" onChange="{{ setDirFwd }}" />{{ curLine.from }} &rarr; {{ curLine.to }}</label>
+          <label class="seg-opt"><input type="radio" name="dir" checked="{{ dirRevChecked }}" onChange="{{ setDirRev }}" />{{ curLine.to }} &rarr; {{ curLine.from }}</label>
+        </div>
+        <div style="display:grid;grid-template-columns:{{ lineDetailCols }};gap:var(--space-4)">
+          <div>
+            <h4 style="margin:0 0 var(--space-3)">{{ T.allStopsOnLine }}</h4>
+            <div style="display:flex;flex-direction:column">
+              <sc-for list="{{ timelineStops }}" as="ts" hint-placeholder-count="4">
+                <div style="display:flex;gap:12px;align-items:flex-start">
+                  <div style="display:flex;flex-direction:column;align-items:center;width:16px;flex:none">
+                    <div style="width:{{ ts.dotSize }};height:{{ ts.dotSize }};border-radius:50%;background:{{ ts.dotBg }};border:{{ ts.dotBorder }};flex:none"></div>
+                    <sc-if value="{{ ts.hasLine }}" hint-placeholder-val="{{ true }}">
+                      <div style="width:2px;flex:1;min-height:32px;background:var(--color-divider)"></div>
+                    </sc-if>
+                  </div>
+                  <div style="padding-bottom:var(--space-4);flex:1">
+                    <div style="font-weight:{{ ts.fontWeight }};font-size:14px">{{ ts.name }}</div>
+                    <div style="font-size:11px;opacity:0.6">{{ ts.tag }} &middot; {{ ts.time }}</div>
+                  </div>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:var(--space-3)">
+            <h4 style="margin:0">{{ T.upcoming }}</h4>
+            <div class="card" style="gap:var(--space-2)">
+              <sc-if value="{{ curLine.hasUpcoming }}" hint-placeholder-val="{{ true }}">
+                <sc-for list="{{ curLine.upcoming }}" as="u" hint-placeholder-count="3">
+                  <div style="display:flex;justify-content:space-between;font-family:var(--font-heading);font-weight:800;font-size:16px">
+                    <span>{{ u.time }}</span>
+                    <sc-if value="{{ u.hasWarning }}" hint-placeholder-val="{{ false }}"><span style="display:inline-flex;align-items:center;padding:4px;background:{{ u.statusBg }};color:{{ u.statusColor }}"><i data-lucide="alert-triangle" style="width:13px;height:13px"></i></span></sc-if>
+                    <sc-if value="{{ u.hasNoWarning }}" hint-placeholder-val="{{ true }}"><span style="font-size:11px;font-weight:600;padding:2px 8px;background:{{ u.statusBg }};color:{{ u.statusColor }}">{{ u.statusLabel }}</span></sc-if>
+                  </div>
+                </sc-for>
+              </sc-if>
+              <sc-if value="{{ curLine.noUpcoming }}" hint-placeholder-val="{{ false }}">
+                <div style="font-size:13px;opacity:0.7">{{ T.lastBusToday }}</div>
+              </sc-if>
+            </div>
+            <h4 style="margin:var(--space-2) 0 0">{{ T.routeMap }}</h4>
+            <sc-if value="{{ curLine.hasMapUrl }}" hint-placeholder-val="{{ false }}">
+              <div style="width:100%;height:280px;border:2px solid var(--color-divider);overflow:hidden">
+                <iframe src="{{ curLine.mapUrl }}" width="100%" height="100%" style="border:0;display:block"></iframe>
+              </div>
+            </sc-if>
+            <sc-if value="{{ curLine.hasNoMapUrl }}" hint-placeholder-val="{{ true }}">
+              <div style="width:100%;height:200px">
+                <image-slot id="{{ curLine.mapSlotId }}" shape="rect" placeholder="Route map"></image-slot>
+              </div>
+            </sc-if>
+          </div>
+        </div>
+      </div>
+    </sc-if>
+
+    <!-- TERMS -->
+    <sc-if value="{{ isTerms }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex;flex-direction:column;gap:var(--space-4);max-width:640px">
+        <a href="#" onClick="{{ goHome }}" style="display:flex;align-items:center;gap:4px;font-size:13px;font-weight:600"><i data-lucide="chevron-left" style="width:15px;height:15px"></i>{{ T.back }}</a>
+        <h2 style="margin:0">{{ T.termsTitle }}</h2>
+        <sc-for list="{{ termsSections }}" as="sec" hint-placeholder-count="5">
+          <div style="display:flex;flex-direction:column;gap:6px">
+            <h4 style="margin:0">{{ sec.title }}</h4>
+            <p style="margin:0;font-size:14px;line-height:1.6;opacity:0.8">{{ sec.body }}</p>
+          </div>
+        </sc-for>
+      </div>
+    </sc-if>
+
+    <!-- INSTALL PWA -->
+    <sc-if value="{{ isInstall }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex;flex-direction:column;gap:var(--space-5);max-width:900px">
+        <a href="#" onClick="{{ goHome }}" style="display:flex;align-items:center;gap:4px;font-size:13px;font-weight:600"><i data-lucide="chevron-left" style="width:15px;height:15px"></i>{{ T.back }}</a>
+        <div>
+          <h2 style="margin:0 0 6px">{{ T.installTitle }}</h2>
+          <p style="margin:0;opacity:0.75;max-width:560px">{{ T.installIntro }}</p>
+        </div>
+        <div style="display:grid;grid-template-columns:{{ installGridCols }};gap:var(--space-5)">
+          <div style="display:flex;flex-direction:column;gap:var(--space-3)">
+            <div style="display:flex;align-items:center;gap:8px;position:sticky;top:0;background:var(--color-bg);z-index:2;padding-block:10px;border-bottom:2px solid var(--color-divider)">
+              <i data-lucide="smartphone" style="width:18px;height:18px"></i>
+              <h3 style="margin:0;font-size:16px;text-transform:uppercase;letter-spacing:0.04em">{{ T.installAndroidTitle }}</h3>
+            </div>
+            <sc-for list="{{ androidSteps }}" as="st" hint-placeholder-count="4">
+              <div class="card" style="gap:10px">
+                <div style="display:flex;align-items:center;gap:10px">
+                  <div style="width:26px;height:26px;flex:none;background:var(--color-neutral-900);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px">{{ st.n }}</div>
+                  <div style="font-weight:700;font-size:14px">{{ st.label }}</div>
+                </div>
+                <div style="width:100%;aspect-ratio:9/16;max-height:360px;padding-top:var(--space-4);box-sizing:border-box">
+                  <image-slot id="{{ st.slotId }}" shape="rounded" radius="16px" placeholder="{{ st.placeholder }}"></image-slot>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:var(--space-3)">
+            <div style="display:flex;align-items:center;gap:8px;position:sticky;top:0;background:var(--color-bg);z-index:2;padding-block:10px;border-bottom:2px solid var(--color-divider)">
+              <i data-lucide="smartphone" style="width:18px;height:18px"></i>
+              <h3 style="margin:0;font-size:16px;text-transform:uppercase;letter-spacing:0.04em">{{ T.installIosTitle }}</h3>
+            </div>
+            <sc-for list="{{ iosSteps }}" as="st" hint-placeholder-count="4">
+              <div class="card" style="gap:10px">
+                <div style="display:flex;align-items:center;gap:10px">
+                  <div style="width:26px;height:26px;flex:none;background:var(--color-neutral-900);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px">{{ st.n }}</div>
+                  <div style="font-weight:700;font-size:14px">{{ st.label }}</div>
+                </div>
+                <div style="width:100%;aspect-ratio:9/16;max-height:360px;padding-top:var(--space-4);box-sizing:border-box">
+                  <image-slot id="{{ st.slotId }}" shape="rounded" radius="16px" placeholder="{{ st.placeholder }}"></image-slot>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </div>
+    </sc-if>
+
+    <!-- STOPS LIST -->
+    <sc-if value="{{ isStops }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex;flex-direction:column;gap:var(--space-4)">
+        <h2 style="margin:0">{{ T.navStops }}</h2>
+        <div class="hr" style="margin:0"></div>
+        <div class="field" style="max-width:420px"><input class="input" placeholder="{{ T.searchPlaceholder }}" value="{{ stopSearch }}" onChange="{{ onStopSearch }}" /></div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap">
+          <sc-for list="{{ stopLineFilters }}" as="f" hint-placeholder-count="6">
+            <button onClick="{{ f.onClick }}" style="display:inline-flex;align-items:center;justify-content:center;min-width:30px;height:30px;padding:0 8px;font-family:var(--font-heading);font-weight:800;font-size:12px;cursor:pointer;background:{{ f.bg }};color:{{ f.color }};border:{{ f.border }};border-radius:999px">{{ f.label }}</button>
+          </sc-for>
+        </div>
+        <sc-if value="{{ hasFilteredStops }}" hint-placeholder-val="{{ true }}">
+          <div style="display:grid;grid-template-columns:{{ stopCardCols }};gap:var(--space-3)">
+            <sc-for list="{{ filteredStops }}" as="stop" hint-placeholder-count="6">
+              <div class="card elev-md" style="cursor:pointer" onClick="{{ stop.onClick }}">
+                <div style="display:flex;justify-content:space-between"><div class="card-title">{{ stop.name }}</div><span style="font-size:11px;opacity:0.6">{{ stop.distance }}</span></div>
+                <div style="display:flex;gap:6px">
+                  <sc-for list="{{ stop.badges }}" as="b" hint-placeholder-count="2">
+                    <span style="display:inline-flex;align-items:center;justify-content:center;min-width:20px;height:20px;padding:0 5px;font-family:var(--font-heading);font-weight:800;font-size:11px;background:{{ b.bg }};color:{{ b.color }};border:{{ b.border }};border-radius:50%">{{ b.num }}</span>
+                  </sc-for>
+                </div>
+                <div style="display:flex;gap:10px;font-size:12px">
+                  <sc-for list="{{ stop.departures }}" as="d" hint-placeholder-count="3"><span style="font-family:var(--font-heading);font-weight:700">{{ d.time }}</span></sc-for>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+        </sc-if>
+        <sc-if value="{{ hasNoFilteredStops }}" hint-placeholder-val="{{ false }}">
+          <div class="card" style="align-items:center;text-align:center;padding:var(--space-8)">
+            <i data-lucide="map-pin-x" style="width:28px;height:28px;opacity:0.5"></i>
+            <div style="font-size:13px;opacity:0.7">{{ T.noResults }}</div>
+          </div>
+        </sc-if>
+      </div>
+    </sc-if>
+
+    <!-- STOP DETAIL -->
+    <sc-if value="{{ isStopDetail }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex;flex-direction:column;gap:var(--space-4);max-width:760px">
+        <a href="#" onClick="{{ goStops }}" style="display:flex;align-items:center;gap:4px;font-size:13px;font-weight:600"><i data-lucide="chevron-left" style="width:15px;height:15px"></i>{{ T.back }}</a>
+        <div>
+          <h2 style="margin:0">{{ curStop.name }}</h2>
+          <div style="font-size:12px;opacity:0.65">{{ curStop.distance }} &middot; {{ curStop.walk }}</div>
+        </div>
+        <div style="display:flex;gap:8px">
+          <sc-for list="{{ curStop.badges }}" as="b" hint-placeholder-count="2">
+            <span style="display:inline-flex;align-items:center;justify-content:center;min-width:26px;height:26px;padding:0 7px;font-family:var(--font-heading);font-weight:800;font-size:13px;background:{{ b.bg }};color:{{ b.color }};border:{{ b.border }};border-radius:50%">{{ b.num }}</span>
+          </sc-for>
+        </div>
+        <button class="btn btn-secondary" style="align-self:flex-start" onClick="{{ viewStopOnMap }}"><i data-lucide="map" style="width:15px;height:15px"></i>{{ T.viewOnMap }}</button>
+        <div class="hr" style="margin:0"></div>
+        <h4 style="margin:0">{{ T.upcoming }}</h4>
+        <sc-for list="{{ curStop.byLine }}" as="grp" hint-placeholder-count="2">
+          <div class="card">
+            <div style="display:flex;align-items:center;gap:8px">
+              <span style="display:flex;align-items:center;justify-content:center;width:30px;height:30px;font-family:var(--font-heading);font-weight:800;font-size:14px;background:{{ grp.bg }};color:{{ grp.color }};border:{{ grp.border }};border-radius:50%">{{ grp.num }}</span>
+              <div>
+                <span style="font-weight:700;font-size:13px">{{ grp.from }} &rarr; {{ grp.to }}</span>
+                <div style="font-size:10px;opacity:0.55">{{ grp.company }}</div>
+              </div>
+            </div>
+            <div style="display:flex;gap:14px;flex-wrap:wrap;margin-top:4px">
+              <sc-for list="{{ grp.times }}" as="t" hint-placeholder-count="3">
+                <span style="font-family:var(--font-heading);font-weight:800;font-size:15px;padding:2px 6px;{{ t.highlightStyle }}">{{ t.time }}</span>
+              </sc-for>
+            </div>
+          </div>
+        </sc-for>
+        <a href="#" onClick="{{ goScheduleForStop }}" style="font-size:13px;font-weight:600">{{ T.fullSchedule }} &rarr;</a>
+      </div>
+    </sc-if>
+
+    <!-- MAP -->
+    <sc-if value="{{ isMap }}" hint-placeholder-val="{{ false }}">
+      <div style="display:grid;grid-template-columns:{{ mapCols }};gap:var(--space-4);height:{{ mapHeight }}">
+        <sc-if value="{{ showMapSidebar }}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex;flex-direction:column;gap:var(--space-3);overflow:auto">
+            <h3 style="margin:0">{{ T.navMap }}</h3>
+            <div class="field"><input class="input" placeholder="{{ T.searchPlaceholder }}" value="{{ homeSearch }}" onChange="{{ onHomeSearch }}" /></div>
+            <sc-for list="{{ mapStopList }}" as="stop" hint-placeholder-count="5">
+              <div class="card elev-md" style="cursor:pointer;padding:var(--space-2)" onClick="{{ stop.onClick }}">
+                <div style="font-weight:700;font-size:13px">{{ stop.name }}</div>
+                <div style="display:flex;gap:4px;margin-top:2px"><sc-for list="{{ stop.badges }}" as="b" hint-placeholder-count="2"><span style="display:inline-flex;align-items:center;justify-content:center;min-width:18px;height:18px;font-size:10px;font-family:var(--font-heading);font-weight:800;background:{{ b.bg }};color:{{ b.color }};border:{{ b.border }};border-radius:50%">{{ b.num }}</span></sc-for></div>
+              </div>
+            </sc-for>
+          </div>
+        </sc-if>
+        <div style="position:relative;min-height:280px">
+          <image-slot id="kumanovoMainMap" shape="rect" placeholder="Map of Kumanovo — stops, stations &amp; routes"></image-slot>
+          <sc-for list="{{ mapPins }}" as="pin" hint-placeholder-count="6">
+            <button onClick="{{ pin.onClick }}" aria-label="{{ pin.name }}" style="position:absolute;left:{{ pin.x }};top:{{ pin.y }};transform:translate(-50%,-100%);width:30px;height:30px;background:{{ pin.bg }};border:2px solid #fff;box-shadow:var(--shadow-md);display:flex;align-items:center;justify-content:center;cursor:pointer;border-radius:50% 50% 50% 0;">
+              <i data-lucide="bus" style="width:14px;height:14px;color:#fff;transform:rotate(45deg)"></i>
+            </button>
+          </sc-for>
+        </div>
+        <sc-if value="{{ showMapPanel }}" hint-placeholder-val="{{ false }}">
+          <div class="card elev-md" style="overflow:auto">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start">
+              <div class="card-title">{{ mapSelectedStop.name }}</div>
+              <button class="btn btn-icon btn-ghost" onClick="{{ closeMapSelection }}"><i data-lucide="x" style="width:14px;height:14px"></i></button>
+            </div>
+            <div style="display:flex;gap:6px"><sc-for list="{{ mapSelectedStop.badges }}" as="b" hint-placeholder-count="2"><span style="display:inline-flex;align-items:center;justify-content:center;min-width:22px;height:22px;font-size:11px;font-family:var(--font-heading);font-weight:800;background:{{ b.bg }};color:{{ b.color }};border:{{ b.border }};border-radius:50%">{{ b.num }}</span></sc-for></div>
+            <div style="font-size:12px;font-weight:700;opacity:0.7">{{ T.upcoming }}</div>
+            <sc-for list="{{ mapSelectedStop.departures }}" as="d" hint-placeholder-count="3">
+              <div style="display:flex;justify-content:space-between;font-size:13px"><span>{{ T.line }} {{ d.lineNum }}</span><span style="font-family:var(--font-heading);font-weight:800">{{ d.etaLabel }}</span></div>
+            </sc-for>
+            <button class="btn btn-primary btn-block" onClick="{{ mapSelectedStop.viewClick }}">{{ T.viewStop }}</button>
+          </div>
+        </sc-if>
+      </div>
+    </sc-if>
+
+    <!-- COMING SOON -->
+    <sc-if value="{{ isComingSoon }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:var(--space-4);min-height:360px;padding:var(--space-8)">
+        <i data-lucide="map" style="width:48px;height:48px;opacity:0.4"></i>
+        <h2 style="margin:0">{{ T.comingSoonTitle }}</h2>
+        <div style="font-size:14px;opacity:0.7;max-width:360px">{{ T.comingSoonBody }}</div>
+      </div>
+    </sc-if>
+
+    <!-- SCHEDULE -->
+    <sc-if value="{{ isSchedule }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex;flex-direction:column;gap:var(--space-4);max-width:640px">
+        <h2 style="margin:0">{{ T.navSchedule }}</h2>
+        <div class="hr" style="margin:0"></div>
+        <div style="display:flex;flex-direction:column;gap:var(--space-3)">
+          <div>
+            <label style="display:block;font-size:12px;margin-bottom:5px;color:color-mix(in srgb, var(--color-text) 70%, transparent)">{{ T.navLines }}</label>
+            <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px">
+              <sc-for list="{{ scheduleLineCards }}" as="c" hint-placeholder-count="5">
+                <div onClick="{{ c.onClick }}" style="cursor:pointer;display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:var(--radius-md);background:{{ c.cardBg }};border:{{ c.cardBorder }}">
+                  <span style="display:flex;align-items:center;justify-content:center;width:30px;height:30px;flex:none;font-family:var(--font-heading);font-weight:800;font-size:13px;background:{{ c.bg }};color:{{ c.color }};border:{{ c.border }};border-radius:50%">{{ c.num }}</span>
+                  <div>
+                    <div style="font-size:12px;font-weight:700;line-height:1.2;color:{{ c.textColor }}">{{ c.from }} &rarr; {{ c.to }}</div>
+                    <div style="font-size:9px;color:{{ c.companyTextColor }}">{{ c.company }}</div>
+                  </div>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+          <div style="display:flex;width:100%;border:2px solid var(--color-text);border-radius:var(--radius-md);overflow:hidden">
+            <button style="flex:1;border:none;border-right:2px solid var(--color-text);padding:12px 10px;font-weight:700;font-size:14px;cursor:pointer;background:{{ dirFwdBg }};color:{{ dirFwdColor }}" onClick="{{ setDirFwd }}">{{ scheduleNmFrom }} &rarr; {{ scheduleNmTo }}</button>
+            <button style="flex:1;border:none;padding:12px 10px;font-weight:700;font-size:14px;cursor:pointer;background:{{ dirRevBg }};color:{{ dirRevColor }}" onClick="{{ setDirRev }}">{{ scheduleNmTo }} &rarr; {{ scheduleNmFrom }}</button>
+          </div>
+          <div style="display:flex;width:100%;border:2px solid var(--color-text);border-radius:var(--radius-md);overflow:hidden">
+            <sc-for list="{{ dayOptions }}" as="d" hint-placeholder-count="3">
+              <button style="flex:1;border:none;border-right:{{ d.borderRight }};padding:12px 10px;font-weight:700;font-size:14px;cursor:pointer;background:{{ d.bg }};color:{{ d.color }}" onClick="{{ d.onChange }}">{{ d.label }}</button>
+            </sc-for>
+          </div>
+        </div>
+        <sc-if value="{{ scheduleLine.disrupted }}" hint-placeholder-val="{{ false }}">
+          <div class="card" style="background:var(--color-accent-100);flex-direction:row;gap:10px;align-items:center">
+            <i data-lucide="alert-triangle" style="width:18px;height:18px;color:var(--color-accent-700)"></i>
+            <div style="font-size:12px;color:var(--color-accent-800)">{{ T.disrupted }}</div>
+          </div>
+        </sc-if>
+        <div style="display:flex;flex-direction:column">
+          <sc-for list="{{ scheduleRows }}" as="row" hint-placeholder-count="8">
+            <div style="border-bottom:1px solid var(--color-divider)">
+              <div style="display:flex;align-items:center;gap:var(--space-3);padding:10px 4px;cursor:pointer;{{ row.rowStyle }}" onClick="{{ row.onClick }}">
+                <span style="font-family:var(--font-heading);font-weight:800;font-size:15px;min-width:56px">{{ row.time }}</span>
+                <sc-if value="{{ row.hasWarning }}" hint-placeholder-val="{{ false }}"><span style="display:inline-flex;align-items:center;padding:4px;background:{{ row.statusBg }};color:{{ row.statusColor }}"><i data-lucide="alert-triangle" style="width:13px;height:13px"></i></span></sc-if>
+                <sc-if value="{{ row.hasNoWarning }}" hint-placeholder-val="{{ true }}"><span style="font-size:11px;font-weight:600;padding:2px 8px;background:{{ row.statusBg }};color:{{ row.statusColor }}">{{ row.statusLabel }}</span></sc-if>
+                <i data-lucide="{{ row.chevron }}" style="width:16px;height:16px;margin-left:auto;opacity:0.5"></i>
+              </div>
+              <sc-if value="{{ row.isExpanded }}" hint-placeholder-val="{{ false }}">
+                <div style="padding:0 4px 12px 4px;font-size:13px">
+                  <sc-if value="{{ row.allStops }}" hint-placeholder-val="{{ true }}">
+                    <div style="opacity:0.75">{{ row.summary }}</div>
+                  </sc-if>
+                  <sc-if value="{{ row.notAllStops }}" hint-placeholder-val="{{ false }}">
+                    <div style="display:flex;flex-direction:column;gap:4px">
+                      <div style="font-weight:700;opacity:0.75">{{ row.summary }}</div>
+                      <sc-for list="{{ row.skippedNames }}" as="nm" hint-placeholder-count="2">
+                        <div style="display:flex;align-items:center;gap:6px;opacity:0.7"><i data-lucide="x" style="width:13px;height:13px;flex:none"></i>{{ nm }}</div>
+                      </sc-for>
+                    </div>
+                  </sc-if>
+                </div>
+              </sc-if>
+            </div>
+          </sc-for>
+        </div>
+        <sc-if value="{{ scheduleEmpty }}" hint-placeholder-val="{{ false }}">
+          <div class="card" style="align-items:center;text-align:center;padding:var(--space-6)">{{ T.noBuses }}</div>
+        </sc-if>
+      </div>
+    </sc-if>
+
+    <!-- ROUTE PLANNER -->
+    <sc-if value="{{ isPlanner }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex;flex-direction:column;gap:var(--space-4);max-width:560px">
+        <a href="#" onClick="{{ goHome }}" style="display:flex;align-items:center;gap:4px;font-size:13px;font-weight:600"><i data-lucide="chevron-left" style="width:15px;height:15px"></i>{{ T.back }}</a>
+        <h2 style="margin:0">{{ T.findRoute }}</h2>
+        <div class="hr" style="margin:0"></div>
+        <div class="field"><label>{{ T.from }}</label>
+          <select class="input" value="{{ plannerFrom }}" onChange="{{ onPlannerFromChange }}">
+            <sc-for list="{{ stopOptions }}" as="o" hint-placeholder-count="9"><option value="{{ o.value }}">{{ o.label }}</option></sc-for>
+          </select>
+        </div>
+        <div class="field"><label>{{ T.to }}</label>
+          <select class="input" value="{{ plannerTo }}" onChange="{{ onPlannerToChange }}">
+            <sc-for list="{{ stopOptions }}" as="o" hint-placeholder-count="9"><option value="{{ o.value }}">{{ o.label }}</option></sc-for>
+          </select>
+        </div>
+        <div class="field"><label>{{ T.departure }}</label><input class="input" type="time" value="{{ plannerTime }}" onChange="{{ onPlannerTimeChange }}" /></div>
+        <button class="btn btn-primary" onClick="{{ findRoute }}"><i data-lucide="navigation" style="width:15px;height:15px"></i>{{ T.findRoute }}</button>
+        <sc-if value="{{ hasPlannerResult }}" hint-placeholder-val="{{ false }}">
+          <div class="card elev-md">
+            <div style="display:flex;justify-content:space-between;align-items:center">
+              <div class="card-title">{{ plannerResult.fromName }} &rarr; {{ plannerResult.toName }}</div>
+              <div style="font-family:var(--font-heading);font-weight:800;font-size:18px">{{ plannerResult.duration }}</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:8px;font-size:13px;opacity:0.75"><i data-lucide="footprints" style="width:14px;height:14px"></i>{{ T.walk }} {{ plannerResult.walk }}</div>
+            <div style="display:flex;align-items:center;gap:10px">
+              <span style="display:flex;align-items:center;justify-content:center;width:30px;height:30px;font-family:var(--font-heading);font-weight:800;font-size:14px;background:{{ plannerResult.badge.bg }};color:{{ plannerResult.badge.color }};border:{{ plannerResult.badge.border }};border-radius:50%">{{ plannerResult.lineNum }}</span>
+              <div style="display:flex;flex-direction:column;gap:2px;font-size:13px">
+                <span>{{ plannerResult.fromName }} — {{ plannerResult.departTime }}</span>
+                <span style="opacity:0.5">&darr;</span>
+                <span>{{ plannerResult.toName }} — {{ plannerResult.arriveTime }}</span>
+              </div>
+            </div>
+          </div>
+        </sc-if>
+        <sc-if value="{{ plannerNoRoute }}" hint-placeholder-val="{{ false }}">
+          <div class="card" style="align-items:center;text-align:center;padding:var(--space-6)">{{ T.noRoute }}</div>
+        </sc-if>
+      </div>
+    </sc-if>
+
+  </div>
+
+  <!-- MOBILE BOTTOM NAV -->
+  <sc-if value="{{ isMobile }}" hint-placeholder-val="{{ false }}">
+    <div style="position:fixed;bottom:0;left:0;right:0;z-index:30;background:var(--color-bg);border-top:2px solid var(--color-divider);display:flex">
+      <sc-for list="{{ navItems }}" as="item" hint-placeholder-count="5">
+        <button onClick="{{ item.onClick }}" style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:4px;padding:6px 0 8px;background:none;border:none;cursor:pointer">
+          <div style="width:{{ item.iconBoxSize }};height:{{ item.iconBoxSize }};border-radius:50%;background:{{ item.iconBoxBg }};display:flex;align-items:center;justify-content:center;margin-top:{{ item.iconMarginTop }};box-shadow:{{ item.iconShadow }}">
+            <i data-lucide="{{ item.icon }}" style="width:{{ item.iconSize }};height:{{ item.iconSize }};color:{{ item.iconColor }}"></i>
+          </div>
+          <span style="font-size:10px;font-weight:700;color:{{ item.fabLabelColor }}">{{ item.label }}</span>
+        </button>
+      </sc-for>
+    </div>
+  </sc-if>
+
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;defaultLanguage&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;mk&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;options&quot;:[&quot;mk&quot;,&quot;en&quot;,&quot;sq&quot;],&quot;section&quot;:&quot;Behavior&quot;},&quot;initialLocation&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;denied&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;options&quot;:[&quot;granted&quot;,&quot;denied&quot;],&quot;section&quot;:&quot;Behavior&quot;}}">
+
+const pad = n => n < 10 ? '0' + n : '' + n;
+const toMin = s => { const [h, m] = s.split(':').map(Number); return h * 60 + m; };
+const toStr = m => { m = ((m % 1440) + 1440) % 1440; return pad(Math.floor(m / 60)) + ':' + pad(m % 60); };
+const buildSched = (first, last, freq) => { const a = []; let t = toMin(first); const end = toMin(last); while (t <= end) { a.push(t); t += freq; } return a; };
+
+const STOPS = [
+  { id: 'livade', name: 'Ливаде', nameEn: 'Livade', nameSq: 'Livadhe', distanceM: 0, distance: '0 м', distanceEn: '0 m', walk: '0 мин', walkEn: '0 min', lines: ['5'] },
+  { id: 'nikulski', name: 'Никулски', nameEn: 'Nikulski', nameSq: 'Nikulski', distanceM: 100, distance: '100 м', distanceEn: '100 m', walk: '1 мин', walkEn: '1 min', lines: ['5'] },
+  { id: 'salon', name: 'Салон', nameEn: 'Salon', nameSq: 'Sallon', distanceM: 1400, distance: '1.4 км', distanceEn: '1.4 km', walk: '17 мин', walkEn: '17 min', lines: ['5'] },
+  { id: 'centralnaab', name: 'Централ аб.', nameEn: 'Centralna ab.', nameSq: 'Aut. Qendrore', distanceM: 1400, distance: '1.4 км', distanceEn: '1.4 km', walk: '17 мин', walkEn: '17 min', lines: ['5'] },
+  { id: 'prmakoou', name: 'Прмак ООУ', nameEn: 'Prmak OOU', nameSq: 'SHFU Prmak', distanceM: 1400, distance: '1.4 км', distanceEn: '1.4 km', walk: '17 мин', walkEn: '17 min', lines: ['5'] },
+  { id: 'magantova', name: 'Маг. Антова', nameEn: 'Mag. Antova', nameSq: 'Dyq. Antova', distanceM: 1400, distance: '1.4 км', distanceEn: '1.4 km', walk: '17 мин', walkEn: '17 min', lines: ['5'] },
+  { id: 'krstavtobuska', name: 'Крст Автобуска Станица', nameEn: 'Krst Bus Station', nameSq: 'Kryqëzimi Stacioni Autobusëve', distanceM: 4600, distance: '4.6 км', distanceEn: '4.6 km', walk: '55 мин', walkEn: '55 min', lines: ['5'] },
+  { id: 'ureduserava', name: 'Уред Серава', nameEn: 'Ured Serava', nameSq: 'Zyra Serava', distanceM: 5300, distance: '5.3 км', distanceEn: '5.3 km', walk: '64 мин', walkEn: '64 min', lines: ['5'] },
+  { id: 'zelenpazar', name: 'Зелен Пазар', nameEn: 'Zelen Pazar', nameSq: 'Pazari i Gjelbër', distanceM: 5300, distance: '5.3 км', distanceEn: '5.3 km', walk: '64 мин', walkEn: '64 min', lines: ['5'] },
+  { id: 'zikdirekcija', name: 'ЗИК Дирекција', nameEn: 'ZIK Direkcija', nameSq: 'Drejtoria ZIK', distanceM: 6100, distance: '6.1 км', distanceEn: '6.1 km', walk: '73 мин', walkEn: '73 min', lines: ['5', '10'] },
+  { id: 'armoou', name: 'АРМ ООУ', nameEn: 'ARM OOU', nameSq: 'SHFU ARM', distanceM: 6100, distance: '6.1 км', distanceEn: '6.1 km', walk: '73 мин', walkEn: '73 min', lines: ['5'] },
+  { id: 'tolizordumis', name: 'Толи Зордумис', nameEn: 'Toli Zordumis', nameSq: 'Toli Zordumis', distanceM: 6100, distance: '6.1 км', distanceEn: '6.1 km', walk: '73 мин', walkEn: '73 min', lines: ['5'] },
+  { id: 'iskrajugturist', name: 'Искра Југ Турист', nameEn: 'Iskra Jug Turist', nameSq: 'Iskra Jug Turist', distanceM: 7600, distance: '7.6 км', distanceEn: '7.6 km', walk: '92 мин', walkEn: '92 min', lines: ['5'] },
+  { id: 'tehpregled', name: 'Стан. за тех. преглед', nameEn: 'Technical Inspection Stn.', nameSq: 'Stacioni i Kontrollit Teknik', distanceM: 7600, distance: '7.6 км', distanceEn: '7.6 km', walk: '92 мин', walkEn: '92 min', lines: ['5'] },
+  { id: 'fzc', name: 'ФЗЦ', nameEn: 'FZC', nameSq: 'FZC', distanceM: 10100, distance: '10.1 км', distanceEn: '10.1 km', walk: '122 мин', walkEn: '122 min', lines: ['5', '10'] },
+  { id: 'biljanovce', name: 'Биљановце', nameEn: 'Biljanovce', nameSq: 'Bilanoc', distanceM: 0, distance: '0 м', distanceEn: '0 m', walk: '0 мин', walkEn: '0 min', lines: ['10'] },
+  { id: 'koracin', name: 'ОУ Кочо Рацин', nameEn: 'OU Kočo Racin', nameSq: 'SHF Koço Racini', distanceM: 2500, distance: '2.5 км', distanceEn: '2.5 km', walk: '30 мин', walkEn: '30 min', lines: ['10'] },
+  { id: 'grobishta', name: 'Гробишта', nameEn: 'Grobishta', nameSq: 'Varrezat', distanceM: 3500, distance: '3.5 км', distanceEn: '3.5 km', walk: '42 мин', walkEn: '42 min', lines: ['10'] },
+  { id: 'sokolana', name: 'Соколана', nameEn: 'Sokolana', nameSq: 'Sokolana', distanceM: 4500, distance: '4.5 км', distanceEn: '4.5 km', walk: '54 мин', walkEn: '54 min', lines: ['10'] },
+  { id: 'serava', name: 'Серава', nameEn: 'Serava', nameSq: 'Serava', distanceM: 5500, distance: '5.5 км', distanceEn: '5.5 km', walk: '66 мин', walkEn: '66 min', lines: ['10'] },
+  { id: 'pajko', name: 'Пајко', nameEn: 'Pajko', nameSq: 'Pajko', distanceM: 6000, distance: '6.0 км', distanceEn: '6.0 km', walk: '72 мин', walkEn: '72 min', lines: ['10'] },
+  { id: 'bedinje', name: 'Бединје', nameEn: 'Bedinje', nameSq: 'Bedinje', distanceM: 7000, distance: '7.0 км', distanceEn: '7.0 km', walk: '84 мин', walkEn: '84 min', lines: ['10'] },
+  { id: 'zeleznicka', name: 'Железничка Станица', nameEn: 'Railway Station', nameSq: 'Stacioni Hekurudhor', distanceM: 450, distance: '450 м', distanceEn: '450 m', walk: '6 мин', walkEn: '6 min', lines: ['5'] },
+];
+const NEIGHBORHOODS = [
+  { name: 'Стар Аеродром', nameEn: 'Star Aerodrom', nameSq: 'Aeroporti i Vjetër' }, { name: '3-ти Октомври', nameEn: '3-ti Oktomvri', nameSq: '3 Tetori' }, { name: 'Пролет', nameEn: 'Prolet', nameSq: 'Pranvera' },
+];
+
+const LINES = [
+  { id: '5', num: '5', from: 'Ливаде', to: 'ФЗЦ', fromEn: 'Livade', toEn: 'FZC', fromSq: 'Livadhe', toSq: 'FZC', first: '05:05', last: '22:35', freq: 30,
+    times: ['05:05', '05:17', '05:25', '06:25', '06:40', '06:45', '06:50', '07:37', '08:10', '08:57', '09:00', '09:17', '09:40', '10:10', '10:40', '11:07', '12:10', '12:25', '12:30', '12:40', '12:45', '13:10', '13:20', '13:25', '13:27', '13:35', '13:40', '14:20', '14:23', '14:25', '14:30', '14:40', '14:45', '14:50', '15:18', '15:25', '15:28', '15:30', '15:40', '16:18', '16:37', '17:25', '18:07', '18:50', '18:55', '19:07', '19:40', '19:55', '21:10', '21:22', '22:25', '22:35'],
+    tripInfo: { '05:17': { skipIds: ['livade', 'nikulski'] }, '05:25': { skipIds: ['livade', 'nikulski'] }, '06:40': { skipIds: ['livade', 'nikulski'] }, '06:45': { skipIds: ['livade', 'nikulski'] }, '06:50': { skipIds: ['livade', 'nikulski'] }, '07:37': { skipIds: ['livade', 'nikulski'] }, '08:10': { skipIds: ['livade', 'nikulski'] }, '09:17': { skipIds: ['livade', 'nikulski'] }, '09:40': { skipIds: ['livade', 'nikulski'] }, '10:10': { skipIds: ['livade', 'nikulski'] }, '10:40': { skipIds: ['livade', 'nikulski'] }, '11:07': { skipIds: ['livade', 'nikulski'] }, '12:10': { skipIds: ['livade', 'nikulski'] }, '12:40': { skipIds: ['livade', 'nikulski'] }, '12:45': { skipIds: ['livade', 'nikulski'] }, '13:20': { skipIds: ['livade', 'nikulski'] }, '13:25': { skipIds: ['livade', 'nikulski'] }, '13:27': { skipIds: ['livade', 'nikulski'] }, '13:40': { skipIds: ['livade', 'nikulski'] }, '14:20': { skipIds: ['livade', 'nikulski'] }, '14:23': { skipIds: ['livade', 'nikulski'] }, '14:25': { skipIds: ['livade', 'nikulski'] }, '14:40': { skipIds: ['livade', 'nikulski'] }, '14:45': { skipIds: ['livade', 'nikulski'] }, '14:50': { skipIds: ['livade', 'nikulski'] }, '15:18': { skipIds: ['livade', 'nikulski'] }, '15:25': { skipIds: ['livade', 'nikulski'] }, '15:40': { skipIds: ['livade', 'nikulski'] }, '16:18': { skipIds: ['livade', 'nikulski'] }, '16:37': { skipIds: ['livade', 'nikulski'] }, '17:25': { skipIds: ['livade', 'nikulski'] }, '18:07': { skipIds: ['livade', 'nikulski'] }, '18:50': { skipIds: ['livade', 'nikulski'] }, '19:07': { skipIds: ['livade', 'nikulski'] }, '19:40': { skipIds: ['livade', 'nikulski'] }, '21:22': { skipIds: ['livade', 'nikulski'] }, '22:25': { skipIds: ['livade', 'nikulski'] } },
+    timesRev: ['06:00', '06:05', '07:00', '07:05', '07:30', '08:30', '09:00', '09:30', '10:00', '10:30', '11:00', '12:00', '12:30', '14:00', '14:05', '14:10', '15:00', '15:05', '15:10', '15:15', '16:00', '17:00', '18:30', '19:25', '22:00'],
+    tripInfoRev: { '06:05': { skipIds: ['livade', 'nikulski'] }, '07:00': { skipIds: ['livade', 'nikulski'] }, '07:05': { skipIds: ['livade', 'nikulski'] }, '07:30': { skipIds: ['livade', 'nikulski'] }, '09:00': { skipIds: ['livade', 'nikulski'] }, '09:30': { skipIds: ['livade', 'nikulski'] }, '10:00': { skipIds: ['livade', 'nikulski'] }, '10:30': { skipIds: ['livade', 'nikulski'] }, '11:00': { skipIds: ['livade', 'nikulski'] }, '14:05': { skipIds: ['livade', 'nikulski'] }, '14:10': { skipIds: ['livade', 'nikulski'] }, '15:05': { skipIds: ['livade', 'nikulski'] }, '15:10': { skipIds: ['livade', 'nikulski'] }, '15:15': { skipIds: ['livade', 'nikulski'] }, '16:00': { skipIds: ['livade', 'nikulski'] }, '17:00': { skipIds: ['livade', 'nikulski'] } },
+    stopIds: ['livade', 'nikulski', 'salon', 'centralnaab', 'prmakoou', 'magantova', 'krstavtobuska', 'ureduserava', 'zelenpazar', 'zikdirekcija', 'armoou', 'tolizordumis', 'iskrajugturist', 'tehpregled', 'zeleznicka', 'fzc'], bg: 'transparent', color: 'var(--color-text)', border: '2px solid var(--color-text)', disrupted: false, company: 'ШТУЗ-Патнички ДООЕЛ', companyEn: 'ŠTUZ-Patnički DOOEL', price: 30, mapUrl: 'https://www.google.com/maps/d/embed?mid=1Vo7o2DKaDRAf-fWflA8-kLYz5R0tC7w&ehbc=2E312F' },
+  { id: '10', num: '10', from: 'Биљановце', to: 'Бединје', fromEn: 'Biljanovce', toEn: 'Bedinje', fromSq: 'Bilanoc', toSq: 'Bedinje', first: '05:25', last: '21:25', freq: 60,
+    times: ['05:25', '06:25', '07:25', '08:25', '09:25', '11:25', '12:25', '13:25', '14:25', '15:25', '16:25', '17:25', '18:25', '19:25', '21:25'],
+    tripInfo: { '05:25': { skipIds: ['koracin'] }, '06:25': { skipIds: ['koracin', 'fzc'] }, '08:25': { skipIds: ['koracin', 'fzc'] }, '09:25': { skipIds: ['koracin', 'fzc'] }, '11:25': { skipIds: ['koracin', 'fzc'] }, '12:25': { skipIds: ['koracin', 'fzc'] }, '14:25': { skipIds: ['koracin', 'fzc'] }, '15:25': { skipIds: ['koracin', 'fzc'] }, '16:25': { skipIds: ['koracin', 'fzc'] }, '17:25': { skipIds: ['koracin', 'fzc'] }, '18:25': { skipIds: ['koracin', 'fzc'] }, '19:25': { skipIds: ['koracin', 'fzc'] }, '21:25': { skipIds: ['koracin', 'fzc'] } },
+    stopIds: ['biljanovce', 'koracin', 'grobishta', 'sokolana', 'serava', 'zikdirekcija', 'pajko', 'bedinje', 'fzc'], bg: 'transparent', color: 'var(--color-text)', border: '2px solid var(--color-text)', disrupted: false, company: 'ОЛИ-ТРАВЕЛ ДООЕЛ', companyEn: 'Oli Travel DOOEL', price: 30 },
+];
+LINES.forEach(l => {
+  if (l.times) {
+    const mins = l.times.map(toMin).sort((a, b) => a - b);
+    l.schedules = { weekday: mins, weekend: mins, sunday: [] };
+  } else {
+    l.schedules = {
+      weekday: buildSched(l.first, l.last, l.freq),
+      weekend: buildSched(toStr(toMin(l.first) + 60), toStr(toMin(l.last) - 90), l.freq + 10),
+      sunday: buildSched(toStr(toMin(l.first) + 90), toStr(toMin(l.last) - 120), l.freq + 20),
+    };
+  }
+  if (l.timesRev) {
+    const minsRev = l.timesRev.map(toMin).sort((a, b) => a - b);
+    l.schedulesRev = { weekday: minsRev, weekend: minsRev, sunday: [] };
+  } else {
+    l.schedulesRev = l.schedules;
+  }
+  l.tripInfoRev = l.tripInfoRev || l.tripInfo;
+});
+
+const STR = {
+  mk: {
+    navHome: 'Дома', navLines: 'Линии', navStops: 'Постојки', navMap: 'Мапа', navSchedule: 'Возен ред', favorites: 'Омилени',
+    searchPlaceholder: 'Каде сакаш да одиш?', nearbyStops: 'Блиски постојки', popularLines: 'Популарни линии', viewAll: 'Погледни ги сите поаѓања',
+    allLines: 'Сите', activeNow: 'Активни сега', weekday: 'Работен ден', weekend: 'Сабота', sunday: 'Недела/празник',
+    firstBus: 'Прв автобус', lastBus: 'Последен автобус', frequency: 'Фреквенција', line: 'Линија', upcoming: 'Следни автобуси',
+    walk: 'Пешачење', direction: 'Насока', fullSchedule: 'Целосен возен ред', findRoute: 'Најди рута', from: 'Од', to: 'До',
+    departure: 'Време на поаѓање', myStops: 'Мои постојки', myLines: 'Омилени линии', noResults: 'Нема резултати',
+    lastBusToday: 'Последен автобус за денес', onTime: 'На време', arriving: 'Пристигнува', delayed: 'Задржан', disrupted: 'Прекин во услугата на линијата',
+    locationDenied: 'Локацијата е оневозможена — приказ по азбучен ред', enableLocation: 'Овозможи локација', noBuses: 'Нема автобуси во моментов',
+    disruptions: 'Прекини', morning: 'Добро утро', afternoon: 'Добар ден', evening: 'Добра вечер', nextFromFav: 'Следен од омилена',
+    back: 'Назад', viewStop: 'Погледни постојка', noRoute: 'Не е пронајдена директна рута за оваа комбинација', viewOnMap: 'Погледни на мапа',
+    allStopsOnLine: 'Постојки на линијата', routeMap: 'Мапа на рутата', status: 'Статус', noFavorites: 'Немате зачувани омилени сè уште',
+    start: 'Почетна', end: 'Крајна', denar: 'ден', language: 'Јазик',
+    stopsAllStations: 'Овој автобус застанува на сите постојки', skipsSomeStations: 'Овој автобус не застанува на сите постојки', doesNotStopAt: 'Не застанува на:', notAllStops: 'Не на сите постојки',
+    comingSoonTitle: 'Наскоро', comingSoonBody: 'Мапата е во подготовка. Наскоро ќе можете да ги гледате линиите и постојките во живо.',
+    termsMenu: 'Услови и употреба', termsTitle: 'Услови и политика на употреба',
+    installMenu: 'Инсталирајте апликација', installTitle: 'Инсталирајте го на вашиот телефон',
+    installIntro: 'Додадете го Куманово Транзит на почетниот екран за брз пристап, без да морате да одите во продавница на апликации. (Скоро ќе понудиме и посебна апликација.)',
+    installAndroidTitle: 'Android', installIosTitle: 'iPhone (iOS)',
+    termsGateBody: 'За да ги користите возните редови и информациите во апликацијата, ве моливаме да ги прифатите условите и политиката на употреба.', acceptTermsBtn: 'Прифатам', readFullTerms: 'Ги читам условите',
+    termsSections: [
+      { title: 'Користење на апликацијата', body: 'Куманово Транзит ви дава информации за линии, постојки и поаѓања на јавниот превоз во Куманово. Апликацијата е наменета за лична, некомерцијална употреба.' },
+      { title: 'Точност на информациите', body: 'Возните редови, цените и мапите на рутите се објавени од превозниците и може да се менуваат без најава. Се трудиме информациите да бидат ажурни, но не можеме да гарантираме точност.' },
+      { title: 'Цени', body: 'Прикажаните цени на билети се информативни. Секогаш проверете ја цената кај возачот или превозникот пред качување.' },
+      { title: 'Дозволена употреба', body: 'Не користете ја апликацијата за нарушување на нејзиното функционирање, преземање на податоци за препродажба или погрешно претставување на официјални информации за превоз.' },
+      { title: 'Промени на политиката', body: 'Можеме да ја ажурираме оваа политика како апликацијата се развива. Продолженото користење по промените значи дека ги прифаќате ажурираните услови.' },
+    ],
+  },
+  en: {
+    navHome: 'Home', navLines: 'Lines', navStops: 'Stops', navMap: 'Map', navSchedule: 'Schedule', favorites: 'Favorites',
+    searchPlaceholder: 'Where do you want to go?', nearbyStops: 'Nearby Stops', popularLines: 'Popular Lines', viewAll: 'View all departures',
+    allLines: 'All', activeNow: 'Active Now', weekday: 'Weekday', weekend: 'Saturday', sunday: 'Sunday / Holiday',
+    firstBus: 'First bus', lastBus: 'Last bus', frequency: 'Frequency', line: 'Line', upcoming: 'Upcoming departures',
+    walk: 'Walk', direction: 'Direction', fullSchedule: 'Full schedule', findRoute: 'Find Route', from: 'From', to: 'To',
+    departure: 'Departure time', myStops: 'My Stops', myLines: 'Favorite Lines', noResults: 'No results',
+    lastBusToday: 'Last bus today', onTime: 'On time', arriving: 'Arriving', delayed: 'Delayed', disrupted: 'Service disruption on this line',
+    locationDenied: 'Location disabled — showing alphabetical list', enableLocation: 'Enable location', noBuses: 'No buses available right now',
+    disruptions: 'Disruptions', morning: 'Good morning', afternoon: 'Good afternoon', evening: 'Good evening', nextFromFav: 'Next from favorite',
+    back: 'Back', viewStop: 'View Stop', noRoute: 'No direct route found for this combination', viewOnMap: 'View on Map',
+    allStopsOnLine: 'Stops on this line', routeMap: 'Route map', status: 'Status', noFavorites: "You haven't saved any favorites yet",
+    start: 'Start', end: 'End', denar: 'MKD', language: 'Language',
+    stopsAllStations: 'This bus stops at every station', skipsSomeStations: 'This bus does not stop at every station', doesNotStopAt: 'Does not stop at:', notAllStops: 'Not all stops',
+    comingSoonTitle: 'Coming soon', comingSoonBody: "The live map is on its way. You'll soon be able to see lines and stops in real time.",
+    termsMenu: 'Terms & Usage', termsTitle: 'Terms & Usage Policy',
+    installMenu: 'Install the app', installTitle: 'Install on your phone',
+    installIntro: 'Add Kumanovo Transit to your home screen for fast access, no app store needed. (A dedicated app is coming later.)',
+    installAndroidTitle: 'Android', installIosTitle: 'iPhone (iOS)',
+    termsGateBody: 'To use the live schedules and information in this app, please accept our terms and usage policy.', acceptTermsBtn: 'Accept', readFullTerms: 'Read the full terms',
+    termsSections: [
+      { title: 'Use of the App', body: 'Kumanovo Transit gives you route, stop and departure information for public bus lines in Kumanovo. It is provided for personal, non-commercial use.' },
+      { title: 'Accuracy of Information', body: 'Schedules, prices and route maps are published by transport operators and may change without notice. We do our best to keep them current but cannot guarantee accuracy.' },
+      { title: 'Fares', body: 'Displayed ticket prices are indicative. Always confirm the fare with the driver or operator before boarding.' },
+      { title: 'Acceptable Use', body: 'Do not use the app to disrupt its operation, scrape data for resale, or misrepresent official transit information.' },
+      { title: 'Changes to this Policy', body: 'We may update this policy as the app evolves. Continued use after changes means you accept the updated terms.' },
+    ],
+  },
+  sq: {
+    navHome: 'Shtëpia', navLines: 'Linjat', navStops: 'Stacionet', navMap: 'Harta', navSchedule: 'Orari', favorites: 'Të preferuarat',
+    searchPlaceholder: 'Ku dëshironi të shkoni?', nearbyStops: 'Stacionet e afërta', popularLines: 'Linjat popullore', viewAll: 'Shiko të gjitha nisjet',
+    allLines: 'Të gjitha', activeNow: 'Aktive tani', weekday: 'Ditë pune', weekend: 'E shtunë', sunday: 'E diel/Festë',
+    firstBus: 'Autobusi i parë', lastBus: 'Autobusi i fundit', frequency: 'Frekuenca', line: 'Linja', upcoming: 'Autobusët e ardhshëm',
+    walk: 'Ecje', direction: 'Drejtimi', fullSchedule: 'Orari i plotë', findRoute: 'Gjej rrugën', from: 'Nga', to: 'Për',
+    departure: 'Koha e nisjes', myStops: 'Stacionet e mia', myLines: 'Linjat e preferuara', noResults: 'Nuk ka rezultate',
+    lastBusToday: 'Autobusi i fundit për sot', onTime: 'Në kohë', arriving: 'Po afrohet', delayed: 'Vonuar', disrupted: 'Ndërprerje e shërbimit në këtë linjë',
+    locationDenied: 'Vendndodhja e çaktivizuar — shfaqet lista alfabetike', enableLocation: 'Aktivizo vendndodhjen', noBuses: 'Nuk ka autobusë në këtë moment',
+    disruptions: 'Ndërprerje', morning: 'Mirëmëngjes', afternoon: 'Mirëdita', evening: 'Mirëmbrëma', nextFromFav: 'Radha nga e preferuara',
+    back: 'Prapa', viewStop: 'Shiko stacionin', noRoute: 'Nuk u gjet rrugë e drejtpërdrejtë për këtë kombinim', viewOnMap: 'Shiko në hartë',
+    allStopsOnLine: 'Stacionet e linjës', routeMap: 'Harta e itinerarit', status: 'Statusi', noFavorites: 'Nuk keni ende asnjë të preferuar të ruajtur',
+    start: 'Fillimi', end: 'Fundi', denar: 'den', language: 'Gjuha',
+    stopsAllStations: 'Ky autobus ndalon në të gjitha stacionet', skipsSomeStations: 'Ky autobus nuk ndalon në të gjitha stacionet', doesNotStopAt: 'Nuk ndalon në:', notAllStops: 'Jo në të gjitha stacionet',
+    comingSoonTitle: 'Së shpejti', comingSoonBody: 'Harta live është duke u përgatitur. Së shpejti do të mund t\'i shihni linjat dhe stacionet në kohë reale.',
+    termsMenu: 'Kushtet e Përdorimit', termsTitle: 'Kushtet dhe Politika e Përdorimit',
+    installMenu: 'Instaloni aplikacionin', installTitle: 'Instaloni në telefonin tuaj',
+    installIntro: 'Shtoni Kumanovo Transit në ekranin kryesor për qasje të shpejtë, pa nevojë për dyqan aplikacionesh. (Së shpejti do të ketë dhe aplikacion të dedikuar.)',
+    installAndroidTitle: 'Android', installIosTitle: 'iPhone (iOS)',
+    termsGateBody: 'Për të përdorur oraret dhe informacionet live në kë të aplikacion, ju lutemi pranoni kushtet dhe politikën e përdorimit.', acceptTermsBtn: 'Prano', readFullTerms: 'Lexoni kushtet e plota',
+    termsSections: [
+      { title: 'Përdorimi i aplikacionit', body: 'Kumanovo Transit ju jep informacione për linjat, stacionet dhe nisjet e transportit publik në Kumanovë. Aplikacioni është për përdorim personal, jo-komercial.' },
+      { title: 'Saktësia e informacionit', body: 'Oraret, çmimet dhe hartat e itinerareve publikohen nga operatorët e transportit dhe mund të ndryshojnë pa njoftim. Bëjmë çmos t\'i mbajmë të përditësuara, por nuk mund të garantojmë saktësinë.' },
+      { title: 'Çmimet e biletave', body: 'Çmimet e shfaqura janë indikative. Konfirmoni gjithmonë çmimin me shoferin ose operatorin para se të hipni.' },
+      { title: 'Përdorimi i lejuar', body: 'Mos e përdorni aplikacionin për të prishur funksionimin e tij, për të mbledhur të dhëna për rishitje, ose për të keqinterpretuar informacionin zyrtar të transportit.' },
+      { title: 'Ndryshimet e politikës', body: 'Ne mund ta përditësojmë këtë politikë ndërsa aplikacioni evoluon. Vazhdimi i përdorimit pas ndryshimeve nënkupton pranimin e kushteve të përditësuara.' },
+    ],
+  },
+};
+
+class Component extends DCLogic {
+  state = {
+    vw: typeof window !== 'undefined' ? window.innerWidth : 1280,
+    lang: this.props.defaultLanguage || 'mk',
+    screen: (() => {
+      const h = (typeof window !== 'undefined' ? window.location.hash.slice(1) : '');
+      const s = h.startsWith('mobile:') ? h.slice(7) : h;
+      return ['home', 'lines', 'stops', 'map', 'schedule', 'planner', 'comingSoon'].includes(s) ? s : 'home';
+    })(),
+    forceMobile: typeof window !== 'undefined' && window.location.hash.slice(1).startsWith('mobile:'),
+    selectedLineId: '5',
+    selectedStopId: 'livade',
+    direction: 'fwd',
+    lineFilter: 'all',
+    stopSearch: '',
+    stopLineFilter: 'all',
+    homeSearch: '',
+    scheduleLineId: '5',
+    scheduleDay: 'weekday',
+    selectedScheduleTime: null,
+    termsAccepted: typeof localStorage !== 'undefined' && localStorage.getItem('kt_terms_accepted') === 'true',
+    mapSelectedStopId: null,
+    menuOpen: false,
+    plannerFrom: 'livade',
+    plannerTo: 'fzc',
+    plannerTime: '14:00',
+    plannerResult: undefined,
+    plannerSubmitted: false,
+    locationDenied: (this.props.initialLocation || 'denied') === 'denied',
+    loadingHome: true,
+  };
+
+  componentDidMount() {
+    this._onResize = () => this.setState({ vw: window.innerWidth });
+    window.addEventListener('resize', this._onResize);
+    this._loadTimer = setTimeout(() => this.setState({ loadingHome: false }), 700);
+    this._tick = setInterval(() => this.forceUpdate(), 30000);
+    this._icons();
+  }
+  componentDidUpdate() { this._icons(); }
+  componentWillUnmount() {
+    window.removeEventListener('resize', this._onResize);
+    clearTimeout(this._loadTimer);
+    clearInterval(this._tick);
+  }
+  _icons() { if (window.lucide) window.lucide.createIcons(); }
+
+  statusFor(line, timeMin, nowMin) {
+    if (line.disrupted) return { kind: 'disrupted' };
+    const diff = timeMin - nowMin;
+    if (diff < -3) return null;
+    const seed = (timeMin + parseInt(line.num, 10)) % 11;
+    if (seed === 0) return { kind: 'delayed', mins: 6 };
+    if (diff <= 4) return { kind: 'arriving', mins: Math.max(diff, 0) };
+    return { kind: 'onTime' };
+  }
+  statusVisual(status, T) {
+    if (!status) return { label: '', bg: 'transparent', color: 'var(--color-text)' };
+    if (status.kind === 'disrupted') return { label: T.disrupted, bg: 'var(--color-accent-100)', color: 'var(--color-accent-800)' };
+    if (status.kind === 'delayed') return { label: T.delayed + ' ' + status.mins + ' ' + (T === STR.mk ? 'мин' : 'min'), bg: 'var(--color-accent-100)', color: 'var(--color-accent-800)' };
+    if (status.kind === 'arriving') return { label: status.mins <= 0 ? T.arriving : T.arriving + ' ' + status.mins + ' ' + (T === STR.mk ? 'мин' : 'min'), bg: 'var(--color-neutral-900)', color: '#fff' };
+    return { label: T.onTime, bg: 'var(--color-neutral-100)', color: 'var(--color-neutral-800)' };
+  }
+  badgeFor(line) { return { num: line.num, bg: line.bg, color: line.color, border: line.border }; }
+
+  lineName(line, T) { return T === STR.en ? { from: line.fromEn, to: line.toEn } : { from: line.from, to: line.to }; }
+  stopName(stop, T) { return T === STR.en ? stop.nameEn : stop.name; }
+
+  renderVals() {
+    const T = STR[this.state.lang] || STR.mk;
+    const lang = this.state.lang;
+    const isEn = lang === 'en';
+    const tr = (mk, en, sq) => lang === 'en' ? en : lang === 'sq' ? sq : mk;
+    const now = new Date();
+    const nowMin = now.getHours() * 60 + now.getMinutes();
+    const dow = now.getDay();
+    const today = dow === 0 ? 'sunday' : dow === 6 ? 'weekend' : 'weekday';
+
+    const vw = this.state.vw;
+    const bp = this.state.forceMobile ? 'mobile' : (vw < 640 ? 'mobile' : vw < 1100 ? 'tablet' : 'desktop');
+    const isMobile = bp === 'mobile';
+    const isDesktop = bp === 'desktop';
+    const dayNamesMk = ['Недела', 'Понеделник', 'Вторник', 'Среда', 'Четврток', 'Петок', 'Сабота'];
+    const dayNamesEn = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    const dayNamesSq = ['E diel', 'E hënë', 'E martë', 'E mërkurë', 'E enjte', 'E premte', 'E shtunë'];
+    const nowLabel = tr(dayNamesMk[dow], dayNamesEn[dow], dayNamesSq[dow]) + ' \u00b7 ' + toStr(nowMin);
+    const homeColDivider = isMobile ? 'none' : '2px solid var(--color-divider)';
+    const homeColPad = isMobile ? '0' : 'var(--space-6)';
+    const monthsMk = ['Јан', 'Фев', 'Мар', 'Апр', 'Мај', 'Јун', 'Јул', 'Авг', 'Сеп', 'Окт', 'Ное', 'Дек'];
+    const monthsEn = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    const dateDay = now.getDate();
+    const monthsSq = ['Jan', 'Shk', 'Mar', 'Pri', 'Maj', 'Qer', 'Korr', 'Gush', 'Sht', 'Tet', 'Nën', 'Dhj'];
+    const dateMonth = tr(monthsMk[now.getMonth()], monthsEn[now.getMonth()], monthsSq[now.getMonth()]);
+    const hour = now.getHours();
+    const greeting = hour < 12 ? T.morning : hour < 18 ? T.afternoon : T.evening;
+    const dashCols = isMobile ? 'repeat(2,1fr)' : bp === 'tablet' ? 'repeat(2,1fr)' : 'repeat(4,1fr)';
+    const activeLinesCount = LINES.filter(l => nowMin >= toMin(l.first) && nowMin <= toMin(l.last) && !l.disrupted).length;
+    const disruptedCount = LINES.filter(l => l.disrupted).length;
+    let heroNext = null;
+    const nearestStopForHero = this.state.locationDenied ? null : STOPS.slice().sort((a, b) => a.distanceM - b.distanceM)[0];
+    if (nearestStopForHero) {
+      const d = nextDeparturesForStop(nearestStopForHero, 1)[0];
+      if (d) heroNext = { stopName: stopName(nearestStopForHero), lineNum: d.lineNum, time: d.time };
+    }
+
+    const lineName = l => ({ from: tr(l.from, l.fromEn, l.fromSq || l.fromEn), to: tr(l.to, l.toEn, l.toSq || l.toEn), company: tr(l.company, l.companyEn, l.company) });
+    const stopName = s => tr(s.name, s.nameEn, s.nameSq || s.nameEn);
+    const stopDistance = s => tr(s.distance, s.distanceEn, s.distanceEn);
+    const stopWalk = s => tr(s.walk, s.walkEn, s.walkEn);
+
+    const go = screen => () => this.setState({ screen });
+    const openLine = id => () => this.setState({ screen: 'lineDetail', selectedLineId: id, direction: 'fwd' });
+    const openStop = id => () => this.setState({ screen: 'stopDetail', selectedStopId: id });
+
+    const navDefs = [
+      { key: 'home', icon: 'home', label: T.navHome, match: s => s === 'home', onClick: go('home') },
+      { key: 'lines', icon: 'route', label: T.navLines, match: s => s === 'lines' || s === 'lineDetail', onClick: go('lines') },
+      { key: 'schedule', icon: 'calendar-clock', label: T.navSchedule, match: s => s === 'schedule' || s === 'planner', onClick: go('schedule') },
+      { key: 'stops', icon: 'map-pin', label: T.navStops, match: s => s === 'stops' || s === 'stopDetail', onClick: go('stops') },
+      { key: 'map', icon: 'map', label: T.navMap, match: s => s === 'map' || s === 'comingSoon', onClick: go('comingSoon') },
+    ];
+    const navItems = navDefs.map(n => {
+      const active = n.match(this.state.screen);
+      const isFab = n.key === 'schedule';
+      return {
+        ...n, current: active ? 'page' : undefined,
+        linkColor: active ? 'var(--color-accent-600)' : 'var(--color-text)',
+        underline: active ? '2px solid var(--color-accent)' : '2px solid transparent',
+        iconBoxSize: isFab ? '54px' : '26px', iconBoxBg: isFab ? 'var(--color-accent-500)' : 'transparent',
+        iconMarginTop: isFab ? '-24px' : '0', iconShadow: isFab ? 'var(--shadow-md)' : 'none',
+        iconSize: isFab ? '25px' : '20px', iconColor: isFab ? '#fff' : (active ? 'var(--color-accent-600)' : 'var(--color-text)'),
+        fabLabelColor: isFab ? 'var(--color-accent-600)' : (active ? 'var(--color-accent-600)' : 'var(--color-text)'),
+      };
+    });
+
+    const badgesFor = ids => ids.map(id => this.badgeFor(LINES.find(l => l.id === id)));
+
+    const nextDeparturesForStop = (stop, count) => {
+      const items = [];
+      stop.lines.forEach(lid => {
+        const line = LINES.find(l => l.id === lid);
+        const sched = line.schedules[today];
+        for (const t of sched) {
+          const st = this.statusFor(line, t, nowMin);
+          if (st) { items.push({ lineId: line.id, lineNum: line.num, time: toStr(t), min: t, status: st }); break; }
+        }
+      });
+      items.sort((a, b) => a.min - b.min);
+      return items.slice(0, count).map(d => {
+        const v = this.statusVisual(d.status, T);
+        const line = LINES.find(l => l.id === d.lineId);
+        const warn = line.tripInfo && line.tripInfo[d.time];
+        return {
+          lineNum: d.lineNum, time: d.time,
+          statusLabel: warn ? T.notAllStops : v.label, hasWarning: !!warn, hasNoWarning: false,
+          statusBg: warn ? 'oklch(0.94 0.06 80)' : v.bg, statusColor: warn ? 'oklch(0.45 0.13 70)' : v.color,
+        };
+      });
+    };
+
+    // ---- HOME ----
+    let nearbySource = this.state.locationDenied
+      ? STOPS.slice().sort((a, b) => stopName(a).localeCompare(stopName(b))).slice(0, 3)
+      : STOPS.slice().sort((a, b) => a.distanceM - b.distanceM).slice(0, 3);
+    const nearbyStops = nearbySource.map(stop => {
+      const deps = nextDeparturesForStop(stop, 3);
+      return {
+        name: stopName(stop), distance: this.state.locationDenied ? '—' : stopDistance(stop), walk: stopWalk(stop),
+        badges: badgesFor(stop.lines), departures: deps, hasDepartures: deps.length > 0, noDepartures: deps.length === 0,
+        onClick: openStop(stop.id),
+      };
+    });
+    const popularLines = LINES.slice(0, 5).map(l => {
+      const nm = lineName(l);
+      return { num: l.num, from: nm.from, to: nm.to, company: nm.company, bg: l.bg, color: l.color, border: l.border, freqLabel: tr('На секои ' + l.freq + ' мин', 'Every ' + l.freq + ' min', 'Çdo ' + l.freq + ' min'), onClick: openLine(l.id) };
+    });
+
+    const q = this.state.homeSearch.trim().toLowerCase();
+    let searchResults = [];
+    if (q) {
+      STOPS.forEach(s => { if (s.name.toLowerCase().includes(q) || s.nameEn.toLowerCase().includes(q)) searchResults.push({ icon: 'map-pin', title: stopName(s), subtitle: T.navStops, onClick: openStop(s.id) }); });
+      LINES.forEach(l => { const nm = lineName(l); if (nm.from.toLowerCase().includes(q) || nm.to.toLowerCase().includes(q) || l.num.includes(q)) searchResults.push({ icon: 'route', title: T.line + ' ' + l.num + ' — ' + nm.from + ' → ' + nm.to, subtitle: T.navLines, onClick: openLine(l.id) }); });
+      NEIGHBORHOODS.forEach(n => { const nm = tr(n.name, n.nameEn, n.nameSq || n.nameEn); if (nm.toLowerCase().includes(q)) searchResults.push({ icon: 'map', title: nm, subtitle: tr('Населба', 'Neighborhood', 'Lagje'), onClick: go('map') }); });
+      searchResults = searchResults.slice(0, 6);
+    }
+
+    // ---- LINES LIST ----
+    const lineFilterDefs = [
+      { key: 'all', label: T.allLines },
+      { key: 'active', label: T.activeNow },
+      { key: 'weekday', label: T.weekday },
+      { key: 'weekend', label: T.weekend },
+    ];
+    const lineFilters = lineFilterDefs.map(f => ({
+      label: f.label, checked: this.state.lineFilter === f.key,
+      onChange: () => this.setState({ lineFilter: f.key }),
+    }));
+    let filteredLineList = LINES;
+    if (this.state.lineFilter === 'active') {
+      filteredLineList = LINES.filter(l => nowMin >= toMin(l.first) && nowMin <= toMin(l.last) && !l.disrupted);
+    }
+    const filteredLines = filteredLineList.map(l => {
+      const nm = lineName(l);
+      const active = nowMin >= toMin(l.first) && nowMin <= toMin(l.last);
+      const statusLabel = l.disrupted ? T.disrupted : active ? T.activeNow : T.lastBusToday;
+      const statusTagClass = l.disrupted ? 'tag-accent' : active ? 'tag-outline' : 'tag-neutral';
+      return {
+        num: l.num, bg: l.bg, color: l.color, border: l.border, from: nm.from, to: nm.to, company: nm.company,
+        first: l.first, last: l.last, freqLabel: tr('На секои ' + l.freq + ' мин', 'Every ' + l.freq + ' min', 'Çdo ' + l.freq + ' min'),
+        priceLabel: l.price + ' ' + T.denar,
+        statusLabel, statusTagClass, onClick: openLine(l.id),
+      };
+    });
+
+    // ---- LINE DETAIL ----
+    const curLineRaw = LINES.find(l => l.id === this.state.selectedLineId) || LINES[0];
+    const curLineNm = lineName(curLineRaw);
+    const curLineDeps = (() => {
+      const sched = curLineRaw.schedules[today];
+      const items = [];
+      for (const t of sched) { const st = this.statusFor(curLineRaw, t, nowMin); if (st) items.push({ t, st }); if (items.length >= 3) break; }
+      return items.map(({ t, st }) => {
+        const v = this.statusVisual(st, T);
+        const warn = curLineRaw.tripInfo && curLineRaw.tripInfo[toStr(t)];
+        return {
+          time: toStr(t), statusLabel: warn ? T.notAllStops : v.label, hasWarning: !!warn, hasNoWarning: false,
+          statusBg: warn ? 'oklch(0.94 0.06 80)' : v.bg, statusColor: warn ? 'oklch(0.45 0.13 70)' : v.color,
+        };
+      });
+    })();
+    const activeNowLine = nowMin >= toMin(curLineRaw.first) && nowMin <= toMin(curLineRaw.last);
+    const curLine = {
+      num: curLineRaw.num, bg: curLineRaw.bg, color: curLineRaw.color, border: curLineRaw.border,
+      from: curLineNm.from, to: curLineNm.to, company: curLineNm.company, priceLabel: curLineRaw.price + ' ' + T.denar,
+      statusLabel: curLineRaw.disrupted ? T.disrupted : activeNowLine ? T.activeNow : T.lastBusToday,
+      statusTagClass: curLineRaw.disrupted ? 'tag-accent' : activeNowLine ? 'tag-outline' : 'tag-neutral',
+      upcoming: curLineDeps, hasUpcoming: curLineDeps.length > 0, noUpcoming: curLineDeps.length === 0,
+      mapUrl: curLineRaw.mapUrl, hasMapUrl: !!curLineRaw.mapUrl, hasNoMapUrl: !curLineRaw.mapUrl, mapSlotId: 'lineRouteMap-' + curLineRaw.id,
+    };
+    let orderedStopIds = curLineRaw.stopIds.slice();
+    if (this.state.direction === 'rev') orderedStopIds = orderedStopIds.slice().reverse();
+    const timelineStops = orderedStopIds.map((sid, i) => {
+      const stop = STOPS.find(s => s.id === sid);
+      const isEnd = i === orderedStopIds.length - 1;
+      const isStart = i === 0;
+      const offset = Math.round((i * curLineRaw.freq) / orderedStopIds.length);
+      return {
+        name: stopName(stop), tag: isStart ? T.start : isEnd ? T.end : T.line + ' ' + curLineRaw.num,
+        time: '+' + offset + ' ' + tr('мин', 'min', 'min'), fontWeight: isStart || isEnd ? 800 : 600,
+        dotSize: isStart || isEnd ? '14px' : '10px', dotBg: isStart || isEnd ? curLineRaw.bg === 'transparent' ? 'var(--color-text)' : curLineRaw.bg : 'var(--color-neutral-400)',
+        dotBorder: curLineRaw.bg === 'transparent' ? '2px solid var(--color-text)' : 'none',
+        hasLine: !isEnd,
+      };
+    });
+
+    // ---- STOPS LIST ----
+    const stopLineFilterDefs = [{ id: 'all', num: T.allLines }].concat(LINES.map(l => ({ id: l.id, num: l.num, bg: l.bg, color: l.color, border: l.border })));
+    const stopLineFilters = stopLineFilterDefs.map(f => {
+      const active = this.state.stopLineFilter === f.id;
+      return {
+        label: f.num, onClick: () => this.setState({ stopLineFilter: f.id }),
+        bg: active ? (f.bg && f.bg !== 'transparent' ? f.bg : 'var(--color-text)') : 'var(--color-neutral-100)',
+        color: active ? '#fff' : 'var(--color-text)', border: active ? 'none' : '1px solid var(--color-divider)',
+      };
+    });
+    const sq = this.state.stopSearch.trim().toLowerCase();
+    let stopList = STOPS.filter(s => {
+      const matchesFilter = this.state.stopLineFilter === 'all' || s.lines.includes(this.state.stopLineFilter);
+      const matchesSearch = !sq || s.name.toLowerCase().includes(sq) || s.nameEn.toLowerCase().includes(sq);
+      return matchesFilter && matchesSearch;
+    }).sort((a, b) => stopName(a).localeCompare(stopName(b)));
+    const filteredStops = stopList.map(stop => ({
+      name: stopName(stop), distance: stopDistance(stop), badges: badgesFor(stop.lines),
+      departures: nextDeparturesForStop(stop, 3), onClick: openStop(stop.id),
+    }));
+
+    // ---- STOP DETAIL ----
+    const curStopRaw = STOPS.find(s => s.id === this.state.selectedStopId) || STOPS[0];
+    const byLine = curStopRaw.lines.map(lid => {
+      const line = LINES.find(l => l.id === lid);
+      const nm = lineName(line);
+      const sched = line.schedules[today];
+      const upcomingSet = new Set();
+      for (const t of sched) { if (t >= nowMin - 3) upcomingSet.add(t); if (upcomingSet.size >= 3) break; }
+      const times = [...upcomingSet].slice(0, 3).map((t, i) => ({ time: toStr(t), highlightStyle: i === 0 ? 'background:var(--color-neutral-900);color:#fff' : '' }));
+      return { num: line.num, bg: line.bg, color: line.color, border: line.border, from: nm.from, to: nm.to, company: nm.company, times };
+    });
+    const curStop = {
+      name: stopName(curStopRaw), distance: stopDistance(curStopRaw), walk: stopWalk(curStopRaw),
+      badges: badgesFor(curStopRaw.lines), byLine,
+    };
+
+    // ---- MAP ----
+    const mapPinPositions = { zeleznicka: ['58%', '58%'],
+      livade: ['12%', '70%'], nikulski: ['14%', '68%'], salon: ['18%', '64%'], centralnaab: ['20%', '62%'], prmakoou: ['22%', '60%'], magantova: ['24%', '58%'], krstavtobuska: ['30%', '52%'], ureduserava: ['34%', '48%'], zelenpazar: ['37%', '46%'], zikdirekcija: ['41%', '43%'], armoou: ['44%', '41%'], tolizordumis: ['47%', '39%'], iskrajugturist: ['52%', '35%'], tehpregled: ['55%', '32%'], fzc: ['60%', '28%'] };
+    const mapPins = STOPS.map(stop => ({
+      name: stopName(stop), bg: stop.id === this.state.mapSelectedStopId ? 'var(--color-neutral-900)' : 'var(--color-accent-600)',
+      x: (mapPinPositions[stop.id] || ['50%', '50%'])[0], y: (mapPinPositions[stop.id] || ['50%', '50%'])[1],
+      onClick: () => this.setState({ mapSelectedStopId: stop.id }),
+    }));
+    const mapSelStopRaw = STOPS.find(s => s.id === this.state.mapSelectedStopId);
+    const mapSelectedStop = mapSelStopRaw ? {
+      name: stopName(mapSelStopRaw), badges: badgesFor(mapSelStopRaw.lines),
+      departures: nextDeparturesForStop(mapSelStopRaw, 3).map(d => ({ lineNum: d.lineNum, etaLabel: d.time })),
+      viewClick: openStop(mapSelStopRaw.id),
+    } : null;
+    const mapStopList = STOPS.map(stop => ({ name: stopName(stop), badges: badgesFor(stop.lines), onClick: () => this.setState({ mapSelectedStopId: stop.id }) }));
+
+    // ---- SCHEDULE ----
+    const scheduleLineOptions = LINES.map(l => { const nm = lineName(l); return { value: l.id, label: T.line + ' ' + l.num + ' — ' + nm.from + ' → ' + nm.to }; });
+    const scheduleLineCards = LINES.map(l => {
+      const nm = lineName(l);
+      const sel = this.state.scheduleLineId === l.id;
+      return {
+        num: l.num, bg: l.bg, color: l.color, border: l.border, from: nm.from, to: nm.to, company: nm.company,
+        onClick: () => this.setState({ scheduleLineId: l.id, selectedScheduleTime: null, direction: 'fwd' }),
+        cardBg: sel ? 'var(--color-neutral-900)' : 'var(--color-surface)', cardBorder: sel ? 'none' : '1px solid var(--color-divider)',
+        textColor: sel ? '#fff' : 'var(--color-text)', companyTextColor: sel ? 'rgba(255,255,255,0.6)' : 'var(--color-neutral-600)',
+      };
+    });
+    const scheduleLineRaw = LINES.find(l => l.id === this.state.scheduleLineId) || LINES[0];
+    const scheduleNm = lineName(scheduleLineRaw);
+    const scheduleLine = { from: this.state.direction === 'rev' ? scheduleNm.to : scheduleNm.from, to: this.state.direction === 'rev' ? scheduleNm.from : scheduleNm.to, disrupted: scheduleLineRaw.disrupted };
+    const dayDefs = [{ key: 'weekday', label: T.weekday }, { key: 'weekend', label: T.weekend }, { key: 'sunday', label: T.sunday }];
+    const dayOptions = dayDefs.map((d, i) => { const sel = this.state.scheduleDay === d.key; return { label: d.label, checked: sel, onChange: () => this.setState({ scheduleDay: d.key, selectedScheduleTime: null }), bg: sel ? 'var(--color-accent-600)' : 'transparent', color: sel ? '#fff' : 'var(--color-text)', borderRight: i < dayDefs.length - 1 ? '2px solid var(--color-text)' : 'none' }; });
+    const scheduleSchedMap = this.state.direction === 'rev' ? scheduleLineRaw.schedulesRev : scheduleLineRaw.schedules;
+    const scheduleTripMap = this.state.direction === 'rev' ? scheduleLineRaw.tripInfoRev : scheduleLineRaw.tripInfo;
+    const schedTimes = scheduleSchedMap[this.state.scheduleDay] || [];
+    let nextShown = false;
+    const scheduleRows = schedTimes.map(t => {
+      const timeStr = toStr(t);
+      const st = this.statusFor(scheduleLineRaw, t, this.state.scheduleDay === today ? nowMin : -1);
+      const v = this.statusVisual(st, T);
+      const isNext = this.state.scheduleDay === today && !nextShown && st && st.kind !== 'disrupted' && t >= nowMin;
+      if (isNext) nextShown = true;
+      const isExpanded = this.state.selectedScheduleTime === timeStr;
+      const trip = scheduleTripMap && scheduleTripMap[timeStr];
+      const skipIds = trip ? trip.skipIds : [];
+      const allStops = skipIds.length === 0;
+      const skippedNames = skipIds.map(sid => stopName(STOPS.find(s => s.id === sid)));
+      const warn = !allStops;
+      return {
+        time: timeStr, statusLabel: warn ? T.notAllStops : (v.label || T.onTime), hasWarning: !!warn, hasNoWarning: false,
+        statusBg: warn ? 'oklch(0.94 0.06 80)' : (v.bg === 'transparent' ? 'var(--color-neutral-100)' : v.bg), statusColor: warn ? 'oklch(0.45 0.13 70)' : v.color,
+        rowStyle: isNext ? 'background:var(--color-accent-100)' : '',
+        isExpanded, chevron: isExpanded ? 'chevron-up' : 'chevron-down',
+        onClick: () => this.setState({ selectedScheduleTime: isExpanded ? null : timeStr }),
+        allStops, notAllStops: !allStops, summary: allStops ? T.stopsAllStations : T.doesNotStopAt, skippedNames,
+      };
+    });
+
+    // ---- ROUTE PLANNER ----
+    const stopOptions = STOPS.map(s => ({ value: s.id, label: stopName(s) }));
+    let plannerResult, plannerNoRoute = false;
+    if (this.state.plannerSubmitted) {
+      const fromStop = STOPS.find(s => s.id === this.state.plannerFrom);
+      const toStop = STOPS.find(s => s.id === this.state.plannerTo);
+      const sharedLine = LINES.find(l => fromStop.lines.includes(l.id) && toStop.lines.includes(l.id));
+      if (sharedLine && fromStop.id !== toStop.id) {
+        const depMin = toMin(this.state.plannerTime);
+        const sched = sharedLine.schedules.weekday;
+        const dep = sched.find(t => t >= depMin) || sched[0];
+        const legMin = Math.max(8, Math.abs(fromStop.distanceM - toStop.distanceM) / 40 | 0) + 7;
+        const arr = dep + legMin;
+        const nm = lineName(sharedLine);
+        plannerResult = {
+          fromName: stopName(fromStop), toName: stopName(toStop), duration: (legMin + 3) + ' ' + tr('мин', 'min', 'min'),
+          walk: '3 ' + tr('мин', 'min', 'min'), lineNum: sharedLine.num, badge: this.badgeFor(sharedLine),
+          departTime: toStr(dep), arriveTime: toStr(arr),
+        };
+      } else { plannerNoRoute = true; }
+    }
+
+    return {
+      T, isEn,
+      menuOpen: this.state.menuOpen, menuIcon: this.state.menuOpen ? 'x' : 'menu', toggleMenu: () => this.setState(s => ({ menuOpen: !s.menuOpen })),
+      langMenuOpen: this.state.langMenuOpen, toggleLangMenu: () => this.setState(s => ({ langMenuOpen: !s.langMenuOpen })),
+      langChevronIcon: this.state.langMenuOpen ? 'chevron-up' : 'chevron-down',
+      currentLangFlag: ({ mk: '🇲🇰', en: '🇬🇧', sq: '🇦🇱' })[lang],
+      currentLangLabel: ({ mk: 'Македонски', en: 'English', sq: 'Shqip' })[lang],
+      langOptions: [
+        { code: 'mk', label: 'Македонски', flag: '🇲🇰' },
+        { code: 'en', label: 'English', flag: '🇬🇧' },
+        { code: 'sq', label: 'Shqip', flag: '🇦🇱' },
+      ].map(o => ({
+        label: o.label, flag: o.flag,
+        style: lang === o.code ? 'font-weight:800;background:var(--color-accent-100);' : '',
+        onClick: () => this.setState({ lang: o.code, langMenuOpen: false }),
+      })),
+      isMobile, showTopNav: !isMobile, rootMaxWidth: this.state.forceMobile ? '390px' : 'none',
+      rootMargin: this.state.forceMobile ? '0 auto' : '0',
+      goHome: go('home'), goLines: go('lines'), goStops: go('stops'), goMap: go('map'),
+      goSchedule: go('schedule'), goScheduleForStop: () => this.setState({ screen: 'schedule', scheduleLineId: curStopRaw.lines[0] }),
+      goPlanner: go('planner'),
+      navItems, noop: () => {},
+      mainPadding: isMobile ? '16px' : bp === 'tablet' ? '24px 32px' : '32px 40px',
+      mainPaddingBottom: isMobile ? '84px' : bp === 'tablet' ? '32px' : '40px',
+
+      isHome: this.state.screen === 'home', isLines: this.state.screen === 'lines', isLineDetail: this.state.screen === 'lineDetail',
+      isTerms: this.state.screen === 'terms', termsSections: T.termsSections,
+      goTerms: () => this.setState({ screen: 'terms', menuOpen: false }),
+      isInstall: this.state.screen === 'install', goInstall: () => this.setState({ screen: 'install', menuOpen: false }),
+      installGridCols: isMobile ? '1fr' : '1fr 1fr',
+      androidSteps: [
+        { n: 1, label: tr('Отворете го Chrome и допрете на менито (⋮)', 'Open Chrome and tap the menu (⋮)', 'Hapni Chrome dhe prekni menun (⋮)'), slotId: 'installAndroid1', placeholder: tr('Слика: Chrome мени', 'Screenshot: Chrome menu', 'Foto: Menuja Chrome') },
+        { n: 2, label: tr('Изберете „Додај на почетен екран“', 'Select "Add to Home screen"', 'Zgjidhni "Shto n\u00eb ekranin kryesor"'), slotId: 'installAndroid2', placeholder: tr('Слика: Додај на почетен екран', 'Screenshot: Add to Home screen', 'Foto: Shto n\u00eb ekranin kryesor') },
+        { n: 3, label: tr('Потврдете со „Додај“', 'Confirm by tapping "Add"', 'Konfirmoni duke prekur "Shto"'), slotId: 'installAndroid3', placeholder: tr('Слика: Потврда', 'Screenshot: Confirmation', 'Foto: Konfirmimi') },
+        { n: 4, label: tr('Иконата се појавува на почетниот екран', 'The icon appears on your home screen', 'Ikona shfaqet n\u00eb ekranin kryesor'), slotId: 'installAndroid4', placeholder: tr('Слика: Икона на екран', 'Screenshot: Icon on home screen', 'Foto: Ikona n\u00eb ekran') },
+      ],
+      iosSteps: [
+        { n: 1, label: tr('Отворете во Safari и допрете „Сподели“', 'Open in Safari and tap the Share icon', 'Hapni n\u00eb Safari dhe prekni ikon\u00ebn "Share"'), slotId: 'installIos1', placeholder: tr('Слика: Копче Сподели', 'Screenshot: Share button', 'Foto: Butoni Share') },
+        { n: 2, label: tr('Скролувајте и изберете „Додај на почетен екран“', 'Scroll down and select "Add to Home Screen"', 'Rrëshqisni poshtë dhe zgjidhni "Add to Home Screen"'), slotId: 'installIos2', placeholder: tr('Слика: Додај на почетен екран', 'Screenshot: Add to Home Screen', 'Foto: Add to Home Screen') },
+        { n: 3, label: tr('Потврдете со „Додај“ горе десно', 'Confirm by tapping "Add" top-right', 'Konfirmoni duke prekur "Add" n\u00eb t\u00eb djathtë sip\u00ebr'), slotId: 'installIos3', placeholder: tr('Слика: Потврда', 'Screenshot: Confirmation', 'Foto: Konfirmimi') },
+        { n: 4, label: tr('Иконата се појавува на почетниот екран', 'The icon appears on your home screen', 'Ikona shfaqet n\u00eb ekranin kryesor'), slotId: 'installIos4', placeholder: tr('Слика: Икона на екран', 'Screenshot: Icon on home screen', 'Foto: Ikona n\u00eb ekran') },
+      ],
+      showTermsGate: !this.state.termsAccepted,
+      acceptTerms: () => { if (typeof localStorage !== 'undefined') localStorage.setItem('kt_terms_accepted', 'true'); this.setState({ termsAccepted: true }); },
+      openTermsFromGate: () => this.setState({ screen: 'terms' }),
+      isStops: this.state.screen === 'stops', isStopDetail: this.state.screen === 'stopDetail', isMap: this.state.screen === 'map',
+      isSchedule: this.state.screen === 'schedule', isPlanner: this.state.screen === 'planner',
+      isComingSoon: this.state.screen === 'comingSoon',
+
+      homeSearch: this.state.homeSearch, onHomeSearch: e => this.setState({ homeSearch: e.target.value }),
+      hasSearchQuery: q.length > 0, hasSearchResults: searchResults.length > 0, hasNoSearchResults: q.length > 0 && searchResults.length === 0, searchResults,
+      nowLabel, homeColDivider, homeColPad, dateDay, dateMonth, greeting, dashCols,
+      activeLinesCount, totalLinesCount: LINES.length, disruptedCount, hasDisrupted: disruptedCount > 0,
+      heroNext, hasHeroNext: !!heroNext,
+      homeGridCols: isMobile ? '1fr' : '1.1fr 1fr', lineCardCols: isMobile ? '1fr' : bp === 'tablet' ? '1fr 1fr' : '1fr 1fr 1fr',
+      nearbyStops, popularLines, locationDenied: this.state.locationDenied, enableLocation: () => this.setState({ locationDenied: false }),
+      loadingHome: this.state.loadingHome, homeNotLoading: !this.state.loadingHome, skeletons: [1, 2, 3],
+
+      lineFilters, hasFilteredLines: filteredLines.length > 0, hasNoFilteredLines: filteredLines.length === 0, filteredLines,
+
+      curLine, timelineStops, lineDetailCols: isMobile ? '1fr' : '1.3fr 1fr',
+      dirFwdChecked: this.state.direction === 'fwd', dirRevChecked: this.state.direction === 'rev',
+      setDirFwd: () => this.setState({ direction: 'fwd' }), setDirRev: () => this.setState({ direction: 'rev' }),
+
+      stopSearch: this.state.stopSearch, onStopSearch: e => this.setState({ stopSearch: e.target.value }),
+      stopLineFilters, hasFilteredStops: filteredStops.length > 0, hasNoFilteredStops: filteredStops.length === 0, filteredStops,
+      stopCardCols: isMobile ? '1fr' : bp === 'tablet' ? '1fr 1fr' : '1fr 1fr 1fr',
+
+      curStop, viewStopOnMap: () => this.setState({ screen: 'map', mapSelectedStopId: curStopRaw.id }),
+
+      mapCols: isDesktop ? '260px 1fr 300px' : bp === 'tablet' ? '1fr 1fr' : '1fr',
+      mapHeight: isMobile ? 'calc(100vh - 220px)' : '640px',
+      showMapSidebar: isDesktop, showMapPanel: !!mapSelectedStop && !isMobile,
+      mapPins, mapSelectedStop, mapStopList,
+      closeMapSelection: () => this.setState({ mapSelectedStopId: null }),
+
+      dirFwdBg: this.state.direction === 'rev' ? 'transparent' : 'var(--color-accent-600)', dirFwdColor: this.state.direction === 'rev' ? 'var(--color-text)' : '#fff',
+      dirRevBg: this.state.direction === 'rev' ? 'var(--color-accent-600)' : 'transparent', dirRevColor: this.state.direction === 'rev' ? '#fff' : 'var(--color-text)',
+      scheduleNmFrom: scheduleNm.from, scheduleNmTo: scheduleNm.to,
+      scheduleLineOptions, scheduleLineCards, scheduleLineId: this.state.scheduleLineId,
+      onScheduleLineChange: e => this.setState({ scheduleLineId: e.target.value }),
+      scheduleLine, dayOptions, scheduleRows, scheduleEmpty: scheduleRows.length === 0,
+
+      stopOptions, plannerFrom: this.state.plannerFrom, plannerTo: this.state.plannerTo, plannerTime: this.state.plannerTime,
+      onPlannerFromChange: e => this.setState({ plannerFrom: e.target.value, plannerSubmitted: false }),
+      onPlannerToChange: e => this.setState({ plannerTo: e.target.value, plannerSubmitted: false }),
+      onPlannerTimeChange: e => this.setState({ plannerTime: e.target.value, plannerSubmitted: false }),
+      findRoute: () => this.setState({ plannerSubmitted: true }),
+      hasPlannerResult: !!plannerResult, plannerResult, plannerNoRoute,
+    };
+  }
+}
+
+</script>
+</body>
+</html>

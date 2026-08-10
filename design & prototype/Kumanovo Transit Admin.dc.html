@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+
+<helmet>
+  <link rel="stylesheet" href="_ds/modernist-103182da-9152-42d3-b836-0e1d1e7d7d3a/styles.css">
+  <script src="_ds/modernist-103182da-9152-42d3-b836-0e1d1e7d7d3a/_ds_bundle.js"></script>
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; }
+    html, body { margin: 0; }
+    :root { --font-heading: 'Montserrat', sans-serif; --font-body: 'Montserrat', sans-serif; }
+    a { color: var(--color-accent-700); text-decoration: none; }
+    a:hover { color: var(--color-accent-600); text-decoration: underline; }
+    input[type=radio], input[type=checkbox] { accent-color: var(--color-accent); }
+  </style>
+</helmet>
+
+<div id="adminRoot" style="min-height:100vh;display:flex;flex-direction:column;background:var(--color-bg);color:var(--color-text);font-family:var(--font-body);--radius-sm:12px;--radius-md:20px;--radius-lg:28px;--shadow-sm:0 2px 8px rgba(45,43,43,0.08);--shadow-md:0 10px 28px rgba(45,43,43,0.10);--shadow-lg:0 22px 50px rgba(45,43,43,0.16)">
+
+  <!-- LOGIN -->
+  <sc-if value="{{ isLoggedOut }}" hint-placeholder-val="{{ false }}">
+    <div style="min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px">
+      <div class="card elev-lg" style="width:380px;gap:var(--space-4);padding:var(--space-6)">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px">
+          <div style="width:38px;height:38px;flex:none;background:var(--color-accent-500);border-radius:10px;display:flex;align-items:center;justify-content:center">
+            <i data-lucide="route" style="width:20px;height:20px;color:#fff;stroke-width:2.5"></i>
+          </div>
+          <div style="font-family:var(--font-heading);font-weight:800;font-size:16px;line-height:1.05">КУМАНОВО<br /><span style="color:var(--color-accent-600)">ТРАНЗИТ</span> <span style="font-weight:700;opacity:0.6;font-size:12px">Admin</span></div>
+        </div>
+        <div class="field"><label>Email</label><input class="input" value="{{ loginEmail }}" onChange="{{ onLoginEmail }}" onKeyDown="{{ onLoginKey }}" placeholder="company@kt.mk" /></div>
+        <div class="field"><label>Лозинка</label><input class="input" type="password" value="{{ loginPassword }}" onChange="{{ onLoginPassword }}" onKeyDown="{{ onLoginKey }}" /></div>
+        <sc-if value="{{ loginError }}" hint-placeholder-val="{{ false }}">
+          <div style="font-size:12px;color:var(--color-accent-700)">{{ loginError }}</div>
+        </sc-if>
+        <button class="btn btn-primary btn-block" style="margin-top:0" onClick="{{ doLogin }}">Најави се</button>
+        <div style="font-size:11px;opacity:0.55;line-height:1.6">Демо: admin@kt.mk / admin123 (администратор)<br />kumanovotrans@kt.mk / demo123 (компанија)</div>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ isLoggedIn }}" hint-placeholder-val="{{ false }}">
+  <!-- HEADER -->
+  <div style="position:sticky;top:0;z-index:30;background:var(--color-bg);border-bottom:2px solid var(--color-divider)">
+    <div style="max-width:1320px;margin:0 auto;display:flex;align-items:center;gap:var(--space-3);padding:var(--space-3) var(--space-4);flex-wrap:wrap">
+      <div style="display:flex;align-items:center;gap:8px">
+        <div style="width:34px;height:34px;flex:none;background:var(--color-accent-500);border-radius:9px;display:flex;align-items:center;justify-content:center">
+          <i data-lucide="route" style="width:18px;height:18px;color:#fff;stroke-width:2.5"></i>
+        </div>
+        <div style="font-family:var(--font-heading);font-weight:800;font-size:14px;letter-spacing:-0.01em;line-height:1.05">КУМАНОВО<br /><span style="color:var(--color-accent-600)">ТРАНЗИТ</span></div>
+        <span class="tag tag-neutral" style="margin-left:2px">Admin</span>
+      </div>
+      <sc-if value="{{ showTopNav }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;align-items:stretch;gap:var(--space-4);align-self:stretch">
+          <sc-for list="{{ navItems }}" as="item" hint-placeholder-count="4">
+            <a href="#" onClick="{{ item.onClick }}" style="font-family:var(--font-heading);font-weight:800;font-size:12px;letter-spacing:0.02em;color:{{ item.linkColor }};text-decoration:none;display:flex;align-items:center;gap:6px;white-space:nowrap;border-bottom:{{ item.underline }};padding-bottom:4px">
+              <i data-lucide="{{ item.icon }}" style="width:15px;height:15px"></i>{{ item.label }}
+            </a>
+          </sc-for>
+        </div>
+      </sc-if>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:var(--space-3)">
+        <sc-if value="{{ showCompanyDropdown }}" hint-placeholder-val="{{ false }}">
+          <select class="input" style="width:auto;height:36px;font-size:12px" value="{{ companyFilter }}" onChange="{{ onCompanyFilterChange }}">
+            <sc-for list="{{ companyOptions }}" as="c" hint-placeholder-count="4"><option value="{{ c.value }}">{{ c.label }}</option></sc-for>
+          </select>
+        </sc-if>
+        <div style="text-align:right">
+          <div style="font-size:12px;font-weight:700">{{ userName }}</div>
+          <div style="font-size:10px;opacity:0.55">{{ userRoleLabel }}</div>
+        </div>
+        <button class="btn btn-icon btn-ghost" onClick="{{ doLogout }}" aria-label="Одјава"><i data-lucide="log-out" style="width:17px;height:17px"></i></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN -->
+  <div style="flex:1;width:100%;max-width:1320px;margin:0 auto;padding:{{ mainPadding }};padding-bottom:{{ mainPaddingBottom }};box-sizing:border-box">
+
+    <!-- OVERVIEW -->
+    <sc-if value="{{ isOverview }}" hint-placeholder-val="{{ true }}">
+      <div style="display:flex;flex-direction:column;gap:var(--space-5)">
+        <h2 style="margin:0">Преглед</h2>
+        <div style="display:grid;grid-template-columns:{{ statCols }};gap:var(--space-3)">
+          <div class="card elev-md" style="flex-direction:row;align-items:center;justify-content:space-between">
+            <div><div class="card-kicker">Линии</div><div style="font-family:var(--font-heading);font-weight:800;font-size:24px">{{ stats.totalLines }}</div></div>
+            <i data-lucide="route" style="width:22px;height:22px;opacity:0.35"></i>
+          </div>
+          <div class="card elev-md" style="flex-direction:row;align-items:center;justify-content:space-between">
+            <div><div class="card-kicker">Постојки</div><div style="font-family:var(--font-heading);font-weight:800;font-size:24px">{{ stats.totalStops }}</div></div>
+            <i data-lucide="map-pin" style="width:22px;height:22px;opacity:0.35"></i>
+          </div>
+          <div class="card elev-md" style="flex-direction:row;align-items:center;justify-content:space-between">
+            <div><div class="card-kicker">Активни сега</div><div style="font-family:var(--font-heading);font-weight:800;font-size:24px">{{ stats.activeNow }}</div></div>
+            <i data-lucide="activity" style="width:22px;height:22px;opacity:0.35"></i>
+          </div>
+          <div class="card elev-md" style="flex-direction:row;align-items:center;justify-content:space-between;background:{{ stats.disruptedBg }}">
+            <div><div class="card-kicker">Прекини</div><div style="font-family:var(--font-heading);font-weight:800;font-size:24px;color:{{ stats.disruptedColor }}">{{ stats.disrupted }}</div></div>
+            <i data-lucide="alert-triangle" style="width:22px;height:22px;color:{{ stats.disruptedColor }};opacity:0.7"></i>
+          </div>
+        </div>
+        <div class="hr" style="margin:0"></div>
+        <div style="display:flex;align-items:center;justify-content:space-between">
+          <h3 style="margin:0">Линии</h3>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <sc-for list="{{ overviewLines }}" as="ln" hint-placeholder-count="5">
+            <div class="card elev-sm" style="flex-direction:row;align-items:center;justify-content:space-between;cursor:pointer" onClick="{{ ln.onEdit }}">
+              <div style="display:flex;align-items:center;gap:10px">
+                <span style="display:flex;align-items:center;justify-content:center;width:34px;height:34px;flex:none;font-family:var(--font-heading);font-weight:800;font-size:14px;background:{{ ln.bg }};color:{{ ln.color }};border:{{ ln.border }};border-radius:50%">{{ ln.num }}</span>
+                <div>
+                  <div style="font-weight:700;font-size:13px">{{ ln.from }} &rarr; {{ ln.to }}</div>
+                  <div style="font-size:10px;opacity:0.55">{{ ln.company }}</div>
+                </div>
+              </div>
+              <span class="tag {{ ln.statusTagClass }}">{{ ln.statusLabel }}</span>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </sc-if>
+
+    <!-- LINES -->
+    <sc-if value="{{ isLines }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex;flex-direction:column;gap:var(--space-4)">
+        <div style="display:flex;align-items:center;justify-content:space-between">
+          <h2 style="margin:0">Линии</h2>
+        </div>
+        <div class="hr" style="margin:0"></div>
+        <div style="display:grid;grid-template-columns:{{ lineCardCols }};gap:var(--space-3)">
+          <sc-for list="{{ adminLines }}" as="ln" hint-placeholder-count="5">
+            <div class="card elev-sm">
+              <div style="display:flex;justify-content:space-between;align-items:flex-start">
+                <span style="display:flex;align-items:center;justify-content:center;width:44px;height:44px;font-family:var(--font-heading);font-weight:800;font-size:18px;background:{{ ln.bg }};color:{{ ln.color }};border:{{ ln.border }};border-radius:50%">{{ ln.num }}</span>
+                <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px">
+                  <span class="tag {{ ln.statusTagClass }}">{{ ln.statusLabel }}</span>
+                  <span style="display:flex;align-items:center;gap:4px;font-family:var(--font-heading);font-weight:800;font-size:14px;color:#fff;background:var(--color-accent-600);padding:3px 10px;border-radius:999px"><i data-lucide="ticket" style="width:12px;height:12px"></i>{{ ln.price }} ден</span>
+                </div>
+              </div>
+              <div class="card-title">{{ ln.from }} &rarr; {{ ln.to }}</div>
+              <div style="font-size:11px;opacity:0.6">{{ ln.company }}</div>
+              <div style="display:flex;gap:var(--space-3);font-size:11px;opacity:0.75;margin-top:2px">
+                <span>{{ ln.first }}–{{ ln.last }}</span><span>&middot;</span><span>на секои {{ ln.freq }} мин</span>
+              </div>
+              <div style="display:flex;gap:8px;margin-top:6px">
+                <button class="btn btn-secondary" style="flex:1;font-size:12px;padding:8px 12px" onClick="{{ ln.onEdit }}"><i data-lucide="pencil" style="width:13px;height:13px"></i>Уреди</button>
+                <button class="btn btn-secondary" style="flex:1;font-size:12px;padding:8px 12px" onClick="{{ ln.onSchedule }}"><i data-lucide="calendar-clock" style="width:13px;height:13px"></i>Возен ред</button>
+                <button class="btn btn-icon btn-ghost" onClick="{{ ln.onDelete }}" aria-label="Избриши"><i data-lucide="trash-2" style="width:15px;height:15px;color:var(--color-accent-700)"></i></button>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+        <sc-if value="{{ noLines }}" hint-placeholder-val="{{ false }}">
+          <div class="card" style="align-items:center;text-align:center;padding:var(--space-8)">
+            <i data-lucide="route" style="width:28px;height:28px;opacity:0.5"></i>
+            <div style="font-size:13px;opacity:0.7">Нема линии за оваа компанија</div>
+          </div>
+        </sc-if>
+      </div>
+    </sc-if>
+
+    <!-- SCHEDULES -->
+    <sc-if value="{{ isSchedules }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex;flex-direction:column;gap:var(--space-4);max-width:680px">
+        <h2 style="margin:0">Возен ред</h2>
+        <div class="hr" style="margin:0"></div>
+        <div>
+          <label style="display:block;font-size:12px;margin-bottom:5px;color:color-mix(in srgb, var(--color-text) 70%, transparent)">Линија</label>
+          <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:8px">
+            <sc-for list="{{ schedLineCards }}" as="c" hint-placeholder-count="5">
+              <div onClick="{{ c.onClick }}" style="cursor:pointer;display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:var(--radius-md);background:{{ c.cardBg }};border:{{ c.cardBorder }}">
+                <span style="display:flex;align-items:center;justify-content:center;width:30px;height:30px;flex:none;font-family:var(--font-heading);font-weight:800;font-size:13px;background:{{ c.bg }};color:{{ c.color }};border:{{ c.border }};border-radius:50%">{{ c.num }}</span>
+                <span style="font-size:12px;font-weight:700;color:{{ c.textColor }}">{{ c.from }} &rarr; {{ c.to }}</span>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+        <sc-if value="{{ hasSchedLine }}" hint-placeholder-val="{{ false }}">
+          <div class="seg" style="align-self:flex-start">
+            <label class="seg-opt"><input type="radio" name="sday" checked="{{ isWeekdayDay }}" onChange="{{ setWeekdayDay }}" />Работен ден</label>
+            <label class="seg-opt"><input type="radio" name="sday" checked="{{ isWeekendDay }}" onChange="{{ setWeekendDay }}" />Сабота</label>
+            <label class="seg-opt"><input type="radio" name="sday" checked="{{ isSundayDay }}" onChange="{{ setSundayDay }}" />Недела</label>
+          </div>
+          <sc-if value="{{ isEditableDay }}" hint-placeholder-val="{{ true }}">
+            <div style="display:flex;gap:8px;align-items:flex-end">
+              <div class="field" style="margin:0"><label>Додади поаѓање</label><input class="input" type="time" value="{{ newTime }}" onChange="{{ onNewTimeChange }}" /></div>
+              <button class="btn btn-primary" onClick="{{ addTime }}"><i data-lucide="plus" style="width:14px;height:14px"></i>Додади</button>
+              <button class="btn btn-secondary" onClick="{{ resetTimes }}">Ресетирај</button>
+            </div>
+          </sc-if>
+          <sc-if value="{{ notEditableDay }}" hint-placeholder-val="{{ false }}">
+            <div style="font-size:12px;opacity:0.6">Автоматски генерирано од работниот ред. Изберете „Работен ден" за рачно уредување.</div>
+          </sc-if>
+          <div style="display:flex;flex-wrap:wrap;gap:8px">
+            <sc-for list="{{ schedTimes }}" as="t" hint-placeholder-count="8">
+              <div style="display:flex;align-items:center;gap:6px;background:var(--color-surface);border-radius:999px;padding:8px 8px 8px 14px">
+                <span style="font-family:var(--font-heading);font-weight:800;font-size:13px">{{ t.time }}</span>
+                <sc-if value="{{ t.removable }}" hint-placeholder-val="{{ false }}">
+                  <button class="btn btn-icon btn-ghost" style="width:22px;height:22px" onClick="{{ t.onRemove }}"><i data-lucide="x" style="width:12px;height:12px"></i></button>
+                </sc-if>
+              </div>
+            </sc-for>
+          </div>
+        </sc-if>
+      </div>
+    </sc-if>
+
+    <!-- STOPS -->
+    <sc-if value="{{ isStops }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex;flex-direction:column;gap:var(--space-4)">
+        <div style="display:flex;align-items:center;justify-content:space-between">
+          <h2 style="margin:0">Постојки</h2>
+          <button class="btn btn-primary" onClick="{{ openNewStop }}"><i data-lucide="plus" style="width:15px;height:15px"></i>Нова постојка</button>
+        </div>
+        <div class="hr" style="margin:0"></div>
+        <div style="display:grid;grid-template-columns:{{ stopCardCols }};gap:var(--space-3)">
+          <sc-for list="{{ adminStops }}" as="stop" hint-placeholder-count="6">
+            <div class="card elev-sm">
+              <div style="display:flex;justify-content:space-between;align-items:flex-start"><div class="card-title">{{ stop.name }}</div><span class="tag {{ stop.statusTagClass }}">{{ stop.statusLabel }}</span></div>
+              <div style="font-size:11px;opacity:0.6">{{ stop.lineCountLabel }}</div>
+              <sc-if value="{{ stop.canEdit }}" hint-placeholder-val="{{ true }}">
+                <div style="display:flex;gap:8px;margin-top:6px">
+                  <button class="btn btn-secondary" style="flex:1;font-size:12px;padding:8px 12px" onClick="{{ stop.onEdit }}"><i data-lucide="pencil" style="width:13px;height:13px"></i>Уреди</button>
+                  <button class="btn btn-icon btn-ghost" onClick="{{ stop.onDelete }}" aria-label="Избриши"><i data-lucide="trash-2" style="width:15px;height:15px;color:var(--color-accent-700)"></i></button>
+                </div>
+              </sc-if>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </sc-if>
+
+    <!-- APPROVALS -->
+    <sc-if value="{{ isApprovals }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex;flex-direction:column;gap:var(--space-4);max-width:720px">
+        <h2 style="margin:0">Одобрувања на постојки</h2>
+        <div class="hr" style="margin:0"></div>
+        <sc-if value="{{ noPending }}" hint-placeholder-val="{{ false }}">
+          <div class="card" style="align-items:center;text-align:center;padding:var(--space-8)">
+            <i data-lucide="shield-check" style="width:28px;height:28px;opacity:0.5"></i>
+            <div style="font-size:13px;opacity:0.7">Нема постојки што чекаат одобрување</div>
+          </div>
+        </sc-if>
+        <sc-for list="{{ pendingStopCards }}" as="p" hint-placeholder-count="2">
+          <div class="card elev-sm">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start">
+              <div><div class="card-title">{{ p.name }}</div><div style="font-size:11px;opacity:0.6">Пратено од {{ p.company }}</div></div>
+              <span class="tag tag-accent">Чека одобрување</span>
+            </div>
+            <sc-if value="{{ p.hasDupes }}" hint-placeholder-val="{{ false }}">
+              <div style="display:flex;align-items:flex-start;gap:8px;background:var(--color-accent-100);border-radius:var(--radius-md);padding:10px 14px">
+                <i data-lucide="alert-triangle" style="width:15px;height:15px;color:var(--color-accent-700);flex:none;margin-top:2px"></i>
+                <div style="font-size:12px;color:var(--color-accent-800)">Можен дупликат на: {{ p.dupeNames }}</div>
+              </div>
+            </sc-if>
+            <div style="display:flex;gap:8px;margin-top:4px">
+              <button class="btn btn-primary" style="flex:1" onClick="{{ p.onApprove }}"><i data-lucide="check" style="width:14px;height:14px"></i>Одобри</button>
+              <button class="btn btn-secondary" style="flex:1" onClick="{{ p.onReject }}"><i data-lucide="x" style="width:14px;height:14px"></i>Одбие</button>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </sc-if>
+
+  </div>
+
+  <!-- MOBILE BOTTOM NAV -->
+  <sc-if value="{{ isMobile }}" hint-placeholder-val="{{ false }}">
+    <div style="position:fixed;bottom:0;left:0;right:0;z-index:30;background:var(--color-bg);border-top:2px solid var(--color-divider);display:flex">
+      <sc-for list="{{ navItems }}" as="item" hint-placeholder-count="4">
+        <button onClick="{{ item.onClick }}" style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;padding:8px 0 8px;background:none;border:none;cursor:pointer;color:{{ item.linkColor }}">
+          <i data-lucide="{{ item.icon }}" style="width:20px;height:20px"></i>
+          <span style="font-size:10px;font-weight:700">{{ item.label }}</span>
+        </button>
+      </sc-for>
+    </div>
+  </sc-if>
+
+  <!-- LINE FORM DIALOG -->
+  <sc-if value="{{ showLineForm }}" hint-placeholder-val="{{ false }}">
+    <div class="dialog-backdrop" onClick="{{ closeLineForm }}">
+      <div class="dialog" style="max-width:560px;max-height:88vh;overflow:auto" onClick="{{ stopPropagation }}">
+        <div class="dialog-title">{{ lineFormTitle }}</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+          <div class="field"><label>Број на линија</label><input class="input" value="{{ lineForm.num }}" onChange="{{ onLineFormField_num }}" /></div>
+          <div class="field"><label>Компанија (МК)</label><input class="input" value="{{ lineForm.company }}" onChange="{{ onLineFormField_company }}" /></div>
+          <div class="field"><label>Од (МК)</label><input class="input" value="{{ lineForm.from }}" onChange="{{ onLineFormField_from }}" /></div>
+          <div class="field"><label>До (МК)</label><input class="input" value="{{ lineForm.to }}" onChange="{{ onLineFormField_to }}" /></div>
+          <div class="field"><label>From (EN)</label><input class="input" value="{{ lineForm.fromEn }}" onChange="{{ onLineFormField_fromEn }}" /></div>
+          <div class="field"><label>To (EN)</label><input class="input" value="{{ lineForm.toEn }}" onChange="{{ onLineFormField_toEn }}" /></div>
+          <div class="field"><label>Company (EN)</label><input class="input" value="{{ lineForm.companyEn }}" onChange="{{ onLineFormField_companyEn }}" /></div>
+          <div class="field"><label>Боја на ознака</label>
+            <select class="input" value="{{ lineForm.colorKey }}" onChange="{{ onLineFormColorChange }}">
+              <sc-for list="{{ colorOptions }}" as="o" hint-placeholder-count="5"><option value="{{ o.value }}">{{ o.label }}</option></sc-for>
+            </select>
+          </div>
+          <div class="field"><label>Прв автобус</label><input class="input" type="time" value="{{ lineForm.first }}" onChange="{{ onLineFormField_first }}" /></div>
+          <div class="field"><label>Последен автобус</label><input class="input" type="time" value="{{ lineForm.last }}" onChange="{{ onLineFormField_last }}" /></div>
+          <div class="field"><label>Фреквенција (мин)</label><input class="input" type="number" min="5" step="5" value="{{ lineForm.freq }}" onChange="{{ onLineFormField_freq }}" /></div>
+          <div class="field"><label>Цена на билет (ден)</label><input class="input" type="number" min="0" step="5" value="{{ lineForm.price }}" onChange="{{ onLineFormField_price }}" /></div>
+          <label class="radio" style="align-self:center"><input type="checkbox" checked="{{ lineForm.disrupted }}" onChange="{{ onLineFormDisruptedToggle }}" /><span class="dot" style="border-radius:6px"></span>Прекин во услугата</label>
+        </div>
+        <div>
+          <label style="display:block;font-size:12px;margin-bottom:6px;color:color-mix(in srgb, var(--color-text) 70%, transparent)">Постојки на линијата (по редослед)</label>
+          <div style="display:flex;flex-wrap:wrap;gap:6px">
+            <sc-for list="{{ stopToggleList }}" as="s" hint-placeholder-count="9">
+              <button onClick="{{ s.onClick }}" style="cursor:pointer;display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:999px;font-size:12px;background:{{ s.bg }};color:{{ s.color }};border:{{ s.border }}">{{ s.orderLabel }}{{ s.name }}</button>
+            </sc-for>
+          </div>
+        </div>
+        <div class="dialog-actions">
+          <button class="btn btn-secondary" onClick="{{ closeLineForm }}">Откажи</button>
+          <button class="btn btn-primary" onClick="{{ saveLineForm }}">Зачувај</button>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+  <!-- STOP FORM DIALOG -->
+  <sc-if value="{{ showStopForm }}" hint-placeholder-val="{{ false }}">
+    <div class="dialog-backdrop" onClick="{{ closeStopForm }}">
+      <div class="dialog" style="max-width:420px" onClick="{{ stopPropagation }}">
+        <div class="dialog-title">{{ stopFormTitle }}</div>
+        <div class="field"><label>Име (МК)</label><input class="input" value="{{ stopForm.name }}" onChange="{{ onStopFormField_name }}" /></div>
+        <div class="field"><label>Name (EN)</label><input class="input" value="{{ stopForm.nameEn }}" onChange="{{ onStopFormField_nameEn }}" /></div>
+        <div class="dialog-actions">
+          <button class="btn btn-secondary" onClick="{{ closeStopForm }}">Откажи</button>
+          <button class="btn btn-primary" onClick="{{ saveStopForm }}">Зачувај</button>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+  <!-- TOAST -->
+  <sc-if value="{{ hasToast }}" hint-placeholder-val="{{ false }}">
+    <div style="position:fixed;bottom:24px;left:50%;transform:translateX(-50%);z-index:50;background:var(--color-neutral-900);color:#fff;padding:12px 22px;border-radius:999px;font-size:13px;font-weight:700;box-shadow:var(--shadow-lg)">{{ toast }}</div>
+  </sc-if>
+  </sc-if>
+
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+
+const pad = n => n < 10 ? '0' + n : '' + n;
+const toMin = s => { const [h, m] = (s || '00:00').split(':').map(Number); return h * 60 + m; };
+const toStr = m => { m = ((m % 1440) + 1440) % 1440; return pad(Math.floor(m / 60)) + ':' + pad(m % 60); };
+const buildSched = (first, last, freq) => { const a = []; let t = toMin(first); const end = toMin(last); while (t <= end) { a.push(t); t += Math.max(1, freq); } return a; };
+const uid = () => Math.random().toString(36).slice(2, 9);
+
+const COLOR_PRESETS = {
+  accent: { bg: 'var(--color-accent-500)', color: '#fff', border: 'none', label: 'Црвена (пополнета)' },
+  dark: { bg: 'var(--color-neutral-900)', color: '#fff', border: 'none', label: 'Црна (пополнета)' },
+  accentOutline: { bg: 'transparent', color: 'var(--color-accent-700)', border: '2px solid var(--color-accent-500)', label: 'Црвена (рамка)' },
+  darkFill2: { bg: 'var(--color-accent-700)', color: '#fff', border: 'none', label: 'Тегла црвена' },
+  textOutline: { bg: 'transparent', color: 'var(--color-text)', border: '2px solid var(--color-text)', label: 'Црна (рамка)' },
+};
+
+const DEFAULT_STOPS = [
+  { id: 'plostad', name: 'Градски Плоштад', nameEn: 'City Square', status: 'approved', company: null },
+  { id: 'zeleznicka', name: 'Железничка Станица', nameEn: 'Railway Station', status: 'approved', company: null },
+  { id: 'bolnica', name: 'Болница', nameEn: 'Hospital', status: 'approved', company: null },
+  { id: 'industriska', name: 'Индустриска', nameEn: 'Industriska', status: 'approved', company: null },
+  { id: 'bedinje', name: 'Бединје', nameEn: 'Bedinje', status: 'approved', company: null },
+  { id: 'lopate', name: 'Лопате', nameEn: 'Lopate', status: 'approved', company: null },
+  { id: 'karpos', name: 'Карпош', nameEn: 'Karpoš', status: 'approved', company: null },
+  { id: 'vozarci', name: 'Возарци', nameEn: 'Vozarci', status: 'approved', company: null },
+  { id: 'proevce', name: 'Проевце', nameEn: 'Proevce', status: 'approved', company: null },
+];
+const ACCOUNTS = [
+  { id: 'admin', email: 'admin@kt.mk', password: 'admin123', role: 'admin', name: 'Администратор' },
+  { id: 'c1', email: 'kumanovotrans@kt.mk', password: 'demo123', role: 'company', name: 'Кумановотранс', company: 'Кумановотранс' },
+  { id: 'c2', email: 'prolet@kt.mk', password: 'demo123', role: 'company', name: 'Пролет Турс', company: 'Пролет Турс' },
+  { id: 'c3', email: 'balkan@kt.mk', password: 'demo123', role: 'company', name: 'Балкан Експрес', company: 'Балкан Експрес' },
+  { id: 'c4', email: 'slavija@kt.mk', password: 'demo123', role: 'company', name: 'Славија Ауто', company: 'Славија Ауто' },
+  { id: 'c5', email: 'vardar@kt.mk', password: 'demo123', role: 'company', name: 'Вардар Превоз', company: 'Вардар Превоз' },
+];
+const norm = s => (s || '').toLowerCase().replace(/[^a-zа-ш0-9]/gi, '');
+const DEFAULT_LINES = [
+  { id: '1', num: '1', from: 'Центар', to: 'Карпош', fromEn: 'Centar', toEn: 'Karpoš', first: '05:30', last: '23:00', freq: 15, stopIds: ['plostad', 'zeleznicka', 'karpos'], colorKey: 'accent', disrupted: false, company: 'Кумановотранс', companyEn: 'Kumanovotrans', customTimes: null, price: 40 },
+  { id: '2', num: '2', from: 'Лопате', to: 'Центар', fromEn: 'Lopate', toEn: 'Centar', first: '06:00', last: '21:30', freq: 30, stopIds: ['lopate', 'zeleznicka', 'plostad'], colorKey: 'dark', disrupted: false, company: 'Пролет Турс', companyEn: 'Prolet Tours', customTimes: null, price: 40 },
+  { id: '3', num: '3', from: 'Бединје', to: 'Центар', fromEn: 'Bedinje', toEn: 'Centar', first: '05:45', last: '22:30', freq: 20, stopIds: ['bedinje', 'industriska', 'bolnica', 'plostad'], colorKey: 'accentOutline', disrupted: false, company: 'Балкан Експрес', companyEn: 'Balkan Express', customTimes: null, price: 35 },
+  { id: '4', num: '4', from: 'Возарци', to: 'Центар', fromEn: 'Vozarci', toEn: 'Centar', first: '06:15', last: '21:00', freq: 25, stopIds: ['vozarci', 'zeleznicka', 'plostad'], colorKey: 'darkFill2', disrupted: true, company: 'Славија Ауто', companyEn: 'Slavija Auto', customTimes: null, price: 40 },
+  { id: '5', num: '5', from: 'Проевце', to: 'Центар', fromEn: 'Proevce', toEn: 'Centar', first: '06:00', last: '22:00', freq: 25, stopIds: ['proevce', 'plostad'], colorKey: 'textOutline', disrupted: false, company: 'Вардар Превоз', companyEn: 'Vardar Prevoz', customTimes: null, price: 30 },
+];
+
+class Component extends DCLogic {
+  state = {
+    vw: typeof window !== 'undefined' ? window.innerWidth : 1280,
+    screen: 'overview',
+    companyFilter: 'all',
+    lines: DEFAULT_LINES,
+    stops: DEFAULT_STOPS,
+    lineFormOpen: false, lineFormMode: 'new', lineForm: null,
+    stopFormOpen: false, stopFormMode: 'new', stopForm: null,
+    schedLineId: null, schedDay: 'weekday', newTime: '12:00',
+    toast: '',
+    auth: null, loginEmail: '', loginPassword: '', loginError: '',
+  };
+
+  componentDidMount() {
+    this._onResize = () => this.setState({ vw: window.innerWidth });
+    window.addEventListener('resize', this._onResize);
+    try {
+      const saved = JSON.parse(localStorage.getItem('kt_admin_data_v2') || 'null');
+      if (saved && saved.lines && saved.stops) this.setState({ lines: saved.lines, stops: saved.stops });
+    } catch (e) {}
+    try {
+      const sid = localStorage.getItem('kt_admin_session');
+      const acc = ACCOUNTS.find(a => a.id === sid);
+      if (acc) this.setState({ auth: acc, companyFilter: acc.role === 'company' ? acc.company : 'all' });
+    } catch (e) {}
+    this._icons();
+  }
+  login() {
+    const email = this.state.loginEmail.trim().toLowerCase();
+    const acc = ACCOUNTS.find(a => a.email === email && a.password === this.state.loginPassword);
+    if (!acc) { this.setState({ loginError: 'Погрешен email или лозинка' }); return; }
+    try { localStorage.setItem('kt_admin_session', acc.id); } catch (e) {}
+    this.setState({ auth: acc, loginError: '', companyFilter: acc.role === 'company' ? acc.company : 'all', screen: 'overview' });
+  }
+  logout() {
+    try { localStorage.removeItem('kt_admin_session'); } catch (e) {}
+    this.setState({ auth: null, loginEmail: '', loginPassword: '' });
+  }
+  componentDidUpdate() { this._icons(); }
+  componentWillUnmount() { window.removeEventListener('resize', this._onResize); clearTimeout(this._toastTimer); }
+  _icons() { if (window.lucide) window.lucide.createIcons(); }
+
+  persist(lines, stops) {
+    try { localStorage.setItem('kt_admin_data_v2', JSON.stringify({ lines, stops })); } catch (e) {}
+  }
+  showToast(msg) {
+    clearTimeout(this._toastTimer);
+    this.setState({ toast: msg });
+    this._toastTimer = setTimeout(() => this.setState({ toast: '' }), 2200);
+  }
+
+  badgeFor(line) { const c = COLOR_PRESETS[line.colorKey] || COLOR_PRESETS.accent; return { bg: c.bg, color: c.color, border: c.border }; }
+
+  openNewLineForm() {
+    const a = this.state.auth;
+    const lockedCompany = a && a.role === 'company' ? a.company : '';
+    this.setState({ lineFormOpen: true, lineFormMode: 'new', lineForm: { id: null, num: '', from: '', to: '', fromEn: '', toEn: '', company: lockedCompany, companyEn: '', first: '06:00', last: '22:00', price: 40, freq: 20, colorKey: 'accent', disrupted: false, stopIds: [] } });
+  }
+  openEditLineForm(line) {
+    this.setState({ lineFormOpen: true, lineFormMode: 'edit', lineForm: { ...line, stopIds: line.stopIds.slice() } });
+  }
+  saveLine() {
+    const f = this.state.lineForm;
+    if (!f.num || !f.from || !f.to) { this.showToast('Пополнете број и рута'); return; }
+    let lines = this.state.lines.slice();
+    if (this.state.lineFormMode === 'new') {
+      lines.push({ ...f, id: uid(), customTimes: null });
+      this.showToast('Линијата е додадена');
+    } else {
+      lines = lines.map(l => l.id === f.id ? { ...l, ...f } : l);
+      this.showToast('Линијата е зачувана');
+    }
+    this.persist(lines, this.state.stops);
+    this.setState({ lines, lineFormOpen: false });
+  }
+  deleteLine(id) {
+    const lines = this.state.lines.filter(l => l.id !== id);
+    this.persist(lines, this.state.stops);
+    this.setState({ lines });
+    this.showToast('Линијата е избришана');
+  }
+
+  openNewStopForm() { this.setState({ stopFormOpen: true, stopFormMode: 'new', stopForm: { id: null, name: '', nameEn: '' } }); }
+  openEditStopForm(stop) { this.setState({ stopFormOpen: true, stopFormMode: 'edit', stopForm: { ...stop } }); }
+  saveStop() {
+    const f = this.state.stopForm;
+    const isAdmin = this.state.auth && this.state.auth.role === 'admin';
+    if (!f.name) { this.showToast('Внесете име'); return; }
+    let stops = this.state.stops.slice();
+    if (this.state.stopFormMode === 'new') {
+      stops.push({ ...f, id: uid(), status: isAdmin ? 'approved' : 'pending', company: isAdmin ? null : this.state.auth.company });
+      this.showToast(isAdmin ? 'Постојката е додадена' : 'Постојката е пратена на одобрување');
+    } else {
+      stops = stops.map(s => s.id === f.id ? { ...s, ...f } : s);
+      this.showToast('Постојката е зачувана');
+    }
+    this.persist(this.state.lines, stops);
+    this.setState({ stops, stopFormOpen: false });
+  }
+  deleteStop(id) {
+    const used = this.state.lines.some(l => l.stopIds.includes(id));
+    if (used) { this.showToast('Постојката се користи во линија'); return; }
+    const stops = this.state.stops.filter(s => s.id !== id);
+    this.persist(this.state.lines, stops);
+    this.setState({ stops });
+    this.showToast('Постојката е избришана');
+  }
+  approveStop(id) {
+    const stops = this.state.stops.map(s => s.id === id ? { ...s, status: 'approved' } : s);
+    this.persist(this.state.lines, stops);
+    this.setState({ stops });
+    this.showToast('Постојката е одобрена');
+  }
+  rejectStop(id) {
+    const stops = this.state.stops.filter(s => s.id !== id);
+    this.persist(this.state.lines, stops);
+    this.setState({ stops });
+    this.showToast('Постојката е одбиена');
+  }
+
+  renderVals() {
+    if (!this.state.auth) {
+      return {
+        isLoggedOut: true,
+        loginEmail: this.state.loginEmail, loginPassword: this.state.loginPassword, loginError: this.state.loginError,
+        onLoginEmail: e => this.setState({ loginEmail: e.target.value }),
+        onLoginPassword: e => this.setState({ loginPassword: e.target.value }),
+        onLoginKey: e => { if (e.key === 'Enter') this.login(); },
+        doLogin: () => this.login(),
+      };
+    }
+    const now = new Date();
+    const nowMin = now.getHours() * 60 + now.getMinutes();
+    const vw = this.state.vw;
+    const bp = vw < 640 ? 'mobile' : vw < 1100 ? 'tablet' : 'desktop';
+    const isMobile = bp === 'mobile';
+    const auth = this.state.auth;
+    const isAdmin = auth.role === 'admin';
+
+    const pendingStops = this.state.stops.filter(s => s.status === 'pending');
+
+    const go = screen => () => this.setState({ screen });
+    const navDefs = [
+      { key: 'overview', icon: 'layout-dashboard', label: 'Преглед' },
+      { key: 'lines', icon: 'route', label: 'Линии' },
+      { key: 'schedules', icon: 'calendar-clock', label: 'Возен ред' },
+      { key: 'stops', icon: 'map-pin', label: 'Постојки' },
+    ];
+    if (isAdmin) navDefs.push({ key: 'approvals', icon: 'shield-check', label: 'Одобрувања' + (pendingStops.length ? ' (' + pendingStops.length + ')' : '') });
+    const navItems = navDefs.map(n => {
+      const active = this.state.screen === n.key;
+      return { ...n, onClick: go(n.key), linkColor: active ? 'var(--color-accent-600)' : 'var(--color-text)', underline: active ? '2px solid var(--color-accent)' : '2px solid transparent' };
+    });
+
+    const companies = [...new Set(this.state.lines.map(l => l.company))];
+    const companyOptions = [{ value: 'all', label: 'Сите компании' }].concat(companies.map(c => ({ value: c, label: c })));
+    const effectiveCompanyFilter = isAdmin ? this.state.companyFilter : auth.company;
+    const linesFiltered = (effectiveCompanyFilter === 'all' ? this.state.lines : this.state.lines.filter(l => l.company === effectiveCompanyFilter));
+
+    const scopedLines = isAdmin ? this.state.lines : this.state.lines.filter(l => l.company === auth.company);
+    const activeNow = scopedLines.filter(l => nowMin >= toMin(l.first) && nowMin <= toMin(l.last) && !l.disrupted).length;
+    const disrupted = scopedLines.filter(l => l.disrupted).length;
+    const stats = {
+      totalLines: scopedLines.length, totalStops: this.state.stops.filter(s => s.status === 'approved').length, activeNow,
+      disrupted, disruptedBg: disrupted > 0 ? 'var(--color-accent-100)' : 'var(--color-surface)',
+      disruptedColor: disrupted > 0 ? 'var(--color-accent-800)' : 'var(--color-text)',
+    };
+
+    const lineRow = (l, opts) => {
+      const badge = this.badgeFor(l);
+      const active = nowMin >= toMin(l.first) && nowMin <= toMin(l.last);
+      return {
+        num: l.num, from: l.from, to: l.to, company: l.company, first: l.first, last: l.last, freq: l.freq,
+        bg: badge.bg, color: badge.color, border: badge.border,
+        statusLabel: l.disrupted ? 'Прекин' : active ? 'Активна' : 'Неактивна',
+        statusTagClass: l.disrupted ? 'tag-accent' : active ? 'tag-outline' : 'tag-neutral',
+        onEdit: () => this.openEditLineForm(l),
+        onDelete: () => this.deleteLine(l.id),
+        onSchedule: () => this.setState({ screen: 'schedules', schedLineId: l.id, schedDay: 'weekday' }),
+      };
+    };
+    const overviewLines = scopedLines.slice(0, 6).map(l => lineRow(l));
+    const adminLines = linesFiltered.map(l => lineRow(l));
+
+    const stopToggleListFor = (form) => this.state.stops.map(s => {
+      const idx = form ? form.stopIds.indexOf(s.id) : -1;
+      const on = idx >= 0;
+      return {
+        name: s.name, orderLabel: on ? (idx + 1) + '. ' : '',
+        bg: on ? 'var(--color-neutral-900)' : 'var(--color-surface)', color: on ? '#fff' : 'var(--color-text)', border: on ? 'none' : '1px solid var(--color-divider)',
+        onClick: () => {
+          const ids = this.state.lineForm.stopIds.slice();
+          const i = ids.indexOf(s.id);
+          if (i >= 0) ids.splice(i, 1); else ids.push(s.id);
+          this.setState({ lineForm: { ...this.state.lineForm, stopIds: ids } });
+        },
+      };
+    });
+
+    const fieldSetter = key => e => this.setState({ lineForm: { ...this.state.lineForm, [key]: e.target.value } });
+    const stopFieldSetter = key => e => this.setState({ stopForm: { ...this.state.stopForm, [key]: e.target.value } });
+
+    // ---- SCHEDULES ----
+    const schedLineCards = this.state.lines.map(l => {
+      const badge = this.badgeFor(l);
+      const sel = this.state.schedLineId === l.id;
+      return {
+        num: l.num, from: l.from, to: l.to, bg: badge.bg, color: badge.color, border: badge.border,
+        onClick: () => this.setState({ schedLineId: l.id }),
+        cardBg: sel ? 'var(--color-neutral-900)' : 'var(--color-surface)', cardBorder: sel ? 'none' : '1px solid var(--color-divider)',
+        textColor: sel ? '#fff' : 'var(--color-text)',
+      };
+    });
+    const schedLine = this.state.lines.find(l => l.id === this.state.schedLineId);
+    let schedTimes = [];
+    const isWeekday = this.state.schedDay === 'weekday';
+    if (schedLine) {
+      if (isWeekday) {
+        const times = schedLine.customTimes && schedLine.customTimes.length ? schedLine.customTimes : buildSched(schedLine.first, schedLine.last, schedLine.freq);
+        schedTimes = times.slice().sort((a, b) => a - b).map(t => ({
+          time: toStr(t), removable: true,
+          onRemove: () => {
+            const base = schedLine.customTimes && schedLine.customTimes.length ? schedLine.customTimes : buildSched(schedLine.first, schedLine.last, schedLine.freq);
+            const next = base.filter(x => x !== t);
+            const lines = this.state.lines.map(l => l.id === schedLine.id ? { ...l, customTimes: next } : l);
+            this.persist(lines, this.state.stops);
+            this.setState({ lines });
+          },
+        }));
+      } else {
+        const mult = this.state.schedDay === 'weekend' ? 1.5 : 2;
+        const gen = buildSched(toStr(toMin(schedLine.first) + (mult === 1.5 ? 60 : 90)), toStr(toMin(schedLine.last) - (mult === 1.5 ? 90 : 120)), Math.round(schedLine.freq * mult));
+        schedTimes = gen.map(t => ({ time: toStr(t), removable: false }));
+      }
+    }
+
+    return {
+      isMobile, showTopNav: !isMobile, navItems,
+      mainPadding: isMobile ? '16px' : bp === 'tablet' ? '24px 32px' : '32px 40px',
+      mainPaddingBottom: isMobile ? '84px' : bp === 'tablet' ? '32px' : '40px',
+      isLoggedIn: true,
+      isOverview: this.state.screen === 'overview', isLines: this.state.screen === 'lines',
+      isSchedules: this.state.screen === 'schedules', isStops: this.state.screen === 'stops',
+      companyOptions, companyFilter: this.state.companyFilter,
+      onCompanyFilterChange: e => this.setState({ companyFilter: e.target.value }),
+      stats, statCols: isMobile ? 'repeat(2,1fr)' : 'repeat(4,1fr)',
+      overviewLines, adminLines, noLines: adminLines.length === 0,
+      lineCardCols: isMobile ? '1fr' : bp === 'tablet' ? '1fr 1fr' : '1fr 1fr 1fr',
+      openNewLine: () => this.openNewLineForm(),
+
+      stopCardCols: isMobile ? '1fr' : bp === 'tablet' ? '1fr 1fr' : '1fr 1fr 1fr',
+      adminStops: this.state.stops.filter(s => isAdmin || s.status === 'approved' || s.company === auth.company).map(s => ({
+        name: s.name, lineCountLabel: this.state.lines.filter(l => l.stopIds.includes(s.id)).length + ' линии',
+        statusLabel: s.status === 'pending' ? 'Чека одобрување' : 'Одобрена',
+        statusTagClass: s.status === 'pending' ? 'tag-accent' : 'tag-outline',
+        canEdit: isAdmin || s.company === auth.company,
+        onEdit: () => this.openEditStopForm(s), onDelete: () => this.deleteStop(s.id),
+      })),
+      openNewStop: () => this.openNewStopForm(),
+
+      isAdmin, showCompanyDropdown: isAdmin,
+      userName: auth.name, userRoleLabel: isAdmin ? 'Администратор' : auth.company,
+      doLogout: () => this.logout(),
+      isApprovals: this.state.screen === 'approvals',
+      pendingStopCards: pendingStops.map(s => {
+        const dupes = this.state.stops.filter(o => o.status === 'approved' && o.id !== s.id && (norm(o.name).includes(norm(s.name)) || norm(s.name).includes(norm(o.name))));
+        return {
+          name: s.name, nameEn: s.nameEn, company: s.company,
+          hasDupes: dupes.length > 0, dupeNames: dupes.map(d => d.name).join(', '),
+          onApprove: () => this.approveStop(s.id), onReject: () => this.rejectStop(s.id),
+        };
+      }),
+      noPending: pendingStops.length === 0,
+
+      showLineForm: this.state.lineFormOpen, lineForm: this.state.lineForm || {},
+      lineFormTitle: this.state.lineFormMode === 'new' ? 'Нова линија' : 'Уреди линија',
+      closeLineForm: () => this.setState({ lineFormOpen: false }),
+      saveLineForm: () => this.saveLine(),
+      stopPropagation: e => e.stopPropagation(),
+      colorOptions: Object.keys(COLOR_PRESETS).map(k => ({ value: k, label: COLOR_PRESETS[k].label })),
+      onLineFormColorChange: e => this.setState({ lineForm: { ...this.state.lineForm, colorKey: e.target.value } }),
+      onLineFormDisruptedToggle: e => this.setState({ lineForm: { ...this.state.lineForm, disrupted: e.target.checked } }),
+      onLineFormField_num: fieldSetter('num'), onLineFormField_company: fieldSetter('company'),
+      onLineFormField_from: fieldSetter('from'), onLineFormField_to: fieldSetter('to'),
+      onLineFormField_fromEn: fieldSetter('fromEn'), onLineFormField_toEn: fieldSetter('toEn'),
+      onLineFormField_companyEn: fieldSetter('companyEn'), onLineFormField_first: fieldSetter('first'),
+      onLineFormField_last: fieldSetter('last'), onLineFormField_freq: fieldSetter('freq'),
+      onLineFormField_price: fieldSetter('price'),
+      stopToggleList: this.state.lineForm ? stopToggleListFor(this.state.lineForm) : [],
+
+      showStopForm: this.state.stopFormOpen, stopForm: this.state.stopForm || {},
+      stopFormTitle: this.state.stopFormMode === 'new' ? 'Нова постојка' : 'Уреди постојка',
+      closeStopForm: () => this.setState({ stopFormOpen: false }),
+      saveStopForm: () => this.saveStop(),
+      onStopFormField_name: stopFieldSetter('name'), onStopFormField_nameEn: stopFieldSetter('nameEn'),
+
+      schedLineCards, hasSchedLine: !!schedLine,
+      isWeekdayDay: this.state.schedDay === 'weekday', isWeekendDay: this.state.schedDay === 'weekend', isSundayDay: this.state.schedDay === 'sunday',
+      setWeekdayDay: () => this.setState({ schedDay: 'weekday' }), setWeekendDay: () => this.setState({ schedDay: 'weekend' }), setSundayDay: () => this.setState({ schedDay: 'sunday' }),
+      isEditableDay: isWeekday, notEditableDay: !isWeekday,
+      newTime: this.state.newTime, onNewTimeChange: e => this.setState({ newTime: e.target.value }),
+      addTime: () => {
+        if (!schedLine) return;
+        const base = schedLine.customTimes && schedLine.customTimes.length ? schedLine.customTimes.slice() : buildSched(schedLine.first, schedLine.last, schedLine.freq);
+        const t = toMin(this.state.newTime);
+        if (!base.includes(t)) base.push(t);
+        const lines = this.state.lines.map(l => l.id === schedLine.id ? { ...l, customTimes: base } : l);
+        this.persist(lines, this.state.stops);
+        this.setState({ lines });
+      },
+      resetTimes: () => {
+        if (!schedLine) return;
+        const lines = this.state.lines.map(l => l.id === schedLine.id ? { ...l, customTimes: null } : l);
+        this.persist(lines, this.state.stops);
+        this.setState({ lines });
+      },
+      schedTimes,
+      hasToast: !!this.state.toast, toast: this.state.toast,
+    };
+  }
+}
+
+</script>
+</body>
+</html>

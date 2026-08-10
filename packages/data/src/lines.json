@@ -1,0 +1,41 @@
+[
+  {
+    "id": "5",
+    "num": "5",
+    "from": "Ливаде", "to": "ФЗЦ",
+    "fromEn": "Livade", "toEn": "FZC",
+    "fromSq": "Livadhe", "toSq": "FZC",
+    "first": "05:05", "last": "22:35", "freq": 30,
+    "company": "ШТУЗ-Патнички ДООЕЛ", "companyEn": "ŠTUZ-Patnički DOOEL",
+    "price": 30,
+    "disrupted": false,
+    "mapUrl": "https://www.google.com/maps/d/embed?mid=1Vo7o2DKaDRAf-fWflA8-kLYz5R0tC7w&ehbc=2E312F",
+    "badge": { "bg": "transparent", "color": "var(--color-text)", "border": "2px solid var(--color-text)" },
+    "stopIds": ["livade", "nikulski", "salon", "centralnaab", "prmakoou", "magantova", "krstavtobuska", "ureduserava", "zelenpazar", "zikdirekcija", "armoou", "tolizordumis", "iskrajugturist", "tehpregled", "zeleznicka", "fzc"],
+    "times": ["05:05", "05:17", "05:25", "06:25", "06:40", "06:45", "06:50", "07:37", "08:10", "08:57", "09:00", "09:17", "09:40", "10:10", "10:40", "11:07", "12:10", "12:25", "12:30", "12:40", "12:45", "13:10", "13:20", "13:25", "13:27", "13:35", "13:40", "14:20", "14:23", "14:25", "14:30", "14:40", "14:45", "14:50", "15:18", "15:25", "15:28", "15:30", "15:40", "16:18", "16:37", "17:25", "18:07", "18:50", "18:55", "19:07", "19:40", "19:55", "21:10", "21:22", "22:25", "22:35"],
+    "timesRev": ["06:00", "06:05", "07:00", "07:05", "07:30", "08:30", "09:00", "09:30", "10:00", "10:30", "11:00", "12:00", "12:30", "14:00", "14:05", "14:10", "15:00", "15:05", "15:10", "15:15", "16:00", "17:00", "18:30", "19:25", "22:00"],
+    "tripInfo": {
+      "05:17": { "skipIds": ["livade", "nikulski"] }, "05:25": { "skipIds": ["livade", "nikulski"] }, "06:40": { "skipIds": ["livade", "nikulski"] }, "06:45": { "skipIds": ["livade", "nikulski"] }, "06:50": { "skipIds": ["livade", "nikulski"] }, "07:37": { "skipIds": ["livade", "nikulski"] }, "08:10": { "skipIds": ["livade", "nikulski"] }, "09:17": { "skipIds": ["livade", "nikulski"] }, "09:40": { "skipIds": ["livade", "nikulski"] }, "10:10": { "skipIds": ["livade", "nikulski"] }, "10:40": { "skipIds": ["livade", "nikulski"] }, "11:07": { "skipIds": ["livade", "nikulski"] }, "12:10": { "skipIds": ["livade", "nikulski"] }, "12:40": { "skipIds": ["livade", "nikulski"] }, "12:45": { "skipIds": ["livade", "nikulski"] }, "13:20": { "skipIds": ["livade", "nikulski"] }, "13:25": { "skipIds": ["livade", "nikulski"] }, "13:27": { "skipIds": ["livade", "nikulski"] }, "13:40": { "skipIds": ["livade", "nikulski"] }, "14:20": { "skipIds": ["livade", "nikulski"] }, "14:23": { "skipIds": ["livade", "nikulski"] }, "14:25": { "skipIds": ["livade", "nikulski"] }, "14:40": { "skipIds": ["livade", "nikulski"] }, "14:45": { "skipIds": ["livade", "nikulski"] }, "14:50": { "skipIds": ["livade", "nikulski"] }, "15:18": { "skipIds": ["livade", "nikulski"] }, "15:25": { "skipIds": ["livade", "nikulski"] }, "15:40": { "skipIds": ["livade", "nikulski"] }, "16:18": { "skipIds": ["livade", "nikulski"] }, "16:37": { "skipIds": ["livade", "nikulski"] }, "17:25": { "skipIds": ["livade", "nikulski"] }, "18:07": { "skipIds": ["livade", "nikulski"] }, "18:50": { "skipIds": ["livade", "nikulski"] }, "19:07": { "skipIds": ["livade", "nikulski"] }, "19:40": { "skipIds": ["livade", "nikulski"] }, "21:22": { "skipIds": ["livade", "nikulski"] }, "22:25": { "skipIds": ["livade", "nikulski"] }
+    },
+    "tripInfoRev": {
+      "06:05": { "skipIds": ["livade", "nikulski"] }, "07:00": { "skipIds": ["livade", "nikulski"] }, "07:05": { "skipIds": ["livade", "nikulski"] }, "07:30": { "skipIds": ["livade", "nikulski"] }, "09:00": { "skipIds": ["livade", "nikulski"] }, "09:30": { "skipIds": ["livade", "nikulski"] }, "10:00": { "skipIds": ["livade", "nikulski"] }, "10:30": { "skipIds": ["livade", "nikulski"] }, "11:00": { "skipIds": ["livade", "nikulski"] }, "14:05": { "skipIds": ["livade", "nikulski"] }, "14:10": { "skipIds": ["livade", "nikulski"] }, "15:05": { "skipIds": ["livade", "nikulski"] }, "15:10": { "skipIds": ["livade", "nikulski"] }, "15:15": { "skipIds": ["livade", "nikulski"] }, "16:00": { "skipIds": ["livade", "nikulski"] }, "17:00": { "skipIds": ["livade", "nikulski"] }
+    }
+  },
+  {
+    "id": "10",
+    "num": "10",
+    "from": "Биљановце", "to": "Бединје",
+    "fromEn": "Biljanovce", "toEn": "Bedinje",
+    "fromSq": "Bilanoc", "toSq": "Bedinje",
+    "first": "05:25", "last": "21:25", "freq": 60,
+    "company": "ОЛИ-ТРАВЕЛ ДООЕЛ", "companyEn": "Oli Travel DOOEL",
+    "price": 30,
+    "disrupted": false,
+    "badge": { "bg": "transparent", "color": "var(--color-text)", "border": "2px solid var(--color-text)" },
+    "stopIds": ["biljanovce", "koracin", "grobishta", "sokolana", "serava", "zikdirekcija", "pajko", "bedinje", "fzc"],
+    "times": ["05:25", "06:25", "07:25", "08:25", "09:25", "11:25", "12:25", "13:25", "14:25", "15:25", "16:25", "17:25", "18:25", "19:25", "21:25"],
+    "tripInfo": {
+      "05:25": { "skipIds": ["koracin"] }, "06:25": { "skipIds": ["koracin", "fzc"] }, "08:25": { "skipIds": ["koracin", "fzc"] }, "09:25": { "skipIds": ["koracin", "fzc"] }, "11:25": { "skipIds": ["koracin", "fzc"] }, "12:25": { "skipIds": ["koracin", "fzc"] }, "14:25": { "skipIds": ["koracin", "fzc"] }, "15:25": { "skipIds": ["koracin", "fzc"] }, "16:25": { "skipIds": ["koracin", "fzc"] }, "17:25": { "skipIds": ["koracin", "fzc"] }, "18:25": { "skipIds": ["koracin", "fzc"] }, "19:25": { "skipIds": ["koracin", "fzc"] }, "21:25": { "skipIds": ["koracin", "fzc"] }
+    }
+  }
+]

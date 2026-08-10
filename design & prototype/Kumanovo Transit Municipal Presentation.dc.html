@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+
+<helmet>
+  <link rel="stylesheet" href="_ds/modernist-103182da-9152-42d3-b836-0e1d1e7d7d3a/styles.css">
+  <script src="_ds/modernist-103182da-9152-42d3-b836-0e1d1e7d7d3a/_ds_bundle.js"></script>
+  <script src="./doc-page.js"></script>
+  <script src="./image-slot.js"></script>
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+  <style>
+    doc-page:not(:defined) { visibility: hidden; }
+    a { color: var(--color-accent-700); text-decoration: none; }
+    a:hover { color: var(--color-accent-600); text-decoration: underline; }
+  </style>
+</helmet>
+
+<doc-page size="a4">
+  <section class="page" style="background:var(--color-accent-500);color:#fff;display:flex;flex-direction:column;padding:9% 8%;box-sizing:border-box;font-family:var(--font-body)">
+    <div style="display:flex;align-items:center;gap:16px">
+      <div style="width:56px;height:56px;flex:none;background:#fff;display:flex;align-items:center;justify-content:center">
+        <i data-lucide="route" style="width:30px;height:30px;color:var(--color-accent-600);stroke-width:2.5"></i>
+      </div>
+      <div style="font-family:var(--font-heading);font-weight:800;font-size:24px;letter-spacing:-0.01em;line-height:1">КУМАНОВО<br />ТРАНЗИТ</div>
+    </div>
+    <div style="flex:1;display:flex;flex-direction:column;justify-content:center;gap:22px;max-width:88%;margin-top:6%">
+      <h1 style="margin:0;font-family:var(--font-heading);font-weight:800;font-size:52px;line-height:1.08;letter-spacing:-0.01em">„Секогаш го знаеш следниот автобус.“</h1>
+      <p style="margin:0;font-size:19px;line-height:1.5;opacity:0.92;max-width:520px">Дигитална платформа за полесно користење на јавниот автобуски превоз во Куманово.</p>
+    </div>
+    <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:24px">
+      <div style="font-size:13px;letter-spacing:0.06em;text-transform:uppercase;opacity:0.85;font-weight:600;max-width:280px">Предлог за соработка со Општина Куманово</div>
+      <div style="width:150px;height:300px;flex:none;background:#fff;border-radius:22px;padding:8px;box-sizing:border-box;box-shadow:var(--shadow-lg)">
+        <div style="width:100%;height:100%;border-radius:14px;overflow:hidden">
+          <image-slot id="cover-app-mockup" shape="rect" src="screenshots/app-home-crop.png" placeholder="Слика: почетен екран на апликацијата"></image-slot>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="page" style="background:var(--color-bg);color:var(--color-text);display:flex;flex-direction:column;padding:8% 8%;box-sizing:border-box;font-family:var(--font-body)">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:6%">
+      <div style="width:26px;height:26px;flex:none;background:var(--color-accent-500);display:flex;align-items:center;justify-content:center"><i data-lucide="route" style="width:14px;height:14px;color:#fff"></i></div>
+      <div style="font-family:var(--font-heading);font-weight:800;font-size:13px;letter-spacing:0.04em">КУМАНОВО ТРАНЗИТ</div>
+    </div>
+    <h2 style="margin:0 0 10px;font-family:var(--font-heading);font-weight:800;font-size:32px;letter-spacing:-0.01em">Поедноставен јавен превоз за сите</h2>
+    <p style="margin:0 0 7%;font-size:15px;line-height:1.6;opacity:0.78;max-width:640px">Информациите за јавниот превоз треба да бидат едноставни, достапни и разбирливи за секој граѓанин.</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:0;border-top:2px solid var(--color-text);flex:1">
+      <div style="padding:28px 28px 0 0;border-right:2px solid var(--color-text);display:flex;flex-direction:column;gap:16px">
+        <div style="font-family:var(--font-heading);font-weight:800;font-size:14px;letter-spacing:0.06em;text-transform:uppercase;opacity:0.6">Предизвик</div>
+        <ul style="margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:14px;font-size:14px;line-height:1.55">
+          <li style="display:flex;gap:10px"><i data-lucide="minus" style="width:16px;height:16px;flex:none;margin-top:3px;opacity:0.5"></i>Информациите за линиите и возниот ред не се секогаш лесно достапни.</li>
+          <li style="display:flex;gap:10px"><i data-lucide="minus" style="width:16px;height:16px;flex:none;margin-top:3px;opacity:0.5"></i>На граѓаните им е потребен едноставен начин да проверат кога и од каде тргнува автобусот.</li>
+          <li style="display:flex;gap:10px"><i data-lucide="minus" style="width:16px;height:16px;flex:none;margin-top:3px;opacity:0.5"></i>Посетителите на градот потешко се снаоѓаат со локалниот превоз.</li>
+        </ul>
+      </div>
+      <div style="padding:28px 0 0 28px;display:flex;flex-direction:column;gap:16px">
+        <div style="font-family:var(--font-heading);font-weight:800;font-size:14px;letter-spacing:0.06em;text-transform:uppercase;color:var(--color-accent-700)">Куманово Транзит</div>
+        <ul style="margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:11px;font-size:14px;line-height:1.5">
+          <li style="display:flex;gap:10px;align-items:center"><i data-lucide="check" style="width:16px;height:16px;flex:none;color:var(--color-accent-600)"></i>Сите линии на едно место</li>
+          <li style="display:flex;gap:10px;align-items:center"><i data-lucide="check" style="width:16px;height:16px;flex:none;color:var(--color-accent-600)"></i>Јасен возен ред</li>
+          <li style="display:flex;gap:10px;align-items:center"><i data-lucide="check" style="width:16px;height:16px;flex:none;color:var(--color-accent-600)"></i>Преглед на постојки</li>
+          <li style="display:flex;gap:10px;align-items:center"><i data-lucide="check" style="width:16px;height:16px;flex:none;color:var(--color-accent-600)"></i>Пребарување на дестинација</li>
+          <li style="display:flex;gap:10px;align-items:center"><i data-lucide="check" style="width:16px;height:16px;flex:none;color:var(--color-accent-600)"></i>Најблиски постојки</li>
+          <li style="display:flex;gap:10px;align-items:center"><i data-lucide="check" style="width:16px;height:16px;flex:none;color:var(--color-accent-600)"></i>Македонски и англиски јазик</li>
+          <li style="display:flex;gap:10px;align-items:center"><i data-lucide="check" style="width:16px;height:16px;flex:none;color:var(--color-accent-600)"></i>Бесплатно за граѓаните</li>
+        </ul>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-top:24px">
+      <div style="aspect-ratio:9/16;max-height:150px"><image-slot id="p2-ui-1" shape="rounded" radius="10px" src="screenshots/app-schedule-crop.png" placeholder="Слика: возен ред"></image-slot></div>
+      <div style="aspect-ratio:9/16;max-height:150px"><image-slot id="p2-ui-2" shape="rounded" radius="10px" src="screenshots/app-stops-crop.png" placeholder="Слика: постојки"></image-slot></div>
+      <div style="aspect-ratio:9/16;max-height:150px"><image-slot id="p2-ui-3" shape="rounded" radius="10px" src="screenshots/app-lines-crop.png" placeholder="Слика: линии"></image-slot></div>
+    </div>
+  </section>
+
+  <section class="page" style="background:var(--color-bg);color:var(--color-text);display:flex;flex-direction:column;padding:8% 8%;box-sizing:border-box;font-family:var(--font-body)">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:6%">
+      <div style="width:26px;height:26px;flex:none;background:var(--color-accent-500);display:flex;align-items:center;justify-content:center"><i data-lucide="route" style="width:14px;height:14px;color:#fff"></i></div>
+      <div style="font-family:var(--font-heading);font-weight:800;font-size:13px;letter-spacing:0.04em">КУМАНОВО ТРАНЗИТ</div>
+    </div>
+    <h2 style="margin:0 0 10px;font-family:var(--font-heading);font-weight:800;font-size:32px;letter-spacing:-0.01em">Да го изградиме заедно</h2>
+    <p style="margin:0 0 7%;font-size:15px;line-height:1.6;opacity:0.78;max-width:640px">Куманово Транзит го развиваме како локална иницијатива со цел да создадеме корисен и долгорочно одржлив дигитален сервис за граѓаните.</p>
+    <div style="display:flex;flex-direction:column;gap:0;border-top:2px solid var(--color-text)">
+      <div style="display:flex;gap:22px;padding:20px 0;border-bottom:2px solid var(--color-divider)">
+        <div style="font-family:var(--font-heading);font-weight:800;font-size:26px;flex:none;width:40px;color:var(--color-accent-600)">01</div>
+        <div>
+          <div style="font-family:var(--font-heading);font-weight:800;font-size:15px;margin-bottom:4px">Точни податоци</div>
+          <div style="font-size:13.5px;line-height:1.55;opacity:0.78;max-width:560px">Соработка при обезбедување и верификација на информации за линии, постојки и возни редови.</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:22px;padding:20px 0;border-bottom:2px solid var(--color-divider)">
+        <div style="font-family:var(--font-heading);font-weight:800;font-size:26px;flex:none;width:40px;color:var(--color-accent-600)">02</div>
+        <div>
+          <div style="font-family:var(--font-heading);font-weight:800;font-size:15px;margin-bottom:4px">Поддршка и промоција</div>
+          <div style="font-size:13.5px;line-height:1.55;opacity:0.78;max-width:560px">Институционална поддршка и помош платформата да стигне до што поголем број граѓани.</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:22px;padding:20px 0">
+        <div style="font-family:var(--font-heading);font-weight:800;font-size:26px;flex:none;width:40px;color:var(--color-accent-600)">03</div>
+        <div>
+          <div style="font-family:var(--font-heading);font-weight:800;font-size:15px;margin-bottom:4px">Долгорочен развој</div>
+          <div style="font-size:13.5px;line-height:1.55;opacity:0.78;max-width:560px">Заедничко дефинирање на модел за одржување, ажурирање, понатамошен развој и долгорочна финансиска одржливост на платформата.</div>
+        </div>
+      </div>
+    </div>
+    <div style="flex:1;display:flex;flex-direction:column;justify-content:center;margin-top:26px">
+      <div style="background:var(--color-accent-500);color:#fff;padding:28px 32px;display:flex;flex-direction:column;gap:10px">
+        <div style="font-family:var(--font-heading);font-weight:700;font-size:17px;line-height:1.4;max-width:520px">„Нашата цел е Куманово Транзит да стане практична дигитална алатка што граѓаните ќе ја користат секојдневно.“</div>
+        <div style="font-size:13.5px;opacity:0.92">Би ни било задоволство проектот да Ви го претставиме на кратка средба.</div>
+      </div>
+    </div>
+    <div style="display:flex;align-items:flex-end;justify-content:space-between;border-top:2px solid var(--color-text);padding-top:16px;margin-top:20px">
+      <div>
+        <div style="font-family:var(--font-heading);font-weight:800;font-size:15px">Андреј Јовановски</div>
+        <div style="font-size:12.5px;opacity:0.7;margin-top:1px">Куманово Транзит</div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:3px;text-align:right;font-size:12.5px">
+        <div>codeaxis25@gmail.com</div>
+      </div>
+    </div>
+  </section>
+</doc-page>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  componentDidMount() { if (window.lucide) window.lucide.createIcons(); }
+  componentDidUpdate() { if (window.lucide) window.lucide.createIcons(); }
+}
+</script>
+</body>
+</html>

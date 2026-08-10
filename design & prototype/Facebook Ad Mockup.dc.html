@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+
+<helmet>
+  <link rel="stylesheet" href="_ds/modernist-103182da-9152-42d3-b836-0e1d1e7d7d3a/styles.css">
+  <script src="_ds/modernist-103182da-9152-42d3-b836-0e1d1e7d7d3a/_ds_bundle.js"></script>
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+  <style>
+    * { box-sizing: border-box; }
+    html, body { margin: 0; }
+  </style>
+</helmet>
+
+<div id="fbAdCanvas" style="width:1080px;height:1080px;position:relative;background:var(--color-accent-500);color:#fff;font-family:var(--font-body);overflow:hidden">
+
+  <svg width="1080" height="1080" style="position:absolute;top:0;left:0" viewBox="0 0 1080 1080" fill="none">
+    <path d="M -40 260 L 300 260 L 420 380 L 900 380 L 1040 260" stroke="#fff" stroke-opacity="0.14" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M -40 640 L 220 640 L 340 520 L 760 520 L 880 640 L 1120 640" stroke="#fff" stroke-opacity="0.1" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="300" cy="260" r="9" fill="#fff" opacity="0.18"/>
+    <circle cx="900" cy="380" r="9" fill="#fff" opacity="0.18"/>
+    <circle cx="220" cy="640" r="9" fill="#fff" opacity="0.14"/>
+    <circle cx="760" cy="520" r="9" fill="#fff" opacity="0.14"/>
+    <circle cx="1040" cy="260" r="7" fill="#fff" opacity="0.14"/>
+  </svg>
+  <i data-lucide="bus" style="position:absolute;top:346px;left:540px;width:30px;height:30px;color:#fff;opacity:0.16;stroke-width:2"></i>
+  <i data-lucide="bus" style="position:absolute;top:596px;left:960px;width:26px;height:26px;color:#fff;opacity:0.14;stroke-width:2"></i>
+  <i data-lucide="map-pin" style="position:absolute;top:610px;left:190px;width:24px;height:24px;color:#fff;opacity:0.14;stroke-width:2"></i>
+
+  <div style="position:absolute;top:56px;left:64px;display:flex;align-items:center;gap:12px">
+    <div style="width:44px;height:44px;flex:none;background:#fff;border-radius:12px;display:flex;align-items:center;justify-content:center">
+      <i data-lucide="route" style="width:24px;height:24px;color:var(--color-accent-600);stroke-width:2.5"></i>
+    </div>
+    <div style="font-family:var(--font-heading);font-weight:800;font-size:19px;line-height:1.05;color:#fff">КУМАНОВО<br />ТРАНЗИТ</div>
+  </div>
+
+  <div style="position:absolute;top:150px;left:64px;right:64px">
+    <div style="font-family:var(--font-heading);font-weight:800;font-size:56px;line-height:1.04;letter-spacing:-0.02em;color:#fff">Секогаш го знаеш<br />следниот автобус.</div>
+    <div style="font-size:18px;line-height:1.5;color:rgba(255,255,255,0.88);margin-top:20px;max-width:640px">Линии, постојки, мапа и возен ред за Куманово — сè на едно место, бесплатно.</div>
+    <div style="display:inline-flex;align-items:center;gap:8px;background:#fff;color:var(--color-accent-700);font-family:var(--font-heading);font-weight:800;font-size:14px;padding:12px 22px;border-radius:999px;margin-top:26px">
+      <i data-lucide="download" style="width:16px;height:16px"></i>Наскоро достапно
+    </div>
+  </div>
+
+  <div style="position:absolute;bottom:-96px;left:0;right:0;display:flex;justify-content:center;align-items:flex-end;gap:22px">
+    <div style="transform:rotate(-7deg) translateY(20px);width:240px;height:522px;border-radius:44px;box-shadow:0 40px 80px rgba(0,0,0,0.35);overflow:hidden">
+      <div style="transform:scale(0.597);transform-origin:top left;width:402px;height:874px">
+        <x-import component-from-global-scope="IOSDevice" from="./ios-frame.jsx" hint-size="402,874">
+          <div style="width:100%;height:100%;display:flex;flex-direction:column;background:#f3f2f2"><div style="height:59px;flex:none"></div><div style="flex:1;overflow:hidden"><img src="./screenshots/mock-home.png" style="width:100%;height:100%;object-fit:cover;object-position:top" alt="Дома" /></div></div>
+        </x-import>
+      </div>
+    </div>
+    <div style="transform:translateY(-16px);z-index:2;width:248px;height:539px;border-radius:44px;box-shadow:0 40px 90px rgba(0,0,0,0.4);overflow:hidden">
+      <div style="transform:scale(0.617);transform-origin:top left;width:402px;height:874px">
+        <x-import component-from-global-scope="IOSDevice" from="./ios-frame.jsx" hint-size="402,874">
+          <div style="width:100%;height:100%;display:flex;flex-direction:column;background:#f3f2f2"><div style="height:59px;flex:none"></div><div style="flex:1;overflow:hidden"><img src="./screenshots/mock-schedule.png" style="width:100%;height:100%;object-fit:cover;object-position:top" alt="Возен ред" /></div></div>
+        </x-import>
+      </div>
+    </div>
+    <div style="transform:rotate(7deg) translateY(20px);width:240px;height:522px;border-radius:44px;box-shadow:0 40px 80px rgba(0,0,0,0.35);overflow:hidden">
+      <div style="transform:scale(0.597);transform-origin:top left;width:402px;height:874px">
+        <x-import component-from-global-scope="IOSDevice" from="./ios-frame.jsx" hint-size="402,874">
+          <div style="width:100%;height:100%;display:flex;flex-direction:column;background:#f3f2f2"><div style="height:59px;flex:none"></div><div style="flex:1;overflow:hidden"><img src="./screenshots/mock-stops.png" style="width:100%;height:100%;object-fit:cover;object-position:top" alt="Постојки" /></div></div>
+        </x-import>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  componentDidMount() { if (window.lucide) window.lucide.createIcons(); }
+  componentDidUpdate() { if (window.lucide) window.lucide.createIcons(); }
+  renderVals() { return {}; }
+}
+
+</script>
+</body>
+</html>
