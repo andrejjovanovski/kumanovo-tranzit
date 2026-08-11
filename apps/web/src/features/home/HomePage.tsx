@@ -62,6 +62,9 @@ export function HomePage() {
 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-6)" }}>
+      {/* Page heading — visually hidden (design leads with the greeting) but a
+          real H1 for SEO + screen readers, carrying the primary search term. */}
+      <h1 className="sr-only">Јавен превоз во Куманово — линии, возен ред и постојки</h1>
       {/* Greeting header */}
       <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-3)" }}>
         <div style={{ display: "flex", alignItems: "center", gap: "var(--space-4)", flexWrap: "wrap" }}>
