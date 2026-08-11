@@ -33,6 +33,7 @@ export function StopsPage() {
 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-4)" }}>
+      <h1 className="sr-only">Автобуски постојки во Куманово — јавен превоз</h1>
       <h2 style={{ margin: 0 }}>{T.navStops}</h2>
       <div className="hr" style={{ margin: 0 }} />
 
