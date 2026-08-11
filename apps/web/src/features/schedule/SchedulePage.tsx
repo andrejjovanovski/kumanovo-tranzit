@@ -5,6 +5,7 @@ import { dayKeyForDate, localizedLine, statusFor, statusVisual, toStr, type DayK
 import type { Line } from "@kt/data";
 import { useT } from "@/i18n/useT";
 import { useNow } from "@/hooks/useNow";
+import { useBreakpoint } from "@/hooks/useBreakpoint";
 import { useLines, useStops } from "@/hooks/useTransitData";
 import { toMinutes } from "@/lib/time";
 import { LineBadge } from "@/components/ui/LineBadge";
@@ -15,6 +16,7 @@ type Direction = "fwd" | "rev";
 
 export function SchedulePage() {
   const { T, lang } = useT();
+  const { isDesktop } = useBreakpoint();
   const now = useNow();
   const { data: lines } = useLines();
   const { data: stops } = useStops();
@@ -61,16 +63,57 @@ export function SchedulePage() {
     setDirection("fwd");
   };
 
+  // One departure row. Shared so the desktop two-column split and the mobile
+  // single column render identical rows; `nextShown` is consumed in reading
+  // order (column 1 top-to-bottom, then column 2) so the "next" highlight lands
+  // on the first upcoming departure.
+  const renderRow = (t: number) => {
+    const timeStr = toStr(t);
+    const status = statusFor(line, t, day === today ? nowMin : -1);
+    const v = statusVisual(status, lang, T);
+    const isNext = day === today && !nextShown && !!status && status.kind !== "disrupted" && t >= nowMin;
+    if (isNext) nextShown = true;
+    const trip = tripMap?.[timeStr];
+    const skipIds = trip?.skipIds ?? [];
+    return (
+      <ScheduleRow
+        key={timeStr}
+        time={timeStr}
+        statusLabel={v.label || T.onTime}
+        statusBg={v.bg === "transparent" ? "var(--color-neutral-100)" : v.bg}
+        statusColor={v.color}
+        isNext={isNext}
+        skipIds={skipIds}
+        stops={stops}
+        expanded={expanded === timeStr}
+        onToggle={() => setExpanded(expanded === timeStr ? null : timeStr)}
+      />
+    );
+  };
+
+  // On desktop the lines sit in a single strip of exactly two rows.
+  const lineCols = Math.ceil(lines.length / 2);
+  // On desktop the times are split down the middle into two columns.
+  const mid = Math.ceil(times.length / 2);
+
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-4)", maxWidth: 640 }}>
+    <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-4)", maxWidth: isDesktop ? 1160 : 640 }}>
       <h2 style={{ margin: 0 }}>{T.navSchedule}</h2>
       <div className="hr" style={{ margin: 0 }} />
 
+      {/* Line picker — desktop: a horizontal grid of exactly two rows; mobile:
+          a wrapping grid of full-width-ish cards, as before. */}
       <div>
         <label style={{ display: "block", fontSize: 12, marginBottom: 5, color: "color-mix(in srgb, var(--color-text) 70%, transparent)" }}>
           {T.navLines}
         </label>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(150px, 1fr))", gap: 8 }}>
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: isDesktop ? `repeat(${lineCols}, minmax(0, 1fr))` : "repeat(auto-fill, minmax(150px, 1fr))",
+            gap: 8,
+          }}
+        >
           {lines.map((l) => {
             const lnm = localizedLine(l, lang);
             const sel = l.id === line.id;
@@ -86,7 +129,7 @@ export function SchedulePage() {
                 }}
               >
                 <LineBadge num={l.num} badge={l.badge} size={30} fontSize={13} />
-                <div>
+                <div style={{ minWidth: 0 }}>
                   <div style={{ fontSize: 12, fontWeight: 700, lineHeight: 1.2, color: sel ? "#fff" : "var(--color-text)" }}>
                     {lnm.from} → {lnm.to}
                   </div>
@@ -98,7 +141,7 @@ export function SchedulePage() {
         </div>
       </div>
 
-      {/* Direction toggle */}
+      {/* Filters (direction + day) sit directly under the lines. */}
       <SegmentedButtons
         value={direction}
         onChange={(d) => { setDirection(d); setExpanded(null); }}
@@ -108,7 +151,6 @@ export function SchedulePage() {
         ]}
       />
 
-      {/* Day toggle */}
       <SegmentedButtons
         value={day}
         onChange={(d) => { setDay(d); setExpanded(null); }}
@@ -122,32 +164,16 @@ export function SchedulePage() {
         </div>
       )}
 
+      {/* Times — desktop: two columns; mobile: a single column. */}
       {times.length > 0 ? (
-        <div style={{ display: "flex", flexDirection: "column" }}>
-          {times.map((t) => {
-            const timeStr = toStr(t);
-            const status = statusFor(line, t, day === today ? nowMin : -1);
-            const v = statusVisual(status, lang, T);
-            const isNext = day === today && !nextShown && !!status && status.kind !== "disrupted" && t >= nowMin;
-            if (isNext) nextShown = true;
-            const trip = tripMap?.[timeStr];
-            const skipIds = trip?.skipIds ?? [];
-            return (
-              <ScheduleRow
-                key={timeStr}
-                time={timeStr}
-                statusLabel={v.label || T.onTime}
-                statusBg={v.bg === "transparent" ? "var(--color-neutral-100)" : v.bg}
-                statusColor={v.color}
-                isNext={isNext}
-                skipIds={skipIds}
-                stops={stops}
-                expanded={expanded === timeStr}
-                onToggle={() => setExpanded(expanded === timeStr ? null : timeStr)}
-              />
-            );
-          })}
-        </div>
+        isDesktop ? (
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0 var(--space-6)", alignItems: "start" }}>
+            <div style={{ display: "flex", flexDirection: "column" }}>{times.slice(0, mid).map(renderRow)}</div>
+            <div style={{ display: "flex", flexDirection: "column" }}>{times.slice(mid).map(renderRow)}</div>
+          </div>
+        ) : (
+          <div style={{ display: "flex", flexDirection: "column" }}>{times.map(renderRow)}</div>
+        )
       ) : (
         <div className="card" style={{ alignItems: "center", textAlign: "center", padding: "var(--space-6)" }}>{T.noBuses}</div>
       )}

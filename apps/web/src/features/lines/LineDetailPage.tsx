@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { useParams } from "react-router-dom";
-import { Ticket } from "lucide-react";
+import { useNavigate, useParams } from "react-router-dom";
+import { CalendarClock, Ticket } from "lucide-react";
 import {
   dayKeyForDate, isLineActive, localizedLine, localizedStopName, minUnit, upcomingForLine,
 } from "@kt/shared";
@@ -19,6 +19,7 @@ type Direction = "fwd" | "rev";
 
 export function LineDetailPage() {
   const { id } = useParams();
+  const navigate = useNavigate();
   const { T, lang } = useT();
   const { isMobile } = useBreakpoint();
   const now = useNow();
@@ -120,6 +121,15 @@ export function LineDetailPage() {
               <div style={{ fontSize: 13, opacity: 0.7 }}>{T.lastBusToday}</div>
             )}
           </div>
+
+          <button
+            className="btn btn-primary"
+            style={{ justifyContent: "center" }}
+            onClick={() => navigate(`/schedule?line=${line.id}`)}
+          >
+            <CalendarClock size={16} />
+            {T.fullSchedule}
+          </button>
 
           <h4 style={{ margin: "var(--space-2) 0 0" }}>{T.routeMap}</h4>
           <RouteMap line={line} />
