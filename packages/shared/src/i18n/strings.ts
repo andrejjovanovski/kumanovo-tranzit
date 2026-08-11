@@ -111,7 +111,7 @@ export const STR: Record<Lang, Strings> = {
     dismiss: "Затвори",
     termsSections: [
       { title: "Користење на апликацијата", body: "Куманово Транзит ви дава информации за линии, постојки и поаѓања на јавниот превоз во Куманово. Апликацијата е наменета за лична, некомерцијална употреба." },
-      { title: "Точност на информациите", body: "Возните редови, цените и мапите на рутите се објавени од превозниците и може да се менуваат без најава. Се трудиме информациите да бидат ажурни, но не можеме да гарантираме точност." },
+      { title: "Точност на информациите", body: "Возните редови, цените и мапите на рутите се објавени од превозниците и може да се менуваат без најава. Се трудиме информациите да бидат ажурни, но не можеме да гарантираме точност. Прикажаните времиња на поаѓање и поминување на автобусите се информативни — реалното време на поминување низ постојките зависи од сообраќајната состојба, временските услови и други надворешни фактори, па не претставува гаранција за точно пристигнување." },
       { title: "Цени", body: "Прикажаните цени на билети се информативни. Секогаш проверете ја цената кај возачот или превозникот пред качување." },
       { title: "Дозволена употреба", body: "Не користете ја апликацијата за нарушување на нејзиното функционирање, преземање на податоци за препродажба или погрешно претставување на официјални информации за превоз." },
       { title: "Промени на политиката", body: "Можеме да ја ажурираме оваа политика како апликацијата се развива. Продолженото користење по промените значи дека ги прифаќате ажурираните услови." },
@@ -143,7 +143,7 @@ export const STR: Record<Lang, Strings> = {
     dismiss: "Dismiss",
     termsSections: [
       { title: "Use of the App", body: "Kumanovo Transit gives you route, stop and departure information for public bus lines in Kumanovo. It is provided for personal, non-commercial use." },
-      { title: "Accuracy of Information", body: "Schedules, prices and route maps are published by transport operators and may change without notice. We do our best to keep them current but cannot guarantee accuracy." },
+      { title: "Accuracy of Information", body: "Schedules, prices and route maps are published by transport operators and may change without notice. We do our best to keep them current but cannot guarantee accuracy. Displayed departure and passing times are indicative — the actual time a bus reaches a stop depends on traffic conditions, weather and other external factors, and is not a guarantee of on-time arrival." },
       { title: "Fares", body: "Displayed ticket prices are indicative. Always confirm the fare with the driver or operator before boarding." },
       { title: "Acceptable Use", body: "Do not use the app to disrupt its operation, scrape data for resale, or misrepresent official transit information." },
       { title: "Changes to this Policy", body: "We may update this policy as the app evolves. Continued use after changes means you accept the updated terms." },
@@ -175,7 +175,7 @@ export const STR: Record<Lang, Strings> = {
     dismiss: "Mbyll",
     termsSections: [
       { title: "Përdorimi i aplikacionit", body: "Kumanovo Transit ju jep informacione për linjat, stacionet dhe nisjet e transportit publik në Kumanovë. Aplikacioni është për përdorim personal, jo-komercial." },
-      { title: "Saktësia e informacionit", body: "Oraret, çmimet dhe hartat e itinerareve publikohen nga operatorët e transportit dhe mund të ndryshojnë pa njoftim. Bëjmë çmos t'i mbajmë të përditësuara, por nuk mund të garantojmë saktësinë." },
+      { title: "Saktësia e informacionit", body: "Oraret, çmimet dhe hartat e itinerareve publikohen nga operatorët e transportit dhe mund të ndryshojnë pa njoftim. Bëjmë çmos t'i mbajmë të përditësuara, por nuk mund të garantojmë saktësinë. Oraret e shfaqura të nisjes dhe të kalimit të autobusëve janë indikative — koha reale kur autobusi arrin në një stacion varet nga kushtet e trafikut, moti dhe faktorë të tjerë të jashtëm, dhe nuk përbën garanci për arritje në kohë." },
       { title: "Çmimet e biletave", body: "Çmimet e shfaqura janë indikative. Konfirmoni gjithmonë çmimin me shoferin ose operatorin para se të hipni." },
       { title: "Përdorimi i lejuar", body: "Mos e përdorni aplikacionin për të prishur funksionimin e tij, për të mbledhur të dhëna për rishitje, ose për të keqinterpretuar informacionin zyrtar të transportit." },
       { title: "Ndryshimet e politikës", body: "Ne mund ta përditësojmë këtë politikë ndërsa aplikacioni evoluon. Vazhdimi i përdorimit pas ndryshimeve nënkupton pranimin e kushteve të përditësuara." },

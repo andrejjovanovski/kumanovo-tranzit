@@ -56,9 +56,13 @@ export function HomePage() {
   })();
 
   const popular = (lines ?? []).slice(0, 5);
-  const dashCols = isMobile ? "repeat(2,1fr)" : "repeat(4,1fr)";
+  // On desktop, cap each stat card's width so a lone card stays compact instead
+  // of stretching to a quarter of the page.
+  const dashCols = isMobile ? "repeat(2,1fr)" : "repeat(auto-fit, minmax(180px, 220px))";
   const homeGridCols = isMobile ? "1fr" : "1.1fr 1fr";
-  const lineCardCols = isMobile ? "1fr" : "1fr 1fr";
+  // Popular lines live in the narrower right column — a single column keeps the
+  // from→to labels on one line instead of wrapping awkwardly.
+  const lineCardCols = "1fr";
 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-6)" }}>
@@ -111,7 +115,7 @@ export function HomePage() {
       </div>
 
       {/* Search + Find route */}
-      <div style={{ display: "flex", gap: "var(--space-3)", flexWrap: "wrap", alignItems: "flex-start" }}>
+      <div style={{ display: "flex", gap: "var(--space-3)", flexWrap: "wrap", alignItems: "flex-start", maxWidth: isMobile ? undefined : 640, width: "100%" }}>
         <HomeSearch />
         <button className="btn btn-secondary" style={{ height: 52, flex: "none" }} onClick={() => navigate("/planner")}>
           <Navigation size={15} />

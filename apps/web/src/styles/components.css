@@ -98,3 +98,18 @@ select.input { appearance: none; background-image: none; cursor: pointer; }
 .dialog-title { font-family: var(--font-heading); font-weight: var(--font-heading-weight); font-size: 20px; }
 .dialog-body { font-size: 14px; opacity: 0.85; }
 .dialog-actions { display: flex; justify-content: flex-end; gap: var(--space-2); margin-top: var(--space-2); }
+
+/* — desktop / tablet refinements (≥640px, above the app's mobile breakpoint) —
+ * The mobile layout is deliberately soft and full-width; on wider viewports the
+ * same cards sit in grids where they need a hairline edge to read as distinct
+ * surfaces, and the segmented control must hug its content instead of stretching. */
+@media (min-width: 640px) {
+  .card { border: 1px solid var(--color-neutral-300); }
+  .seg { align-self: flex-start; }
+}
+
+/* Pointer-hover affordance for clickable cards — desktop only (no touch). */
+@media (min-width: 1100px) and (hover: hover) {
+  .card.elev-md { transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease; }
+  .card.elev-md:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); border-color: var(--color-neutral-400); }
+}

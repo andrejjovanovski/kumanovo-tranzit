@@ -69,7 +69,7 @@ export function PlannerPage() {
   };
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-4)", maxWidth: 560 }}>
+    <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-4)", maxWidth: 560, width: "100%", marginInline: "auto" }}>
       <BackLink to="/" />
       <h2 style={{ margin: 0 }}>{T.findRoute}</h2>
       <div className="hr" style={{ margin: 0 }} />
