@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
-import { LANG_META, LANGS } from "@kt/shared";
+import { type Lang, LANG_META, LANGS } from "@kt/shared";
+import { pathForLang, stripLangPrefix } from "@/i18n/langUrl";
 import { useUIStore } from "@/store/uiStore";
 
 /** Language switcher used inside the mobile menu overlay. */
@@ -9,6 +10,22 @@ export function LanguageMenu({ onPick }: { onPick?: () => void }) {
   const setLang = useUIStore((s) => s.setLang);
   const [open, setOpen] = useState(false);
   const current = LANG_META[lang];
+
+  /**
+   * Each language is its own URL, and the router's basename is fixed at mount,
+   * so switching means loading the sibling address (/lines ↔ /en/lines). The
+   * store is updated first so the choice persists for later visits.
+   */
+  function pick(code: Lang) {
+    setLang(code);
+    setOpen(false);
+    onPick?.();
+    if (code === lang) return;
+    const { pathname, search, hash } = window.location;
+    window.location.assign(
+      pathForLang(stripLangPrefix(pathname), code) + search + hash,
+    );
+  }
 
   return (
     <div style={{ position: "relative" }}>
@@ -42,11 +59,7 @@ export function LanguageMenu({ onPick }: { onPick?: () => void }) {
                   color: "var(--color-text)",
                   ...(active ? { fontWeight: 800, background: "var(--color-accent-100)" } : {}),
                 }}
-                onClick={() => {
-                  setLang(code);
-                  setOpen(false);
-                  onPick?.();
-                }}
+                onClick={() => pick(code)}
               >
                 <span style={{ fontSize: 16, lineHeight: 1 }}>{meta.flag}</span>
                 <span style={{ fontSize: 13, fontWeight: 700 }}>{meta.label}</span>
